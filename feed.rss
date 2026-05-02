@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+	<channel>
+		<title>Intitech</title>
+		<link>https://blogs.intitech.dev/</link>
+		<description>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</description>
+		<copyright>Copyright © 2026</copyright>
+		<pubDate>Sat, 02 May 2026 13:55:29 GMT</pubDate>
+		<lastBuildDate>Sat, 02 May 2026 13:55:29 GMT</lastBuildDate>
+		<item>
+			<title>How I Built a Multi-Tenant Reporting System for 500+ AMSA Branches</title>
+			<link>https://blogs.intitech.dev/posts/2025-04-11-amsa-reporting</link>
+			<description>A deep dive into the architecture behind AMSA Nigeria's reporting system — cross-database queries, JWT role hierarchies, and the decisions that made it work.</description>
+			<author>Abdulawwal Intisor</author>
+			<guid>https://blogs.intitech.dev/posts/2025-04-11-amsa-reporting</guid>
+			<pubDate>Fri, 11 Apr 2025 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Most reporting systems are boring. One database, one tenant, one set of users. The AMSA Nigeria reporting system had to work across &lt;strong&gt;National → State → Unit&lt;/strong&gt; hierarchy — meaning data from hundreds of branches, different access levels per role, and reports that had to aggregate upward cleanly.&lt;/p&gt;
+&lt;p&gt;Here's how I built it.&lt;/p&gt;
+&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;AMSA Nigeria has branches at three levels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;National&lt;/strong&gt; — sees everything&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State&lt;/strong&gt; — sees their state and all units below&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unit&lt;/strong&gt; — sees only their own data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A simple single-tenant system wouldn't cut it. Every query had to be scope-aware.&lt;/p&gt;
+&lt;h2 id="the-database-decision"&gt;The Database Decision&lt;/h2&gt;
+&lt;p&gt;I separated concerns into two databases:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;AmsaAuthDB     -- users, roles, JWT tokens
+AmsaReportDB   -- all report data, scoped by branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cross-database queries in SQL Server are clean with linked servers or just &lt;code&gt;USE&lt;/code&gt; switching in EF Core. The key insight: &lt;strong&gt;auth and data should never live in the same database for a multi-tenant system&lt;/strong&gt; at this scale.&lt;/p&gt;
+&lt;h2 id="jwt-role-hierarchy"&gt;JWT Role Hierarchy&lt;/h2&gt;
+&lt;p&gt;The token payload carries both the user's role and their branch code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;var claims = new[]
+{
+    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+    new Claim(&amp;quot;role&amp;quot;, user.Role),           // National | State | Unit
+    new Claim(&amp;quot;branchCode&amp;quot;, user.BranchCode) // NG | NG-OY | NG-OY-001
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Every API endpoint extracts &lt;code&gt;branchCode&lt;/code&gt; from the token and scopes the query accordingly. National users get &lt;code&gt;WHERE BranchCode LIKE 'NG%'&lt;/code&gt;. State users get &lt;code&gt;WHERE BranchCode LIKE 'NG-OY%'&lt;/code&gt;. Unit users get exact match.&lt;/p&gt;
+&lt;h2 id="the-report-state-machine"&gt;The Report State Machine&lt;/h2&gt;
+&lt;p&gt;Reports go through states: &lt;code&gt;Draft → Submitted → Reviewed → Approved&lt;/code&gt;. Each transition is guarded:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public class ReportStateMachine
+{
+    public static bool CanTransition(ReportStatus from, ReportStatus to, string role)
+    {
+        return (from, to, role) switch
+        {
+            (Draft, Submitted, &amp;quot;Unit&amp;quot;) =&amp;gt; true,
+            (Submitted, Reviewed, &amp;quot;State&amp;quot;) =&amp;gt; true,
+            (Reviewed, Approved, &amp;quot;National&amp;quot;) =&amp;gt; true,
+            _ =&amp;gt; false
+        };
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Clean, testable, no spaghetti conditionals.&lt;/p&gt;
+&lt;h2 id="what-i-learned"&gt;What I Learned&lt;/h2&gt;
+&lt;p&gt;Building multi-tenant systems in Nigeria specifically means accounting for intermittent connectivity. I added aggressive caching at the state level so a bad connection doesn't kill a report submission mid-way.&lt;/p&gt;
+&lt;p&gt;The full source isn't public yet but the architecture is replicable for any hierarchical org system.&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+	</channel>
+</rss>
