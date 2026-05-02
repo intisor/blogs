@@ -1,0 +1,89 @@
+@* Intitech Layout - Updated with Tailwind & New Design System *@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  @Html.Partial("_head")
+  <style>
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #080705; /* void */ }
+    ::-webkit-scrollbar-thumb { background: #2e2b22; /* sediment */ }
+    ::-webkit-scrollbar-thumb:hover { background: #6b6355; /* ash */ }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .revealed { opacity: 1; transform: none; }
+
+    /* ── MARKDOWN / ARTICLE STYLING ── */
+    .prose-container p { margin-bottom: 1.5rem; line-height: 1.95; }
+    .prose-container h1, .prose-container h2, .prose-container h3, .prose-container h4 { font-family: 'Cinzel', serif; color: #e8dcc8; margin-top: 2.5rem; margin-bottom: 1rem; }
+    .prose-container h1 { font-size: 2.5rem; font-weight: 700; }
+    .prose-container h2 { font-size: 1.8rem; font-weight: 700; border-bottom: 1px solid #2e2b22; padding-bottom: 0.5rem; }
+    .prose-container h3 { font-size: 1.4rem; font-weight: 700; }
+    .prose-container a { color: #c8612a; text-decoration: none; border-bottom: 1px solid rgba(200,97,42,0.3); transition: border-color 0.3s, color 0.3s; }
+    .prose-container a:hover { color: #ffb694; border-color: #c8612a; }
+    .prose-container blockquote { border-left: 2px solid #a8873a; padding: 1rem 1.5rem; margin: 1.8rem 0; background: rgba(168,135,58,0.04); font-style: italic; color: #a58b81; }
+    .prose-container pre { background: #1c1a13; border: 1px solid #2e2b22; padding: 1.5rem; overflow-x: auto; margin: 1.8rem 0; font-family: 'JetBrains Mono', monospace; color: #8ab87a; font-size: 14px; }
+    .prose-container code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #2c2a26; padding: 0.15rem 0.4rem; border: 1px solid #373431; color: #e8c26e; border-radius: 0.25rem; }
+    .prose-container pre code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; border-radius: 0; }
+    .prose-container img { max-width: 100%; border: 1px solid #2e2b22; margin: 1.5rem 0; border-radius: 0.25rem; }
+    .prose-container ul, .prose-container ol { padding-left: 1.5rem; margin-bottom: 1.5rem; list-style-type: disc; }
+    .prose-container ol { list-style-type: decimal; }
+    .prose-container li { margin-bottom: 0.5rem; }
+    .prose-container hr { border: none; border-top: 1px solid #2e2b22; margin: 3rem 0; }
+  </style>
+</head>
+<body class="bg-void text-parchment font-body-main min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- Branching Fractal Ornaments (Left & Right) -->
+  <div class="hidden lg:flex fixed left-0 top-0 bottom-0 w-32 pointer-events-none opacity-60 z-0 flex-col justify-between py-24 pl-8">
+    <svg class="h-full w-full stroke-sediment fill-none" preserveAspectRatio="none" stroke-width="1" viewBox="0 0 100 400">
+      <path d="M 50,0 Q 40,50 50,100 T 50,200 Q 60,250 50,300 T 50,400 M 50,50 Q 20,70 10,90 M 50,150 Q 80,170 90,190 M 50,250 Q 20,270 10,290 M 50,350 Q 80,370 90,390"></path>
+    </svg>
+  </div>
+  <div class="hidden lg:flex fixed right-0 top-0 bottom-0 w-32 pointer-events-none opacity-40 z-0 flex-col justify-between py-24 pr-8 scale-x-[-1]">
+    <svg class="h-full w-full stroke-sediment fill-none" preserveAspectRatio="none" stroke-width="1" viewBox="0 0 100 400">
+      <path d="M 50,0 Q 40,50 50,100 T 50,200 Q 60,250 50,300 T 50,400 M 50,50 Q 20,70 10,90 M 50,150 Q 80,170 90,190 M 50,250 Q 20,270 10,290 M 50,350 Q 80,370 90,390"></path>
+    </svg>
+  </div>
+
+  <!-- Top Navigation -->
+  @Html.Partial("_navbar")
+
+  <!-- Main Content -->
+  <main class="flex-grow z-10 relative px-4 md:px-32 lg:px-64 py-16 max-w-5xl mx-auto w-full">
+    @{
+      bool isPost = Document.GetBool("IsPost") && !Document.GetBool("IsPostArchive");
+    }
+    @if (isPost)
+    {
+      @Html.Partial("_post-header")
+      <article class="prose-container font-body-main text-body-main text-parchment space-y-6 mb-section-gap">
+        @RenderBody()
+      </article>
+    }
+    else
+    {
+      @RenderBody()
+    }
+  </main>
+
+  <!-- Footer -->
+  @Html.Partial("_footer")
+
+  <script>
+    // Scroll reveal logic for elements with the .reveal class
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('revealed'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: .08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+  @Html.Partial("_scripts")
+</body>
+</html>

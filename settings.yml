@@ -1,0 +1,5 @@
+Host: blogs.intitech.dev
+LinksUseHttps: true
+SiteTitle: Intitech
+SiteDescription: Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.
+PostSources: posts/*

@@ -1,0 +1,39 @@
+@* Intitech Navigation - Updated with Glass Header & Portfolio Branding *@
+<header class="fixed top-0 left-0 w-full z-[1000] bg-gradient-to-b from-void/90 via-void/60 to-transparent backdrop-blur-md border-b border-sprout/10 transition-all duration-300">
+  <div class="container flex justify-between items-center w-full px-6 md:px-12 py-5 max-w-screen-2xl mx-auto">
+    <a href="/" class="flex items-center space-x-4 transition-opacity hover:opacity-80 group">
+      <svg class="w-10 h-10 transition-transform group-hover:scale-110" viewBox="0 0 120 120">
+        <use href="#karakul-cap" />
+      </svg>
+      <div class="font-display-xl text-2xl font-bold tracking-[0.2em] uppercase">
+        <span class="text-gold">INTITECH</span>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center space-x-10">
+      @foreach (IDocument doc in OutputPages.GetChildrenOf("index.html")
+        .Where(x => x.GetBool("ShowInNavbar", true))
+        .OrderBy(x => x.GetInt(Keys.Order)))
+      {
+        if (doc.Destination != "index.html")
+        {
+          bool isActive = Document.Destination == doc.Destination;
+          string activeClass = isActive
+              ? "text-ember"
+              : "text-ash hover:text-ember";
+
+          <a class="@activeClass font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="@Context.GetLink(doc)">@doc.GetString("NavTitle", doc.GetTitle())</a>
+        }
+      }
+      <a class="text-ash hover:text-ember font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="https://intitech.dev" target="_blank">Portfolio ↗</a>
+    </nav>
+
+    <div class="flex items-center space-x-4">
+      <a href="mailto:hello@intitech.dev" class="hidden sm:block font-mono-label text-[10px] tracking-widest text-ash hover:text-ember uppercase transition-colors">Direct Line</a>
+      <span class="material-symbols-outlined text-ash hover:text-ember transition-colors cursor-pointer p-2 rounded">terminal</span>
+    </div>
+  </div>
+</header>
+<!-- Spacer to push content below fixed header -->
+<div class="h-24"></div>
+

@@ -1,0 +1,167 @@
+@* Replaces CleanBlog's _head.cshtml *@
+@Html.Partial("_svg-symbols")
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="@Document.GetString("Description", Document.GetString("SiteDescription", "Backend engineering from the trenches — C#, ASP.NET Core, and systems built for real problems."))" />
+<meta name="author" content="Abdulawwal Intisor Mawupego" />
+
+@* Open Graph *@
+<meta property="og:type" content="@(Document.GetBool("IsPost", false) ? "article" : "website")" />
+<meta property="og:title" content="@Document.GetTitle() — Intitech" />
+<meta property="og:description" content="@Document.GetString("Description", "Backend engineering in C# and ASP.NET Core.")" />
+<meta property="og:url" content="@Context.GetLink(Document, true)" />
+<meta property="og:site_name" content="Intitech" />
+@if (Document.ContainsKey("Image"))
+{
+    <meta property="og:image" content="@Document.GetString("Image")" />
+}
+
+@* Twitter *@
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@@intitech" />
+<meta name="twitter:title" content="@Document.GetTitle()" />
+<meta name="twitter:description" content="@Document.GetString("Description", "Backend engineering in C# and ASP.NET Core.")" />
+
+@* Canonical *@
+<link rel="canonical" href="@Context.GetLink(Document, true)" />
+
+@* Tailwind & Plugins *@
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+@* Fonts & Icons *@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+@* Tailwind Configuration *@
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "surface-container-highest": "#373431",
+                    "error-container": "#93000a",
+                    "tertiary-fixed": "#bbf1a4",
+                    "canopy": "#5a8a48",
+                    "topsoil": "#1c1a13",
+                    "on-secondary-fixed": "#251a00",
+                    "surface-tint": "#ffb694",
+                    "on-background": "#e7e2dc",
+                    "gold": "#a8873a",
+                    "script": "#e8dcc8",
+                    "on-primary-fixed-variant": "#7b2f00",
+                    "background": "#151310",
+                    "surface-container-low": "#1d1b18",
+                    "secondary-fixed": "#ffdf9c",
+                    "on-tertiary-container": "#073100",
+                    "primary-container": "#df723a",
+                    "on-surface": "#e7e2dc",
+                    "dry-grass": "#8a7a2e",
+                    "on-primary-container": "#4c1a00",
+                    "tertiary-container": "#6c9d59",
+                    "on-secondary-container": "#e7c16e",
+                    "tertiary": "#a0d58a",
+                    "outline": "#a58b81",
+                    "surface-container": "#211f1c",
+                    "primary-fixed": "#ffdbcc",
+                    "primary": "#ffb694",
+                    "secondary-fixed-dim": "#e8c26e",
+                    "on-tertiary": "#0b3901",
+                    "on-error": "#690005",
+                    "tertiary-fixed-dim": "#a0d58a",
+                    "deep-earth": "#0f0d09",
+                    "surface-variant": "#373431",
+                    "surface-dim": "#151310",
+                    "on-secondary-fixed-variant": "#5b4300",
+                    "on-primary-fixed": "#351000",
+                    "surface-container-high": "#2c2a26",
+                    "sprout": "#8ab87a",
+                    "deep-root": "#1a2e1a",
+                    "primary-fixed-dim": "#ffb694",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0f0e0b",
+                    "on-surface-variant": "#ddc1b5",
+                    "on-tertiary-fixed": "#042100",
+                    "secondary": "#e8c26e",
+                    "parchment": "#c9b99a",
+                    "on-secondary": "#3f2e00",
+                    "moss": "#3d5c35",
+                    "inverse-surface": "#e7e2dc",
+                    "surface": "#151310",
+                    "on-error-container": "#ffdad6",
+                    "void": "#080705",
+                    "terracotta": "#7a4f35",
+                    "inverse-primary": "#9e420a",
+                    "surface-bright": "#3b3935",
+                    "inverse-on-surface": "#32302d",
+                    "outline-variant": "#56423a",
+                    "dew": "#c2ddb8",
+                    "ash": "#6b6355",
+                    "ember-dim": "#4a2410",
+                    "on-tertiary-fixed-variant": "#245116",
+                    "secondary-container": "#694e01",
+                    "ember": "#c8612a",
+                    "sediment": "#2e2b22",
+                    "raw-clay": "#a08060",
+                    "on-primary": "#571f00"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "lg": "48px",
+                    "sm": "16px",
+                    "section-gap": "120px",
+                    "xl": "80px",
+                    "base": "4px",
+                    "md": "24px",
+                    "xs": "8px"
+                },
+                "fontFamily": {
+                    "mono-label": ["JetBrains Mono"],
+                    "body-main": ["IM Fell English"],
+                    "display-xl": ["Cinzel"],
+                    "body-italic": ["IM Fell English"],
+                    "heading-lg": ["Cinzel"],
+                    "mono-data": ["JetBrains Mono"]
+                },
+                "fontSize": {
+                    "mono-label": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                    "body-main": ["18px", { "lineHeight": "1.95", "fontWeight": "400" }],
+                    "display-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "0.05em", "fontWeight": "900" }],
+                    "body-italic": ["18px", { "lineHeight": "1.85", "fontWeight": "400" }],
+                    "heading-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                    "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    :root {
+        --void: #080705;
+        --deep-earth: #0f0d09;
+        --topsoil: #1c1a13;
+        --sediment: #2e2b22;
+        --ash: #6b6355;
+        --parchment: #c9b99a;
+        --script: #e8dcc8;
+        --ember: #c8612a;
+        --gold: #a8873a;
+        --sprout: #8ab87a;
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+
+
+@* RSS Feed *@
+<link rel="alternate" type="application/rss+xml" title="Intitech — RSS Feed" href="/feed.rss" />
+
+<title>@Document.GetTitle() — Intitech</title>

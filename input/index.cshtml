@@ -1,0 +1,83 @@
+---
+Title: Intitech — Backend Engineering
+---
+@* Homepage — overrides CleanBlog's index.cshtml *@
+
+<div class="w-full">
+  <header class="text-center mb-16 reveal relative">
+    <div class="absolute -top-12 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none">
+       <svg class="w-64 h-64 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+    </div>
+    <p class="font-mono-label text-sm text-ember uppercase tracking-widest mb-4 z-10 relative">// Engineering notes from the field</p>
+    <h1 class="font-display-xl text-[clamp(2.5rem,5vw,5rem)] font-900 tracking-[0.06em] text-script uppercase leading-none mb-6 z-10 relative">
+      INTI<span class="text-gold block mt-2">TECH</span>
+    </h1>
+    <p class="font-body-italic text-lg text-ash leading-[1.85] max-w-lg mx-auto z-10 relative">
+      Deep dives into <em class="text-parchment font-normal not-italic">C# and ASP.NET Core</em> — architecture decisions,
+      real systems, and the lessons that only come from
+      <em class="text-parchment font-normal not-italic">actually shipping things</em>.
+    </p>
+  </header>
+
+  <!-- Arch Divider -->
+  <div class="flex items-center justify-center my-12 reveal">
+    <div class="h-px bg-sediment flex-grow"></div>
+    <div class="flex items-center gap-6 px-8">
+      <svg class="w-12 h-12 text-sediment scale-x-[-1]"><use href="#branch-fractal" /></svg>
+      <div class="font-heading-lg text-lg text-script whitespace-nowrap tracking-[0.3em] uppercase">✦ LATEST POSTS ✦</div>
+      <svg class="w-12 h-12 text-sediment"><use href="#branch-fractal" /></svg>
+    </div>
+    <div class="h-px bg-sediment flex-grow"></div>
+  </div>
+
+  <div class="flex flex-col gap-0">
+    @foreach (IDocument post in Document.GetChildren().OrderByDescending(x => x.GetDateTime("Published")))
+    {
+      <article class="py-8 border-b border-sediment grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-start transition-all duration-300 hover:bg-topsoil hover:pl-4 reveal first:border-t">
+        <div>
+          @if (post.ContainsKey("Tags"))
+          {
+            <div class="flex gap-2 mb-3 flex-wrap">
+              @foreach (string tag in post.GetList<string>("Tags").Take(3))
+              {
+                <span class="font-mono-label text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment text-ash uppercase">@tag</span>
+              }
+            </div>
+          }
+          <a href="@Context.GetLink(post)" class="font-display-xl text-2xl font-bold text-script tracking-[0.03em] leading-[1.25] block mb-2 transition-colors hover:text-ember">@post.GetTitle()</a>
+          @if (post.ContainsKey("Description"))
+          {
+            <p class="font-body-italic text-sm text-ash leading-[1.7]">@post.GetString("Description")</p>
+          }
+        </div>
+        <div class="font-mono-label text-xs tracking-[0.15em] text-ghost uppercase whitespace-nowrap pt-1 text-ash/70">
+          @post.GetDateTime("Published").ToString("MMM dd, yyyy")
+        </div>
+      </article>
+    }
+  </div>
+
+  @* Pagination *@
+  @if (Document.ContainsKey(Keys.Next) || Document.ContainsKey(Keys.Previous))
+  {
+    <nav class="flex justify-between py-8 mt-4 reveal">
+      @if (Document.ContainsKey(Keys.Previous))
+      {
+        <a href="@Context.GetLink(Document.GetDocument(Keys.Previous))" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">← Newer</a>
+      }
+      else
+      {
+        <span class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash/30 border border-sediment/30 px-5 py-2.5 pointer-events-none">← Newer</span>
+      }
+
+      @if (Document.ContainsKey(Keys.Next))
+      {
+        <a href="@Context.GetLink(Document.GetDocument(Keys.Next))" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">Older →</a>
+      }
+      else
+      {
+        <span class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash/30 border border-sediment/30 px-5 py-2.5 pointer-events-none">Older →</span>
+      }
+    </nav>
+  }
+</div>

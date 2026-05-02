@@ -1,1 +1,4 @@
-﻿Console.WriteLine("Hello, World!");
+﻿return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .RunAsync();

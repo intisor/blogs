@@ -1,0 +1,41 @@
+<header class="text-center mb-16 reveal relative">
+  <div class="absolute -top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+     <svg class="w-48 h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+  </div>
+  <h1 class="font-display-xl text-[clamp(2rem,6vw,3.5rem)] text-script leading-[1.1] mb-10 z-10 relative">@Document.GetTitle()</h1>
+
+  <div class="flex justify-center items-center mb-10 z-10 relative">
+    <svg class="w-12 h-12 text-ember opacity-60"><use href="#leaf-accent" /></svg>
+  </div>
+
+
+  <div class="font-mono-label text-mono-label text-ash flex flex-wrap justify-center items-center space-x-4">
+    <span>INSCRIBED: @(Document.ContainsKey("Published") ? Document.GetDateTime("Published").ToString("MMM dd, yyyy").ToUpper() : "UNKNOWN")</span>
+
+    @if (Document.ContainsKey("Tags"))
+    {
+      var tags = Document.GetList<string>("Tags");
+      if (tags != null && tags.Any())
+      {
+        <span>|</span>
+        <span>NODE: @tags.First().ToUpper()</span>
+      }
+    }
+
+    @if (Document.ContainsKey("Author"))
+    {
+      <span>|</span>
+      <span>AUTHOR: @Document.GetString("Author").ToUpper()</span>
+    }
+  </div>
+
+  @if (Document.ContainsKey("Tags") && Document.GetList<string>("Tags").Count > 1)
+  {
+    <div class="flex gap-3 justify-center mt-8 flex-wrap">
+      @foreach (string tag in Document.GetList<string>("Tags").Skip(1))
+      {
+        <a href="/tags/@tag.ToLower().Replace(" ", "-")" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">@tag</a>
+      }
+    </div>
+  }
+</header>
