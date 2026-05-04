@@ -27,7 +27,30 @@
       <span>|</span>
       <span>AUTHOR: @Document.GetString("Author").ToUpper()</span>
     }
+
+    @if (Document.ContainsKey("ShortUrl"))
+    {
+      <span>|</span>
+      <button onclick="copyToClipboard('@Document.GetString("ShortUrl")')" class="hover:text-ember transition-colors cursor-pointer uppercase">
+        SHARE: @Document.GetString("ShortSlug")
+      </button>
+    }
   </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'COPIED TO CLIPBOARD';
+        btn.classList.add('text-ember');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('text-ember');
+        }, 2000);
+      });
+    }
+  </script>
 
   @if (Document.ContainsKey("Tags") && Document.GetList<string>("Tags").Count > 1)
   {
