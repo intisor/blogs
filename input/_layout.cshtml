@@ -15,7 +15,12 @@
     .revealed { opacity: 1; transform: none; }
 
     /* ── MARKDOWN / ARTICLE STYLING ── */
-    .prose-container p { margin-bottom: 1.5rem; line-height: 1.95; }
+    .prose-container {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+    .prose-container p { margin-bottom: 1.5rem; line-height: 1.75; }
     .prose-container h1, .prose-container h2, .prose-container h3, .prose-container h4 { font-family: 'Cinzel', serif; color: #e8dcc8; margin-top: 2.5rem; margin-bottom: 1rem; }
     .prose-container h1 { font-size: 2.5rem; font-weight: 700; }
     .prose-container h2 { font-size: 1.8rem; font-weight: 700; border-bottom: 1px solid #2e2b22; padding-bottom: 0.5rem; }
@@ -23,14 +28,49 @@
     .prose-container a { color: #c8612a; text-decoration: none; border-bottom: 1px solid rgba(200,97,42,0.3); transition: border-color 0.3s, color 0.3s; }
     .prose-container a:hover { color: #ffb694; border-color: #c8612a; }
     .prose-container blockquote { border-left: 2px solid #a8873a; padding: 1rem 1.5rem; margin: 1.8rem 0; background: rgba(168,135,58,0.04); font-style: italic; color: #a58b81; }
-    .prose-container pre { background: #1c1a13; border: 1px solid #2e2b22; padding: 1.5rem; overflow-x: auto; margin: 1.8rem 0; font-family: 'JetBrains Mono', monospace; color: #8ab87a; font-size: 14px; }
+    .prose-container pre { background: #1c1a13; border: 1px solid #2e2b22; padding: 1rem; overflow-x: auto; margin: 1.8rem 0; font-family: 'JetBrains Mono', monospace; color: #8ab87a; font-size: 14px; }
+    @@media (min-width: 768px) { .prose-container pre { padding: 1.5rem; } }
     .prose-container code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #2c2a26; padding: 0.15rem 0.4rem; border: 1px solid #373431; color: #e8c26e; border-radius: 0.25rem; }
     .prose-container pre code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; border-radius: 0; }
-    .prose-container img { max-width: 100%; border: 1px solid #2e2b22; margin: 1.5rem 0; border-radius: 0.25rem; }
+    .prose-container img { max-width: 100%; height: auto; border: 1px solid #2e2b22; margin: 1.5rem 0; border-radius: 0.25rem; }
     .prose-container ul, .prose-container ol { padding-left: 1.5rem; margin-bottom: 1.5rem; list-style-type: disc; }
     .prose-container ol { list-style-type: decimal; }
     .prose-container li { margin-bottom: 0.5rem; }
     .prose-container hr { border: none; border-top: 1px solid #2e2b22; margin: 3rem 0; }
+
+    /* ── RESPONSIVE LAYOUT ── */
+    .main-container {
+        width: 100%;
+        max-width: 64rem; /* max-w-5xl */
+        margin-left: auto;
+        margin-right: auto;
+        padding: 3rem 1.25rem; /* py-12 px-5 */
+        box-sizing: border-box;
+    }
+    @@media (max-width: 340px) { .main-container { padding-left: 1rem; padding-right: 1rem; } }
+    @@media (min-width: 640px) { .main-container { padding: 4rem 2.5rem; } }
+    @@media (min-width: 768px) { .main-container { padding: 4rem 5rem; } }
+    @@media (min-width: 1024px) { .main-container { padding: 4rem 8rem; } }
+    @@media (min-width: 1280px) { .main-container { padding: 4rem 12rem; } }
+
+    /* ── POST METADATA ── */
+    .metadata-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: #6b6355; /* ash */
+    }
+    @@media (min-width: 640px) {
+        .metadata-grid {
+            flex-direction: row;
+            gap: 1rem;
+            font-size: 12px;
+        }
+    }
   </style>
 </head>
 <body class="bg-void text-parchment font-body-main min-h-screen flex flex-col relative overflow-x-hidden">
@@ -51,7 +91,7 @@
   @Html.Partial("_navbar")
 
   <!-- Main Content -->
-  <main class="flex-grow z-10 relative px-6 sm:px-10 md:px-20 lg:px-32 xl:px-48 py-16 max-w-7xl mx-auto w-full">
+  <main class="main-container flex-grow z-10 relative">
     @{
       bool isPost = Document.GetBool("IsPost") && !Document.GetBool("IsPostArchive");
     }

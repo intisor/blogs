@@ -8,7 +8,7 @@
     <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent" /></svg>
   </div>
 
-  <div class="font-mono-label text-[10px] md:text-xs text-ash flex flex-wrap justify-center items-center gap-3 md:gap-4">
+  <div class="metadata-grid">
     <div class="flex items-center">
       <span class="opacity-40 mr-2 sm:hidden">#</span>
       <span class="whitespace-nowrap">INSCRIBED: @(Document.ContainsKey("Published") ? Document.GetDateTime("Published").ToString("MMM dd, yyyy").ToUpper() : "UNKNOWN")</span>
@@ -19,23 +19,31 @@
       var tags = Document.GetList<string>("Tags");
       if (tags != null && tags.Any())
       {
-        <span class="hidden sm:inline opacity-30">|</span>
-        <span class="whitespace-nowrap">NODE: @tags.First().ToUpper()</span>
+        <div class="flex items-center">
+          <span class="hidden sm:inline opacity-30 mr-4">|</span>
+          <span class="opacity-40 mr-2 sm:hidden">#</span>
+          <span class="whitespace-nowrap">NODE: @tags.First().ToUpper()</span>
+        </div>
       }
     }
 
     @if (Document.ContainsKey("Author"))
     {
-      <span class="hidden sm:inline opacity-30">|</span>
-      <span class="whitespace-nowrap text-ember/70">AUTHOR: @Document.GetString("Author").ToUpper()</span>
+      <div class="flex items-center">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <span class="opacity-40 mr-2 sm:hidden">#</span>
+        <span class="whitespace-nowrap text-ember/70">AUTHOR: @Document.GetString("Author").ToUpper()</span>
+      </div>
     }
 
     @if (Document.ContainsKey("ShortUrl"))
     {
-      <span class="hidden sm:inline opacity-30">|</span>
-      <button onclick="copyToClipboard('@Document.GetString("ShortUrl")')" class="hover:text-ember transition-colors cursor-pointer uppercase whitespace-nowrap bg-topsoil/30 px-2 py-0.5 rounded border border-sediment/30">
-        SHARE: @Document.GetString("ShortSlug")
-      </button>
+      <div class="flex items-center mt-2 sm:mt-0">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <button onclick="copyToClipboard('@Document.GetString("ShortUrl")')" class="hover:text-ember transition-colors cursor-pointer uppercase whitespace-nowrap bg-topsoil/30 px-2 py-0.5 rounded border border-sediment/30">
+          SHARE: @Document.GetString("ShortSlug")
+        </button>
+      </div>
     }
   </div>
 
