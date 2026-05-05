@@ -11,11 +11,12 @@ namespace blogs
     public class SmallUrlModule : ParallelModule
     {
         private readonly string _apiKey;
-        private readonly string _apiBase = "https://i.intitech.dev/api/process-blog";
+        private readonly string _apiBase;
 
-        public SmallUrlModule(string apiKey)
+        public SmallUrlModule(string apiKey, string? apiBase = null)
         {
             _apiKey = apiKey;
+            _apiBase = apiBase ?? "https://i.intitech.dev/api/process-blog";
         }
 
         protected override async Task<IEnumerable<IDocument>> ExecuteInputAsync(IDocument input, IExecutionContext context)

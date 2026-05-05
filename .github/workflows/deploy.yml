@@ -33,6 +33,8 @@ jobs:
 
       - name: Build site
         run: dotnet run -- deploy
+        env:
+          SMALLURL_API_KEY: ${{ secrets.SMALLURL_API_KEY }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4   # ← correct version
