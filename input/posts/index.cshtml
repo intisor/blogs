@@ -4,6 +4,6 @@ ArchiveFilter: => GetBool("IsPost")
 ArchiveOrderKey: Published
 ArchiveOrderDescending: true
 ArchiveDestination: >
-  => GetInt("Index") <= 1 ? $"index.html" : $"page/{GetInt("Index")}.html"
+  => GetInt("Index") <= 1 ? $"posts/index.html" : $"posts/page/{GetInt("Index")}.html"
 ---
 @Html.Partial("_archive")
