@@ -6,20 +6,16 @@ using System;
 return await Bootstrapper
   .Factory
   .CreateWeb(args)
-  .ModifyPipeline("Content", pipeline => 
+  .ConfigureEngine(engine => 
   {
       var apiKey = Environment.GetEnvironmentVariable("SMALLURL_API_KEY");
       if (!string.IsNullOrEmpty(apiKey))
       {
-          pipeline.PostProcessModules.Add(new SmallUrlModule(apiKey));
-      }
-  })
-  .ModifyPipeline("Posts", pipeline => 
-  {
-      var apiKey = Environment.GetEnvironmentVariable("SMALLURL_API_KEY");
-      if (!string.IsNullOrEmpty(apiKey))
-      {
-          pipeline.PostProcessModules.Add(new SmallUrlModule(apiKey));
+          var module = new SmallUrlModule(apiKey);
+          foreach (var pipeline in engine.Pipelines)
+          {
+              pipeline.Value.PostProcessModules.Add(module);
+          }
       }
   })
   .RunAsync();
