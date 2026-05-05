@@ -24,7 +24,7 @@ The project is an API for AMSA Nigeria — the Ahmadiyya Muslim Students' Associ
 
 Real system. Real data. Real people will use it.
 
-The stack is ASP.NET Core with EF Core and SQL Server. Started with [Minimal API](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/overview) because it felt modern and lightweight — no controllers, no ceremony, just functions mapped to routes. Then discovered [FastEndpoints](https://fast-endpoints.com/docs/get-started) and started migrating.
+The stack is ASP.NET Core with EF Core and SQL Server. Started with [Minimal API](https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453) because it felt modern and lightweight — no controllers, no ceremony, just functions mapped to routes. Then discovered [FastEndpoints](https://fast-endpoints.com/docs/get-started) and started migrating.
 
 Here's what didn't happen: an immediate clean rewrite. The old endpoints stayed. The new ones went in alongside them. For a while, both lived in the same codebase simultaneously.
 
@@ -113,7 +113,7 @@ unitGroup.MapGet("/{id:int}", GetUnitById);
 
 This is genuinely pleasant to read. The navigation properties — `u.State.StateName`, `u.State.National.NationalName`, `mld.LevelDepartment.Level.UnitId` — read almost like English sentences. There's no SQL to write. No JOIN clauses to maintain. The object graph does the talking and EF Core translates it into optimized queries behind the scenes.
 
-This is exactly what [EF Core LINQ queries](https://learn.microsoft.com/en-us/ef/core/querying/) are built for. The [`Select` projection](https://learn.microsoft.com/en-us/ef/core/querying/related-data/eager) means only the required columns are fetched — not entire entity rows hydrated into memory. [`AsNoTracking()`](https://learn.microsoft.com/en-us/ef/core/querying/tracking) tells EF Core to skip the change tracker entirely since this is a read-only path, which is a meaningful performance win for endpoints that never write.
+This is exactly what [EF Core LINQ queries](https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453) are built for. The [`Select` projection](https://learn.microsoft.com/ef/core/querying/related-data/eager?wt.mc_id=studentamb_478453) means only the required columns are fetched — not entire entity rows hydrated into memory. [`AsNoTracking()`](https://learn.microsoft.com/ef/core/querying/tracking?wt.mc_id=studentamb_478453) tells EF Core to skip the change tracker entirely since this is a read-only path, which is a meaningful performance win for endpoints that never write.
 
 The whole handler fits in one mental unit. Read it once, top to bottom, and the intent is clear.
 
@@ -229,9 +229,9 @@ public static class OrganizationValidationMethods
 
 More code than the LINQ version. Deliberately so.
 
-Writing raw SQL here is an explicit statement: *this is exactly what query hits the database.* No ORM translation layer. No inference. The `GROUP BY`, the `COUNT(DISTINCT)`, the JOIN order — all of it is specified and visible. For complex aggregations or performance-sensitive paths, that visibility matters. [EF Core's query translator is good](https://learn.microsoft.com/en-us/ef/core/querying/sql-queries) but it's not omniscient, and sometimes you need to be the one writing the execution plan.
+Writing raw SQL here is an explicit statement: *this is exactly what query hits the database.* No ORM translation layer. No inference. The `GROUP BY`, the `COUNT(DISTINCT)`, the JOIN order — all of it is specified and visible. For complex aggregations or performance-sensitive paths, that visibility matters. [EF Core's query translator is good](https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453) but it's not omniscient, and sometimes you need to be the one writing the execution plan.
 
-The `{0}` parameter syntax in `SqlQueryRaw` is worth understanding. Despite looking like string formatting, these are [proper parameterized queries](https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters) — EF Core passes them as SQL parameters under the hood, not interpolated strings. SQL injection is not a concern here. The shape of the query is written in code; the values are passed safely at runtime.
+The `{0}` parameter syntax in `SqlQueryRaw` is worth understanding. Despite looking like string formatting, these are [proper parameterized queries](https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453#passing-parameters) — EF Core passes them as SQL parameters under the hood, not interpolated strings. SQL injection is not a concern here. The shape of the query is written in code; the values are passed safely at runtime.
 
 The `file record UnitDetailRawDto` at the top uses the `file` access modifier, which scopes the type to this single file. The rest of the project cannot see it. The public contract of this endpoint is `UnitDetailResponse`. How that response was assembled — what intermediate DTOs were used, what SQL was written — is an implementation detail that belongs to this file and nowhere else. This is [vertical slice architecture](https://jimmybogard.com/vertical-slice-architecture/) expressed at the type system level: each endpoint owns its full stack and exposes only its contract.
 
@@ -319,9 +319,9 @@ This is not a post that concludes FastEndpoints won and everything should be rew
 
 For small projects, solo developers, internal tools, and prototypes, that legibility is the right priority. The mental overhead of FastEndpoints pays off over time, at scale, across teams. At the start of a project, or when requirements are shifting fast, the ceremony can slow down more than it helps.
 
-**Minimal API is also closer to the metal of ASP.NET Core.** Everything it does is built on top of primitives that ship with the framework — [route handlers](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/route-handlers), `IResult`, dependency injection via method parameters. FastEndpoints is a library with conventions and abstractions layered on top. That's a dependency. For long-lived projects that's an acceptable and worthwhile dependency; for short-lived ones it may not be.
+**Minimal API is also closer to the metal of ASP.NET Core.** Everything it does is built on top of primitives that ship with the framework — [route handlers](https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/route-handlers?wt.mc_id=studentamb_478453), `IResult`, dependency injection via method parameters. FastEndpoints is a library with conventions and abstractions layered on top. That's a dependency. For long-lived projects that's an acceptable and worthwhile dependency; for short-lived ones it may not be.
 
-The [official error handling documentation for Minimal API](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling) covers how to configure global exception handling there too — it's possible, just not the path of least resistance the way it is in FastEndpoints.
+The [official error handling documentation for Minimal API](https://learn.microsoft.com/aspnet/core/fundamentals/error-handling?wt.mc_id=studentamb_478453) covers how to configure global exception handling there too — it's possible, just not the path of least resistance the way it is in FastEndpoints.
 
 ---
 
@@ -353,4 +353,4 @@ And if the best learning you've done recently came from an accident — from a m
 
 ---
 
-*All code in this post is from a real production project. The full implementation is available on [GitHub](https://github.com).*
+*All code in this post is from a real production project. The full implementation is available on [GitHub](https://github.com/intisor/intitechApi).*

@@ -1,37 +1,39 @@
-<header class="text-center mb-16 reveal relative">
-  <div class="absolute -top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
-     <svg class="w-48 h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+<header class="text-center mb-12 md:mb-20 reveal relative px-2">
+  <div class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+     <svg class="w-32 h-32 md:w-48 md:h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
   </div>
-  <h1 class="font-display-xl text-[clamp(2rem,6vw,3.5rem)] text-script leading-[1.1] mb-10 z-10 relative">@Document.GetTitle()</h1>
+  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">@Document.GetTitle()</h1>
 
-  <div class="flex justify-center items-center mb-10 z-10 relative">
-    <svg class="w-12 h-12 text-ember opacity-60"><use href="#leaf-accent" /></svg>
+  <div class="flex justify-center items-center mb-8 md:mb-10 z-10 relative">
+    <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent" /></svg>
   </div>
 
-
-  <div class="font-mono-label text-mono-label text-ash flex flex-wrap justify-center items-center space-x-4">
-    <span>INSCRIBED: @(Document.ContainsKey("Published") ? Document.GetDateTime("Published").ToString("MMM dd, yyyy").ToUpper() : "UNKNOWN")</span>
+  <div class="font-mono-label text-[10px] md:text-xs text-ash flex flex-wrap justify-center items-center gap-3 md:gap-4">
+    <div class="flex items-center">
+      <span class="opacity-40 mr-2 sm:hidden">#</span>
+      <span class="whitespace-nowrap">INSCRIBED: @(Document.ContainsKey("Published") ? Document.GetDateTime("Published").ToString("MMM dd, yyyy").ToUpper() : "UNKNOWN")</span>
+    </div>
 
     @if (Document.ContainsKey("Tags"))
     {
       var tags = Document.GetList<string>("Tags");
       if (tags != null && tags.Any())
       {
-        <span>|</span>
-        <span>NODE: @tags.First().ToUpper()</span>
+        <span class="hidden sm:inline opacity-30">|</span>
+        <span class="whitespace-nowrap">NODE: @tags.First().ToUpper()</span>
       }
     }
 
     @if (Document.ContainsKey("Author"))
     {
-      <span>|</span>
-      <span>AUTHOR: @Document.GetString("Author").ToUpper()</span>
+      <span class="hidden sm:inline opacity-30">|</span>
+      <span class="whitespace-nowrap text-ember/70">AUTHOR: @Document.GetString("Author").ToUpper()</span>
     }
 
     @if (Document.ContainsKey("ShortUrl"))
     {
-      <span>|</span>
-      <button onclick="copyToClipboard('@Document.GetString("ShortUrl")')" class="hover:text-ember transition-colors cursor-pointer uppercase">
+      <span class="hidden sm:inline opacity-30">|</span>
+      <button onclick="copyToClipboard('@Document.GetString("ShortUrl")')" class="hover:text-ember transition-colors cursor-pointer uppercase whitespace-nowrap bg-topsoil/30 px-2 py-0.5 rounded border border-sediment/30">
         SHARE: @Document.GetString("ShortSlug")
       </button>
     }

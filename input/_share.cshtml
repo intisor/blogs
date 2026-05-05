@@ -1,0 +1,54 @@
+@* Share Post Module *@
+<div class="reveal mt-16 pt-8 border-t border-sediment">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+            <h4 class="text-parchment font-cinzel text-lg mb-1">Share this insight</h4>
+            <p class="text-ash text-sm">Spread the knowledge with your network.</p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            @* X / Twitter *@
+            <a href="https://twitter.com/intent/tweet?text=@(System.Net.WebUtility.UrlEncode(Document.GetString("Title")))&url=@(System.Net.WebUtility.UrlEncode(Context.GetLink(Document, true)))" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on X">
+                <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
+            </a>
+
+            @* LinkedIn *@
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=@(System.Net.WebUtility.UrlEncode(Context.GetLink(Document, true)))" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on LinkedIn">
+                <svg class="w-5 h-5"><use href="#icon-linkedin"></use></svg>
+            </a>
+
+            @* Copy Link *@
+            <button onclick="copyPostLink()" 
+                    id="copy-link-btn"
+                    class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg active:scale-95"
+                    title="Copy post link">
+                <svg class="w-5 h-5" id="copy-icon"><use href="#icon-link"></use></svg>
+                <span id="copy-feedback" class="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-ember text-void text-xs font-bold rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">
+                    Link Copied!
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyPostLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const feedback = document.getElementById('copy-feedback');
+            feedback.classList.remove('opacity-0');
+            feedback.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                feedback.classList.remove('opacity-100');
+                feedback.classList.add('opacity-0');
+            }, 2000);
+        });
+    }
+</script>

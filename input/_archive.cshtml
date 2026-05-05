@@ -2,59 +2,59 @@
 @model IDocument
 @* Shared Archive Component *@
 <div class="w-full">
-  <header class="text-center mb-16 reveal relative">
-    <div class="absolute -top-12 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none">
-       <svg class="w-64 h-64 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+  <header class="text-center mb-12 md:mb-20 reveal relative">
+    <div class="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 opacity-10 md:opacity-20 pointer-events-none overflow-hidden w-full max-w-xs md:max-w-none">
+       <svg class="w-48 h-48 md:w-64 md:h-64 mx-auto text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
     </div>
-    <p class="font-mono-label text-sm text-ember uppercase tracking-widest mb-4 z-10 relative">// Engineering notes from the field</p>
-    <h1 class="font-display-xl text-[clamp(2.5rem,5vw,5rem)] font-900 tracking-[0.06em] text-script uppercase leading-none mb-6 z-10 relative">
-      INTI<span class="text-gold block mt-2">TECH</span>
+    <p class="font-mono-label text-[10px] md:text-sm text-ember uppercase tracking-[0.3em] mb-4 z-10 relative">// Engineering notes from the field</p>
+    <h1 class="font-display-xl text-[clamp(2.5rem,8vw,5.5rem)] font-900 tracking-[0.06em] text-script uppercase leading-none mb-6 z-10 relative">
+      INTI<span class="text-gold block mt-1 md:mt-2">TECH</span>
     </h1>
-    <p class="font-body-italic text-lg text-ash leading-[1.85] max-w-lg mx-auto z-10 relative">
+    <p class="font-body-italic text-base md:text-lg text-ash leading-[1.8] md:leading-[1.85] max-w-md md:max-w-lg mx-auto z-10 relative px-4">
       Deep dives into <em class="text-parchment font-normal not-italic">C# and ASP.NET Core</em> — architecture decisions,
-      real systems, and the lessons that only come from
+      real systems, and the lessons from
       <em class="text-parchment font-normal not-italic">actually shipping things</em>.
     </p>
   </header>
 
   <!-- Arch Divider -->
-  <div class="flex items-center justify-center my-12 reveal">
-    <div class="h-px bg-sediment flex-grow"></div>
-    <div class="flex items-center gap-6 px-8">
-      <svg class="w-12 h-12 text-sediment scale-x-[-1]"><use href="#branch-fractal" /></svg>
-      <div class="font-heading-lg text-lg text-script whitespace-nowrap tracking-[0.3em] uppercase">✦ LATEST POSTS ✦</div>
-      <svg class="w-12 h-12 text-sediment"><use href="#branch-fractal" /></svg>
+  <div class="flex items-center justify-center my-8 md:my-16 reveal">
+    <div class="h-px bg-sediment/30 flex-grow"></div>
+    <div class="flex items-center gap-3 md:gap-6 px-4 md:px-8">
+      <svg class="w-8 h-8 md:w-12 md:h-12 text-sediment/60 scale-x-[-1] hidden sm:block"><use href="#branch-fractal" /></svg>
+      <div class="font-heading-lg text-sm md:text-lg text-script whitespace-nowrap tracking-[0.2em] md:tracking-[0.3em] uppercase">✦ LATEST POSTS ✦</div>
+      <svg class="w-8 h-8 md:w-12 md:h-12 text-sediment/60 hidden sm:block"><use href="#branch-fractal" /></svg>
     </div>
-    <div class="h-px bg-sediment flex-grow"></div>
+    <div class="h-px bg-sediment/30 flex-grow"></div>
   </div>
 
-  <div class="flex flex-col gap-0">
+  <div class="flex flex-col gap-0 px-2 md:px-0">
     @foreach(IGrouping<int, IDocument> group in Document
-                                                .GetChildren()
-                                                .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
-                                                .OrderByDescending(x => x.Key))
+                                                 .GetChildren()
+                                                 .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
+                                                 .OrderByDescending(x => x.Key))
     {
-      <h2 class="font-display-xl text-3xl font-900 tracking-widest text-sediment/50 uppercase mb-8 mt-12 border-b border-sediment/20 pb-2">@group.Key</h2>
+      <h2 class="font-display-xl text-2xl md:text-3xl font-900 tracking-widest text-sediment/40 uppercase mb-6 md:mb-10 mt-10 md:mt-16 border-b border-sediment/10 pb-2">@group.Key</h2>
       foreach (IDocument post in group)
       {
-        <article class="py-8 border-b border-sediment grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-start transition-all duration-300 hover:bg-topsoil hover:pl-4 reveal first:border-t">
+        <article class="py-6 md:py-10 border-b border-sediment/40 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 md:gap-8 items-baseline transition-all duration-300 hover:bg-topsoil/50 hover:pl-4 md:hover:pl-6 reveal first:border-t">
           <div>
             @if (post.ContainsKey("Tags"))
             {
               <div class="flex gap-2 mb-3 flex-wrap">
                 @foreach (string tag in post.GetList<string>("Tags").Take(3))
                 {
-                  <span class="font-mono-label text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment text-ash uppercase">@tag</span>
+                  <span class="font-mono-label text-[9px] md:text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment/60 text-ash/80 uppercase rounded-sm">@tag</span>
                 }
               </div>
             }
-            <a href="@Context.GetLink(post)" class="font-display-xl text-2xl font-bold text-script tracking-[0.03em] leading-[1.25] block mb-2 transition-colors hover:text-ember">@post.GetTitle()</a>
+            <a href="@Context.GetLink(post)" class="font-display-xl text-xl md:text-2xl font-bold text-script tracking-[0.03em] leading-tight block mb-2 transition-colors hover:text-ember">@post.GetTitle()</a>
             @if (post.ContainsKey("Description"))
             {
-              <p class="font-body-italic text-sm text-ash leading-[1.7]">@post.GetString("Description")</p>
+              <p class="font-body-italic text-sm md:text-base text-ash/90 leading-relaxed md:leading-[1.7]">@post.GetString("Description")</p>
             }
           </div>
-          <div class="font-mono-label text-xs tracking-[0.15em] text-ghost uppercase whitespace-nowrap pt-1 text-ash/70">
+          <div class="font-mono-label text-[10px] md:text-xs tracking-[0.15em] text-ash/60 uppercase whitespace-nowrap pt-1">
             @post.GetDateTime("Published").ToString("MMM dd")
           </div>
         </article>
