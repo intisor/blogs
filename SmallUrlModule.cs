@@ -62,6 +62,33 @@ namespace blogs
                         var shortUrl = root.TryGetProperty("blogShortUrl", out var urlProp) ? urlProp.GetString() : null;
                         var shortSlug = root.TryGetProperty("blogSlug", out var slugProp) ? slugProp.GetString() : null;
 
+                        if (!string.IsNullOrEmpty(shortSlug) && !string.IsNullOrEmpty(processedContent))
+                        {
+                            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+                            htmlDoc.LoadHtml(processedContent);
+                            var head = htmlDoc.DocumentNode.SelectSingleNode("//head");
+                            if (head != null)
+                            {
+                                // Check if og:image already exists (it shouldn't, but safety first)
+                                if (htmlDoc.DocumentNode.SelectSingleNode("//meta[@property='og:image']") == null)
+                                {
+                                    var ogImage = htmlDoc.CreateElement("meta");
+                                    ogImage.SetAttributeValue("property", "og:image");
+                                    ogImage.SetAttributeValue("content", $"https://i.intitech.dev/og/{shortSlug}");
+                                    head.AppendChild(ogImage);
+                                }
+
+                                if (htmlDoc.DocumentNode.SelectSingleNode("//meta[@name='twitter:image']") == null)
+                                {
+                                    var twitterImage = htmlDoc.CreateElement("meta");
+                                    twitterImage.SetAttributeValue("name", "twitter:image");
+                                    twitterImage.SetAttributeValue("content", $"https://i.intitech.dev/og/{shortSlug}");
+                                    head.AppendChild(twitterImage);
+                                }
+                                processedContent = htmlDoc.DocumentNode.OuterHtml;
+                            }
+                        }
+
                         return input
                             .Clone(new MetadataItems
                             {

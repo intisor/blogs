@@ -11,7 +11,12 @@
 <meta property="og:description" content="@Document.GetString("Description", "Backend engineering in C# and ASP.NET Core.")" />
 <meta property="og:url" content="@Context.GetLink(Document, true)" />
 <meta property="og:site_name" content="Intitech" />
-@if (Document.ContainsKey("Image"))
+@if (Document.ContainsKey("ShortSlug"))
+{
+    <meta property="og:image" content="https://i.intitech.dev/og/@Document.GetString("ShortSlug")" />
+    <meta name="twitter:image" content="https://i.intitech.dev/og/@Document.GetString("ShortSlug")" />
+}
+else if (Document.ContainsKey("Image"))
 {
     <meta property="og:image" content="@Document.GetString("Image")" />
 }
