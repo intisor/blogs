@@ -1,6 +1,9 @@
-using System.Net.Http.Headers;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Statiq.Common;
 
 namespace blogs
@@ -17,12 +20,15 @@ namespace blogs
 
         protected override async Task<IEnumerable<IDocument>> ExecuteInputAsync(IDocument input, IExecutionContext context)
         {
-            // Only process HTML files that look like posts
+            // Only process HTML files
             if (input.Destination.Extension != ".html")
                 return input.Yield();
 
-            // Skip if it's not in the 'posts' or 'blog' folder (adjust as needed)
-            if (!input.Source.FullPath.Contains("/posts/"))
+            // Only process posts
+            bool isPost = input.GetBool("IsPost") || 
+                          input.Destination.FullPath.StartsWith("posts/", StringComparison.OrdinalIgnoreCase);
+
+            if (!isPost)
                 return input.Yield();
 
             var content = await input.GetContentStringAsync();
@@ -33,12 +39,12 @@ namespace blogs
 
             var requestBody = new
             {
-                content = content,
-                blogUrl = blogUrl
+                content,
+                blogUrl
             };
 
             var json = JsonSerializer.Serialize(requestBody);
-            var requestContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var requestContent = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
@@ -49,26 +55,30 @@ namespace blogs
                     using var doc = JsonDocument.Parse(responseJson);
                     var root = doc.RootElement;
 
-                    var processedContent = root.GetProperty("processedContent").GetString();
-                    var shortUrl = root.GetProperty("blogShortUrl").GetString();
-                    var shortSlug = root.GetProperty("blogSlug").GetString();
+                    if (root.TryGetProperty("processedContent", out var processedContentProp))
+                    {
+                        var processedContent = processedContentProp.GetString();
+                        var shortUrl = root.TryGetProperty("blogShortUrl", out var urlProp) ? urlProp.GetString() : null;
+                        var shortSlug = root.TryGetProperty("blogSlug", out var slugProp) ? slugProp.GetString() : null;
 
-                    return input.Clone(
-                        context.GetContentProvider(processedContent, MediaTypes.Html),
-                        new MetadataItems
-                        {
-                            { "ShortUrl", shortUrl },
-                            { "ShortSlug", shortSlug }
-                        }).Yield();
+                        return input
+                            .Clone(new MetadataItems
+                            {
+                                { "ShortUrl", shortUrl },
+                                { "ShortSlug", shortSlug }
+                            })
+                            .Clone(context.GetContentProvider(processedContent, MediaTypes.Html))
+                            .Yield();
+                    }
                 }
                 else
                 {
-                    context.LogWarning($"SmallURL API failed for {blogUrl}: {response.StatusCode}");
+                    context.LogWarning(input, $"SmallURL API failed for {blogUrl}: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
             {
-                context.LogWarning($"SmallURL processing error: {ex.Message}");
+                context.LogWarning(input, $"SmallURL processing error: {ex.Message}");
             }
 
             return input.Yield();

@@ -1,7 +1,12 @@
----
 Title: Intitech — Backend Engineering
+ArchiveSources: => GetString("PostSources")
+ArchiveFilter: => GetBool("IsPost")
+ArchiveOrderKey: Published
+ArchiveOrderDescending: true
+ArchiveDestination: >
+  => GetInt("Index") <= 1 ? $"index.html" : $"page/{GetInt("Index")}.html"
 ---
-@* Homepage — overrides CleanBlog's index.cshtml *@
+@* Homepage — acts as the posts archive now *@
 
 <div class="w-full">
   <header class="text-center mb-16 reveal relative">
@@ -31,48 +36,59 @@ Title: Intitech — Backend Engineering
   </div>
 
   <div class="flex flex-col gap-0">
-    @foreach (IDocument post in Document.GetChildren().OrderByDescending(x => x.GetDateTime("Published")))
+    @foreach(IGrouping<int, IDocument> group in Document
+                                                .GetChildren()
+                                                .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
+                                                .OrderByDescending(x => x.Key))
     {
-      <article class="py-8 border-b border-sediment grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-start transition-all duration-300 hover:bg-topsoil hover:pl-4 reveal first:border-t">
-        <div>
-          @if (post.ContainsKey("Tags"))
-          {
-            <div class="flex gap-2 mb-3 flex-wrap">
-              @foreach (string tag in post.GetList<string>("Tags").Take(3))
-              {
-                <span class="font-mono-label text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment text-ash uppercase">@tag</span>
-              }
-            </div>
-          }
-          <a href="@Context.GetLink(post)" class="font-display-xl text-2xl font-bold text-script tracking-[0.03em] leading-[1.25] block mb-2 transition-colors hover:text-ember">@post.GetTitle()</a>
-          @if (post.ContainsKey("Description"))
-          {
-            <p class="font-body-italic text-sm text-ash leading-[1.7]">@post.GetString("Description")</p>
-          }
-        </div>
-        <div class="font-mono-label text-xs tracking-[0.15em] text-ghost uppercase whitespace-nowrap pt-1 text-ash/70">
-          @post.GetDateTime("Published").ToString("MMM dd, yyyy")
-        </div>
-      </article>
+      <h2 class="font-display-xl text-3xl font-900 tracking-widest text-sediment/50 uppercase mb-8 mt-12 border-b border-sediment/20 pb-2">@group.Key</h2>
+      foreach (IDocument post in group)
+      {
+        <article class="py-8 border-b border-sediment grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-start transition-all duration-300 hover:bg-topsoil hover:pl-4 reveal first:border-t">
+          <div>
+            @if (post.ContainsKey("Tags"))
+            {
+              <div class="flex gap-2 mb-3 flex-wrap">
+                @foreach (string tag in post.GetList<string>("Tags").Take(3))
+                {
+                  <span class="font-mono-label text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment text-ash uppercase">@tag</span>
+                }
+              </div>
+            }
+            <a href="@Context.GetLink(post)" class="font-display-xl text-2xl font-bold text-script tracking-[0.03em] leading-[1.25] block mb-2 transition-colors hover:text-ember">@post.GetTitle()</a>
+            @if (post.ContainsKey("Description"))
+            {
+              <p class="font-body-italic text-sm text-ash leading-[1.7]">@post.GetString("Description")</p>
+            }
+          </div>
+          <div class="font-mono-label text-xs tracking-[0.15em] text-ghost uppercase whitespace-nowrap pt-1 text-ash/70">
+            @post.GetDateTime("Published").ToString("MMM dd")
+          </div>
+        </article>
+      }
     }
   </div>
 
   @* Pagination *@
-  @if (Document.ContainsKey(Keys.Next) || Document.ContainsKey(Keys.Previous))
+  @{
+    IDocument newer = Model.GetDocument(Keys.Previous);
+    IDocument older = Model.GetDocument(Keys.Next);
+  }
+  @if (older != null || newer != null)
   {
     <nav class="flex justify-between py-8 mt-4 reveal">
-      @if (Document.ContainsKey(Keys.Previous))
+      @if (newer != null)
       {
-        <a href="@Context.GetLink(Document.GetDocument(Keys.Previous))" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">← Newer</a>
+        <a href="@Context.GetLink(newer)" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">← Newer</a>
       }
       else
       {
         <span class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash/30 border border-sediment/30 px-5 py-2.5 pointer-events-none">← Newer</span>
       }
 
-      @if (Document.ContainsKey(Keys.Next))
+      @if (older != null)
       {
-        <a href="@Context.GetLink(Document.GetDocument(Keys.Next))" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">Older →</a>
+        <a href="@Context.GetLink(older)" class="font-mono-label text-[10px] tracking-[0.2em] uppercase text-ash border border-sediment px-5 py-2.5 transition-colors hover:text-parchment hover:border-ash">Older →</a>
       }
       else
       {

@@ -1,12 +1,14 @@
 <svg style="display: none;">
     <!-- Karakul Cap Logo (High-Fidelity) -->
     <symbol id="karakul-cap" viewBox="0 0 120 120">
+        <!-- Shadow -->
+        <ellipse cx="60" cy="110" rx="52" ry="4" fill="var(--void)" opacity="0.5"/>
         <!-- Karakul Cap Body - Shifted +60x, +20y -->
-        <path class="cap-body" d="M 8 110 L 2 32 Q 2 20 16 20 L 104 20 Q 118 20 118 32 L 112 110 Z" fill="var(--topsoil)" stroke="var(--sediment)" stroke-width="0.5"/>
-        <!-- Folded Rim -->
-        <path class="cap-rim" d="M 16 20 Q 16 10 60 8 Q 104 10 104 20" fill="var(--sediment)" stroke="var(--sediment)" stroke-width="0.5"/>
+        <path class="cap-body" d="M 8 110 L 2 32 Q 2 20 16 20 L 104 20 Q 118 20 118 32 L 112 110 Z" fill="var(--topsoil)"/>
+        <!-- Folded Rim (High-Fidelity) -->
+        <path class="cap-rim" d="M 16 20 Q 16 10 60 8 Q 104 10 104 20 L 98 20 Q 98 14 60 12 Q 22 14 22 20 Z" fill="var(--sediment)"/>
         <!-- Center Seam -->
-        <line class="cap-seam" x1="60" y1="12" x2="60" y2="110" stroke="var(--sediment)" stroke-width="0.5" stroke-dasharray="2 1"/>
+        <line class="cap-seam" x1="60" y1="12" x2="60" y2="110" stroke="var(--sediment)" stroke-width="0.5" stroke-dasharray="2 1" fill="none"/>
 
         <!-- Leaf Venation "IN" Geometry - Simplified Transform -->
         <g class="vein-letters" fill="var(--sprout)" stroke="none">
