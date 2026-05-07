@@ -4,63 +4,269 @@
 	<title>Intitech</title>
 	<link rel="self" href="https://blogs.intitech.dev/" />
 	<rights>Copyright © 2026</rights>
-	<updated>2026-05-05T09:34:15Z</updated>
+	<updated>2026-05-07T15:34:37Z</updated>
 	<subtitle>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</subtitle>
 	<entry>
-		<id>https://blogs.intitech.dev/posts/2025-04-11-amsa-reporting</id>
-		<title>How I Built a Multi-Tenant Reporting System for 500+ AMSA Branches</title>
+		<id>https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice</id>
+		<title>I Built the Same API Endpoint Twice. Here's What I Learned.</title>
 		<author>
 			<name>Abdulawwal Intisor</name>
 		</author>
-		<link href="https://blogs.intitech.dev/posts/2025-04-11-amsa-reporting" />
-		<updated>2025-04-11T00:00:00Z</updated>
-		<content>&lt;p&gt;Most reporting systems are boring. One database, one tenant, one set of users. The AMSA Nigeria reporting system had to work across &lt;strong&gt;National → State → Unit&lt;/strong&gt; hierarchy — meaning data from hundreds of branches, different access levels per role, and reports that had to aggregate upward cleanly.&lt;/p&gt;
-&lt;p&gt;Here's how I built it.&lt;/p&gt;
-&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
-&lt;p&gt;AMSA Nigeria has branches at three levels:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;National&lt;/strong&gt; — sees everything&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;State&lt;/strong&gt; — sees their state and all units below&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Unit&lt;/strong&gt; — sees only their own data&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;A simple single-tenant system wouldn't cut it. Every query had to be scope-aware.&lt;/p&gt;
-&lt;h2 id="the-database-decision"&gt;The Database Decision&lt;/h2&gt;
-&lt;p&gt;I separated concerns into two databases:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;AmsaAuthDB     -- users, roles, JWT tokens
-AmsaReportDB   -- all report data, scoped by branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Cross-database queries in SQL Server are clean with linked servers or just &lt;code&gt;USE&lt;/code&gt; switching in EF Core. The key insight: &lt;strong&gt;auth and data should never live in the same database for a multi-tenant system&lt;/strong&gt; at this scale.&lt;/p&gt;
-&lt;h2 id="jwt-role-hierarchy"&gt;JWT Role Hierarchy&lt;/h2&gt;
-&lt;p&gt;The token payload carries both the user's role and their branch code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;var claims = new[]
+		<link href="https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice" />
+		<updated>2026-05-05T00:00:00Z</updated>
+		<content>&lt;p&gt;At some point during this project, I had two folders doing the same thing.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Endpoints/&lt;/code&gt;. &lt;code&gt;FastEndpoints/&lt;/code&gt;. Same database. Same response DTOs. Same data going in and out. Two completely different ways of thinking about the same problem.&lt;/p&gt;
+&lt;p&gt;That's not a bug in my project structure. That's a learning scar. And it's worth writing about.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="some-context-first"&gt;Some Context First&lt;/h2&gt;
+&lt;p&gt;The project is an API for AMSA Nigeria — the Ahmadiyya Muslim Students' Association. The system manages members, units, states, nationals, departments, and executive roles across a three-tier organizational hierarchy: National → State → Unit. Think of it as a mini organizational ERP: query who belongs to which unit, who holds which EXCO position at what level, import members from CSV, generate org-wide statistics.&lt;/p&gt;
+&lt;p&gt;Real system. Real data. Real people will use it.&lt;/p&gt;
+&lt;p&gt;The stack is ASP.NET Core with EF Core and SQL Server. Started with &lt;a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453"&gt;Minimal API&lt;/a&gt; because it felt modern and lightweight — no controllers, no ceremony, just functions mapped to routes. Then discovered &lt;a href="https://fast-endpoints.com/docs/get-started"&gt;FastEndpoints&lt;/a&gt; and started migrating.&lt;/p&gt;
+&lt;p&gt;Here's what didn't happen: an immediate clean rewrite. The old endpoints stayed. The new ones went in alongside them. For a while, both lived in the same codebase simultaneously.&lt;/p&gt;
+&lt;p&gt;That accident became one of the most useful things that happened during this build.&lt;/p&gt;
+&lt;p&gt;Because with both versions present, a direct comparison became unavoidable. Same endpoint. Same query logic. Same output. Two completely different implementations sitting next to each other, forced into contrast.&lt;/p&gt;
+&lt;p&gt;The endpoint used as the example throughout this post is &lt;code&gt;GET /api/units/{id}&lt;/code&gt; — get a unit by ID, with its members and EXCO roles. It's a good candidate because it's not trivial. It has input validation, a primary query, two secondary queries, a composed response object, and a not-found case. Enough moving parts to show real differences.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="version-1-minimal-api-with-linq"&gt;Version 1: Minimal API with LINQ&lt;/h2&gt;
+&lt;p&gt;Here's the Minimal API version, living in &lt;code&gt;OrganizationEndpoints.cs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;private static async Task&amp;lt;IResult&amp;gt; GetUnitById(int id, AmsaDbContext db)
 {
-    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-    new Claim(&amp;quot;role&amp;quot;, user.Role),           // National | State | Unit
-    new Claim(&amp;quot;branchCode&amp;quot;, user.BranchCode) // NG | NG-OY | NG-OY-001
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Every API endpoint extracts &lt;code&gt;branchCode&lt;/code&gt; from the token and scopes the query accordingly. National users get &lt;code&gt;WHERE BranchCode LIKE 'NG%'&lt;/code&gt;. State users get &lt;code&gt;WHERE BranchCode LIKE 'NG-OY%'&lt;/code&gt;. Unit users get exact match.&lt;/p&gt;
-&lt;h2 id="the-report-state-machine"&gt;The Report State Machine&lt;/h2&gt;
-&lt;p&gt;Reports go through states: &lt;code&gt;Draft → Submitted → Reviewed → Approved&lt;/code&gt;. Each transition is guarded:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;public class ReportStateMachine
-{
-    public static bool CanTransition(ReportStatus from, ReportStatus to, string role)
+    try
     {
-        return (from, to, role) switch
+        var unit = await db.Units
+            .AsNoTracking()
+            .Where(u =&amp;gt; u.UnitId == id)
+            .Select(u =&amp;gt; new UnitDetailDto
+            {
+                UnitId = u.UnitId,
+                UnitName = u.UnitName,
+                StateId = u.StateId,
+                StateName = u.State.StateName,
+                NationalId = u.State.NationalId,
+                NationalName = u.State.National.NationalName,
+                MemberCount = u.Members.Count()
+            })
+            .FirstOrDefaultAsync();
+
+        if (unit == null)
+            return Results.NotFound($&amp;quot;Unit with ID {id} not found&amp;quot;);
+
+        var members = await db.Members
+            .AsNoTracking()
+            .Where(m =&amp;gt; m.UnitId == id)
+            .Select(m =&amp;gt; new UnitMemberDto
+            {
+                MemberId = m.MemberId,
+                FirstName = m.FirstName,
+                LastName = m.LastName,
+                Email = m.Email,
+                Phone = m.Phone,
+                Mkanid = m.Mkanid
+            })
+            .OrderBy(m =&amp;gt; m.FirstName)
+            .ToListAsync();
+
+        var excoRoles = await db.MemberLevelDepartments
+            .AsNoTracking()
+            .Where(mld =&amp;gt; mld.LevelDepartment.Level.UnitId == id)
+            .Select(mld =&amp;gt; new UnitExcoDto
+            {
+                FirstName = mld.Member.FirstName,
+                LastName = mld.Member.LastName,
+                Mkanid = mld.Member.Mkanid,
+                DepartmentName = mld.LevelDepartment.Department.DepartmentName,
+                LevelType = mld.LevelDepartment.Level.LevelType
+            })
+            .ToListAsync();
+
+        return Results.Ok(new UnitDetailResponse
         {
-            (Draft, Submitted, &amp;quot;Unit&amp;quot;) =&amp;gt; true,
-            (Submitted, Reviewed, &amp;quot;State&amp;quot;) =&amp;gt; true,
-            (Reviewed, Approved, &amp;quot;National&amp;quot;) =&amp;gt; true,
-            _ =&amp;gt; false
-        };
+            Unit = unit,
+            Members = members,
+            ExcoRoles = excoRoles
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($&amp;quot;Error retrieving unit: {ex.Message}&amp;quot;);
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Clean, testable, no spaghetti conditionals.&lt;/p&gt;
-&lt;h2 id="what-i-learned"&gt;What I Learned&lt;/h2&gt;
-&lt;p&gt;Building multi-tenant systems in Nigeria specifically means accounting for intermittent connectivity. I added aggressive caching at the state level so a bad connection doesn't kill a report submission mid-way.&lt;/p&gt;
-&lt;p&gt;The full source isn't public yet but the architecture is replicable for any hierarchical org system.&lt;/p&gt;
+&lt;p&gt;Registered like this, at the top of the file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;unitGroup.MapGet(&amp;quot;/{id:int}&amp;quot;, GetUnitById);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is genuinely pleasant to read. The navigation properties — &lt;code&gt;u.State.StateName&lt;/code&gt;, &lt;code&gt;u.State.National.NationalName&lt;/code&gt;, &lt;code&gt;mld.LevelDepartment.Level.UnitId&lt;/code&gt; — read almost like English sentences. There's no SQL to write. No JOIN clauses to maintain. The object graph does the talking and EF Core translates it into optimized queries behind the scenes.&lt;/p&gt;
+&lt;p&gt;This is exactly what &lt;a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453"&gt;EF Core LINQ queries&lt;/a&gt; are built for. The &lt;a href="https://learn.microsoft.com/ef/core/querying/related-data/eager?wt.mc_id=studentamb_478453"&gt;&lt;code&gt;Select&lt;/code&gt; projection&lt;/a&gt; means only the required columns are fetched — not entire entity rows hydrated into memory. &lt;a href="https://learn.microsoft.com/ef/core/querying/tracking?wt.mc_id=studentamb_478453"&gt;&lt;code&gt;AsNoTracking()&lt;/code&gt;&lt;/a&gt; tells EF Core to skip the change tracker entirely since this is a read-only path, which is a meaningful performance win for endpoints that never write.&lt;/p&gt;
+&lt;p&gt;The whole handler fits in one mental unit. Read it once, top to bottom, and the intent is clear.&lt;/p&gt;
+&lt;p&gt;But notice what's absent: there's no validation on &lt;code&gt;id&lt;/code&gt;. If someone passes &lt;code&gt;0&lt;/code&gt; or &lt;code&gt;-99&lt;/code&gt;, the query runs. It returns a 404 because nothing matches — which is technically correct but not &lt;em&gt;intentionally&lt;/em&gt; correct. The right answer was arrived at by coincidence, not design.&lt;/p&gt;
+&lt;p&gt;Also notice the &lt;code&gt;try/catch&lt;/code&gt; wrapping everything. Every single Minimal API handler in this project has that same block. Every one. Copy-pasted about twelve times across the codebase. That should tell you something about what Minimal API leaves up to you.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="version-2-fastendpoints-with-raw-sql"&gt;Version 2: FastEndpoints with Raw SQL&lt;/h2&gt;
+&lt;p&gt;Here's the same endpoint rebuilt in &lt;code&gt;OrganizationFastEndpoints.cs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;// Private file-scoped record for SQL projection
+file record UnitDetailRawDto(
+    int UnitId, string UnitName,
+    int StateId, string StateName,
+    int NationalId, string NationalName,
+    int MemberCount
+);
+
+public sealed class GetUnitByIdEndpoint(AmsaDbContext db)
+    : Endpoint&amp;lt;GetUnitByIdRequest, UnitDetailResponse&amp;gt;
+{
+    public override void Configure()
+    {
+        Get(&amp;quot;/api/units/{id}&amp;quot;);
+        AllowAnonymous();
+        Summary(s =&amp;gt; s.Summary = &amp;quot;Get unit details with members and EXCO roles&amp;quot;);
+    }
+
+    public override async Task HandleAsync(GetUnitByIdRequest req, CancellationToken ct)
+    {
+        var validationResult = OrganizationValidationMethods.ValidateUnitRequest(req);
+        if (!validationResult.IsSuccess)
+        {
+            await Send.ResultAsync(Results.BadRequest(validationResult.ErrorMessage));
+            return;
+        }
+
+        var unitRaw = await db.Database.SqlQueryRaw&amp;lt;UnitDetailRawDto&amp;gt;(&amp;quot;&amp;quot;&amp;quot;
+            SELECT u.UnitId, u.UnitName, s.StateId, s.StateName,
+                   n.NationalId, n.NationalName,
+                   COUNT(DISTINCT m.MemberId) as MemberCount
+            FROM Units u
+            INNER JOIN States s ON u.StateId = s.StateId
+            INNER JOIN National n ON s.NationalId = n.NationalId
+            LEFT JOIN Members m ON u.UnitId = m.UnitId
+            WHERE u.UnitId = {0}
+            GROUP BY u.UnitId, u.UnitName, s.StateId, s.StateName,
+                     n.NationalId, n.NationalName
+            &amp;quot;&amp;quot;&amp;quot;, req.Id).FirstOrDefaultAsync(ct);
+
+        if (unitRaw == null)
+        {
+            await Send.NotFoundAsync(ct);
+            return;
+        }
+
+        var members = await db.Database.SqlQueryRaw&amp;lt;UnitMemberDto&amp;gt;(&amp;quot;&amp;quot;&amp;quot;
+            SELECT MemberId, FirstName, LastName, Email, Phone, Mkanid
+            FROM Members
+            WHERE UnitId = {0}
+            ORDER BY FirstName, LastName
+            &amp;quot;&amp;quot;&amp;quot;, req.Id).ToListAsync(ct);
+
+        var excoRoles = await db.Database.SqlQueryRaw&amp;lt;UnitExcoDto&amp;gt;(&amp;quot;&amp;quot;&amp;quot;
+            SELECT m.FirstName, m.LastName, m.Mkanid,
+                   d.DepartmentName, lv.LevelType
+            FROM Members m
+            INNER JOIN MemberLevelDepartments mld ON m.MemberId = mld.MemberId
+            INNER JOIN LevelDepartments ld ON mld.LevelDepartmentId = ld.LevelDepartmentId
+            INNER JOIN Departments d ON ld.DepartmentId = d.DepartmentId
+            INNER JOIN Levels lv ON ld.LevelId = lv.LevelId
+            WHERE lv.UnitId = {0}
+            ORDER BY d.DepartmentName
+            &amp;quot;&amp;quot;&amp;quot;, req.Id).ToListAsync(ct);
+
+        await Send.OkAsync(new UnitDetailResponse
+        {
+            Unit = new UnitDetailDto
+            {
+                UnitId = unitRaw.UnitId,
+                UnitName = unitRaw.UnitName,
+                StateId = unitRaw.StateId,
+                StateName = unitRaw.StateName,
+                NationalId = unitRaw.NationalId,
+                NationalName = unitRaw.NationalName,
+                MemberCount = unitRaw.MemberCount
+            },
+            Members = members,
+            ExcoRoles = excoRoles
+        }, ct);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And the validation method it calls:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public static class OrganizationValidationMethods
+{
+    public static Result&amp;lt;bool&amp;gt; ValidateUnitRequest(GetUnitByIdRequest req)
+    {
+        if (req.Id &amp;lt;= 0)
+            return Result.Validation&amp;lt;bool&amp;gt;(&amp;quot;Invalid unit ID. ID must be greater than 0.&amp;quot;);
+
+        return Result.Success(true);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;More code than the LINQ version. Deliberately so.&lt;/p&gt;
+&lt;p&gt;Writing raw SQL here is an explicit statement: &lt;em&gt;this is exactly what query hits the database.&lt;/em&gt; No ORM translation layer. No inference. The &lt;code&gt;GROUP BY&lt;/code&gt;, the &lt;code&gt;COUNT(DISTINCT)&lt;/code&gt;, the JOIN order — all of it is specified and visible. For complex aggregations or performance-sensitive paths, that visibility matters. &lt;a href="https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453"&gt;EF Core's query translator is good&lt;/a&gt; but it's not omniscient, and sometimes you need to be the one writing the execution plan.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;{0}&lt;/code&gt; parameter syntax in &lt;code&gt;SqlQueryRaw&lt;/code&gt; is worth understanding. Despite looking like string formatting, these are &lt;a href="https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453#passing-parameters"&gt;proper parameterized queries&lt;/a&gt; — EF Core passes them as SQL parameters under the hood, not interpolated strings. SQL injection is not a concern here. The shape of the query is written in code; the values are passed safely at runtime.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;file record UnitDetailRawDto&lt;/code&gt; at the top uses the &lt;code&gt;file&lt;/code&gt; access modifier, which scopes the type to this single file. The rest of the project cannot see it. The public contract of this endpoint is &lt;code&gt;UnitDetailResponse&lt;/code&gt;. How that response was assembled — what intermediate DTOs were used, what SQL was written — is an implementation detail that belongs to this file and nowhere else. This is &lt;a href="https://jimmybogard.com/vertical-slice-architecture/"&gt;vertical slice architecture&lt;/a&gt; expressed at the type system level: each endpoint owns its full stack and exposes only its contract.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="why-the-query-approach-flipped"&gt;Why the Query Approach Flipped&lt;/h2&gt;
+&lt;p&gt;Minimal API uses LINQ. FastEndpoints uses raw SQL. That wasn't arbitrary.&lt;/p&gt;
+&lt;p&gt;Minimal API's promise is that simple things should stay simple. &lt;a href="https://learn.microsoft.com/en-us/ef/core/querying/"&gt;LINQ projections&lt;/a&gt; are the natural language of EF Core — readable, safe, and well-optimized for standard data access patterns. Reaching for raw SQL inside a Minimal API handler would introduce friction that the framework never asked for. It would work, but it would feel like the wrong tool.&lt;/p&gt;
+&lt;p&gt;FastEndpoints operates at a different level of intentionality. By the time a handler is written inside a FastEndpoints endpoint, a request type has been defined, a response type has been declared, explicit validation has been wired up. The whole setup communicates: structure is worth the investment here. In that context, reaching for raw SQL to get precise control over a complex query is &lt;em&gt;consistent&lt;/em&gt; with the philosophy — not contradictory to it. Deliberate query authorship fits naturally alongside deliberate type design.&lt;/p&gt;
+&lt;p&gt;This is something framework documentation rarely says out loud: the framework chosen shapes the &lt;em&gt;kind of decisions&lt;/em&gt; made inside it. Minimal API nudges toward simplicity at every decision point. FastEndpoints nudges toward explicitness. Neither nudge is universally correct. But they're real, and they accumulate.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="what-fastendpoints-forces-you-to-think-about"&gt;What FastEndpoints Forces You to Think About&lt;/h2&gt;
+&lt;h3 id="the-request-is-a-real-object"&gt;1. The Request is a Real Object&lt;/h3&gt;
+&lt;p&gt;In Minimal API, &lt;code&gt;id&lt;/code&gt; is a primitive &lt;code&gt;int&lt;/code&gt; in a method signature. It exists, it has a value, and that's all.&lt;/p&gt;
+&lt;p&gt;In FastEndpoints, the request is &lt;code&gt;GetUnitByIdRequest&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public class GetUnitByIdRequest
+{
+    public int Id { get; set; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Still simple — just wrapping an int. But it's a &lt;em&gt;seam&lt;/em&gt;. When validation needs to be added, it validates the object. When authorization context is needed, it lives on the object. When the request needs to be logged or traced, the object is logged. The request has an identity.&lt;/p&gt;
+&lt;p&gt;And crucially, validation is now a testable, isolated method call:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;var validationResult = OrganizationValidationMethods.ValidateUnitRequest(req);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That method can be unit tested without spinning up a web server, without a database, without any infrastructure at all. In the Minimal API version, extracting validation to that level requires deliberate effort that the framework doesn't push toward. In FastEndpoints, it's the natural path. See &lt;a href="https://fast-endpoints.com/docs/requests"&gt;FastEndpoints request binding docs&lt;/a&gt; for how the framework handles this.&lt;/p&gt;
+&lt;h3 id="the-response-contract-is-declared-upfront"&gt;2. The Response Contract is Declared Upfront&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public sealed class GetUnitByIdEndpoint(AmsaDbContext db)
+    : Endpoint&amp;lt;GetUnitByIdRequest, UnitDetailResponse&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Before reading a single line of the handler, anyone looking at this class knows what goes in and what comes out. FastEndpoints uses these generic type parameters to generate Swagger documentation automatically. The endpoint &lt;em&gt;is&lt;/em&gt; its contract.&lt;/p&gt;
+&lt;p&gt;Minimal API's equivalent return type is &lt;code&gt;Task&amp;lt;IResult&amp;gt;&lt;/code&gt;. That tells the reader nothing. The contract only becomes visible by reading the entire handler.&lt;/p&gt;
+&lt;h3 id="no-more-copy-pasted-error-handling"&gt;3. No More Copy-Pasted Error Handling&lt;/h3&gt;
+&lt;p&gt;FastEndpoints supports a &lt;a href="https://fast-endpoints.com/docs/exception-handler"&gt;global exception handler&lt;/a&gt; configured once at startup. Every endpoint benefits automatically. There is no per-handler &lt;code&gt;try/catch&lt;/code&gt;. There is no risk of forgetting to add it on one endpoint and getting a raw stack trace in production. The infrastructure concern is handled at the infrastructure level, not scattered across every handler.&lt;/p&gt;
+&lt;p&gt;This single difference has compounding effects on codebase maintainability that are easy to underestimate until you've actually had to chase down an unhandled exception that slipped through because one handler out of fifteen was missing its catch block.&lt;/p&gt;
+&lt;h3 id="the-send-api-makes-intent-explicit"&gt;4. The Send API Makes Intent Explicit&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;await Send.OkAsync(response, ct);
+await Send.NotFoundAsync(ct);
+await Send.ResultAsync(Results.BadRequest(validationResult.ErrorMessage));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Compare to:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;return Results.Ok(response);
+return Results.NotFound(...);
+return Results.Problem(...);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Both work. But &lt;code&gt;Send.*&lt;/code&gt; communicates that a response is being &lt;em&gt;sent down an active connection&lt;/em&gt;, not just returned from a function. It's a small shift in framing, but it reflects the underlying reality of HTTP more accurately. See &lt;a href="https://fast-endpoints.com/docs/configuration-settings"&gt;FastEndpoints endpoint configuration&lt;/a&gt; for the full Send API surface.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="what-minimal-api-does-better"&gt;What Minimal API Does Better&lt;/h2&gt;
+&lt;p&gt;This is not a post that concludes FastEndpoints won and everything should be rewritten. That would be dishonest.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Minimal API is genuinely faster to read at a glance.&lt;/strong&gt; Open &lt;code&gt;OrganizationEndpoints.cs&lt;/code&gt; and a single handler can be fully understood in about twenty seconds. No base classes to know about. No framework conventions to learn. No type parameters to decode. A function that takes a db context and an id and returns a result — the most legible possible description of what an endpoint does.&lt;/p&gt;
+&lt;p&gt;For small projects, solo developers, internal tools, and prototypes, that legibility is the right priority. The mental overhead of FastEndpoints pays off over time, at scale, across teams. At the start of a project, or when requirements are shifting fast, the ceremony can slow down more than it helps.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Minimal API is also closer to the metal of ASP.NET Core.&lt;/strong&gt; Everything it does is built on top of primitives that ship with the framework — &lt;a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/route-handlers?wt.mc_id=studentamb_478453"&gt;route handlers&lt;/a&gt;, &lt;code&gt;IResult&lt;/code&gt;, dependency injection via method parameters. FastEndpoints is a library with conventions and abstractions layered on top. That's a dependency. For long-lived projects that's an acceptable and worthwhile dependency; for short-lived ones it may not be.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling?wt.mc_id=studentamb_478453"&gt;official error handling documentation for Minimal API&lt;/a&gt; covers how to configure global exception handling there too — it's possible, just not the path of least resistance the way it is in FastEndpoints.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="the-real-lesson"&gt;The Real Lesson&lt;/h2&gt;
+&lt;p&gt;When the Minimal API version of an endpoint was being written, the question being answered was: &lt;em&gt;what does this endpoint do?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;When the FastEndpoints version was being written, the question was: &lt;em&gt;what is this endpoint?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;That's a subtle distinction but it matters in practice. The first framing produces procedural code — a sequence of steps that accomplishes a task. The second produces structured code — a thing with an identity, an input contract, an output contract, and behavior. The first is easier to write initially. The second is easier to reason about as the codebase grows.&lt;/p&gt;
+&lt;p&gt;Neither framing is universally correct. But being able to recognize which question is being asked — and choose deliberately which one to answer — is the difference between someone who writes code and someone who designs systems.&lt;/p&gt;
+&lt;p&gt;That realization didn't come from reading documentation. It came from having a messy folder structure for two weeks.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="where-this-codebase-goes-from-here"&gt;Where This Codebase Goes From Here&lt;/h2&gt;
+&lt;p&gt;The Minimal API endpoints are not being deleted. They work, they're tested, and removing working code for the sake of consistency is a bad trade. But every new endpoint goes into FastEndpoints, and as existing ones need changes, they get migrated one at a time.&lt;/p&gt;
+&lt;p&gt;That's just software. You don't rewrite — you migrate. Slowly, intentionally, with tests you probably should have written earlier.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;If the FastEndpoints library isn't on your radar yet, the &lt;a href="https://fast-endpoints.com/docs/get-started"&gt;getting started guide&lt;/a&gt; is worth a few hours. It won't change how you think about everything. But it will make you ask better questions about the structure of the code you're already writing, and that compounds.&lt;/p&gt;
+&lt;p&gt;And if the best learning you've done recently came from an accident — from a messy project, a bad decision that turned into a comparison, a folder structure that got out of hand — that's not a failure of process. That's just how real understanding gets built.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;All code in this post is from a real production project. The full implementation is available on &lt;a href="https://github.com/intisor/intitechApi"&gt;GitHub&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 </content>
-		<summary>A deep dive into the architecture behind AMSA Nigeria's reporting system — cross-database queries, JWT role hierarchies, and the decisions that made it work.</summary>
+		<summary>A direct comparison of the same ASP.NET Core endpoint built with Minimal API (LINQ) and FastEndpoints (raw SQL) — and what having both versions side-by-side revealed about how frameworks shape the decisions you make inside them.</summary>
 	</entry>
 </feed>

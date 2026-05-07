@@ -61,20 +61,20 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.">
+<meta name="description" content="A direct comparison of the same ASP.NET Core endpoint built with Minimal API (LINQ) and FastEndpoints (raw SQL) &#x2014; and what having both versions side-by-side revealed about how frameworks shape the decisions you make inside them.">
 <meta name="author" content="Abdulawwal Intisor Mawupego">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intitech &#x2014; Backend Engineering — Intitech">
-<meta property="og:description" content="Backend engineering in C# and ASP.NET Core.">
-<meta property="og:url" content="https://blogs.intitech.dev/posts">
+<meta property="og:title" content="I Built the Same API Endpoint Twice. Here&#x27;s What I Learned. — Intitech">
+<meta property="og:description" content="A direct comparison of the same ASP.NET Core endpoint built with Minimal API (LINQ) and FastEndpoints (raw SQL) &#x2014; and what having both versions side-by-side revealed about how frameworks shape the decisions you make inside them.">
+<meta property="og:url" content="https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice">
 <meta property="og:site_name" content="Intitech">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@intitech">
-<meta name="twitter:title" content="Intitech &#x2014; Backend Engineering">
-<meta name="twitter:description" content="Backend engineering in C# and ASP.NET Core.">
+<meta name="twitter:title" content="I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.">
+<meta name="twitter:description" content="A direct comparison of the same ASP.NET Core endpoint built with Minimal API (LINQ) and FastEndpoints (raw SQL) &#x2014; and what having both versions side-by-side revealed about how frameworks shape the decisions you make inside them.">
 
-<link rel="canonical" href="https://blogs.intitech.dev/posts">
+<link rel="canonical" href="https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice">
 
 <link rel="icon" type="image/svg+xml" href='/favicon.svg'>
 
@@ -213,7 +213,7 @@
 
 <link rel="alternate" type="application/rss+xml" title="Intitech — RSS Feed" href="/feed.rss">
 
-<title>Intitech &#x2014; Backend Engineering — Intitech</title>
+<title>I Built the Same API Endpoint Twice. Here&#x27;s What I Learned. — Intitech</title>
 
   <style>
     /* ── SCROLLBAR ── */
@@ -402,7 +402,7 @@
     }
   </style>
   
-<meta property="og:image" content="https://i.intitech.dev/og/r0Jqn"><meta name="twitter:image" content="https://i.intitech.dev/og/r0Jqn"></head>
+<meta property="og:image" content="https://i.intitech.dev/og/YRrY0"><meta name="twitter:image" content="https://i.intitech.dev/og/YRrY0"></head>
 <body class="bg-void text-parchment font-body-main min-h-screen flex flex-col relative overflow-x-hidden">
 
   <!-- Branching Fractal Ornaments (Left & Right) -->
@@ -440,7 +440,7 @@
 
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex items-center space-x-10">
-          <a class="text-ember font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="/posts">Intitech &#x2014; Backend Engineering</a>
+          <a class="text-ash hover:text-ember font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="/posts">Intitech &#x2014; Backend Engineering</a>
           <a class="text-ash hover:text-ember font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="/tags">Tags</a>
       <a class="text-ash hover:text-ember font-mono-label text-[11px] tracking-[0.2em] uppercase transition-colors duration-300" href="https://intitech.dev" target="_blank">Portfolio ↗</a>
     </nav>
@@ -491,7 +491,7 @@
   <div class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
      <svg class="w-32 h-32 md:w-48 md:h-48 text-sediment" viewbox="-60 -30 120 100"><use href="#phi-spiral"></use></svg>
   </div>
-  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">Intitech &#x2014; Backend Engineering</h1>
+  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.</h1>
 
   <div class="flex justify-center items-center mb-8 md:mb-10 z-10 relative">
     <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent"></use></svg>
@@ -500,10 +500,20 @@
   <div class="metadata-grid">
     <div class="flex items-center">
       <span class="opacity-40 mr-2 sm:hidden">#</span>
-      <span class="whitespace-nowrap">INSCRIBED: MAY 07, 2026</span>
+      <span class="whitespace-nowrap">INSCRIBED: MAY 05, 2026</span>
     </div>
 
+        <div class="flex items-center">
+          <span class="hidden sm:inline opacity-30 mr-4">|</span>
+          <span class="opacity-40 mr-2 sm:hidden">#</span>
+          <span class="whitespace-nowrap">NODE: ASP.NET CORE</span>
+        </div>
 
+      <div class="flex items-center">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <span class="opacity-40 mr-2 sm:hidden">#</span>
+        <span class="whitespace-nowrap text-ember/70">AUTHOR: ABDULAWWAL INTISOR</span>
+      </div>
 
   </div>
 
@@ -522,55 +532,265 @@
     }
   </script>
 
+    <div class="flex gap-3 justify-center mt-8 flex-wrap">
+        <a href="/tags/fastendpoints" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">FastEndpoints</a>
+        <a href="/tags/minimal-api" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">Minimal API</a>
+        <a href="/tags/architecture" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">Architecture</a>
+    </div>
 </header>
       <article class="prose-container font-body-main text-body-main text-parchment space-y-6 mb-section-gap">
-        <div class="w-full">
-  <header class="text-center mb-12 md:mb-20 reveal relative">
-    <div class="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 opacity-10 md:opacity-20 pointer-events-none overflow-hidden w-full max-w-xs md:max-w-none">
-       <svg class="w-48 h-48 md:w-64 md:h-64 mx-auto text-sediment" viewbox="-60 -30 120 100"><use href="#phi-spiral"></use></svg>
-    </div>
-    <p class="font-mono-label text-[10px] md:text-sm text-ember uppercase tracking-[0.3em] mb-4 z-10 relative">// Engineering notes from the field</p>
-    <h1 class="font-display-xl text-[clamp(2.5rem,8vw,5.5rem)] font-900 tracking-[0.06em] text-script uppercase leading-none mb-6 z-10 relative">
-      INTI<span class="text-gold block mt-1 md:mt-2">TECH</span>
-    </h1>
-    <p class="font-body-italic text-base md:text-lg text-ash leading-[1.8] md:leading-[1.85] max-w-md md:max-w-lg mx-auto z-10 relative px-4">
-      Deep dives into <em class="text-parchment font-normal not-italic">C# and ASP.NET Core</em> — architecture decisions,
-      real systems, and the lessons from
-      <em class="text-parchment font-normal not-italic">actually shipping things</em>.
-    </p>
-  </header>
+        <p>At some point during this project, I had two folders doing the same thing.</p>
+<p><code>Endpoints/</code>. <code>FastEndpoints/</code>. Same database. Same response DTOs. Same data going in and out. Two completely different ways of thinking about the same problem.</p>
+<p>That's not a bug in my project structure. That's a learning scar. And it's worth writing about.</p>
+<hr>
+<h2 id="some-context-first">Some Context First</h2>
+<p>The project is an API for AMSA Nigeria — the Ahmadiyya Muslim Students' Association. The system manages members, units, states, nationals, departments, and executive roles across a three-tier organizational hierarchy: National → State → Unit. Think of it as a mini organizational ERP: query who belongs to which unit, who holds which EXCO position at what level, import members from CSV, generate org-wide statistics.</p>
+<p>Real system. Real data. Real people will use it.</p>
+<p>The stack is ASP.NET Core with EF Core and SQL Server. Started with <a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453">Minimal API</a> because it felt modern and lightweight — no controllers, no ceremony, just functions mapped to routes. Then discovered <a href="https://fast-endpoints.com/docs/get-started">FastEndpoints</a> and started migrating.</p>
+<p>Here's what didn't happen: an immediate clean rewrite. The old endpoints stayed. The new ones went in alongside them. For a while, both lived in the same codebase simultaneously.</p>
+<p>That accident became one of the most useful things that happened during this build.</p>
+<p>Because with both versions present, a direct comparison became unavoidable. Same endpoint. Same query logic. Same output. Two completely different implementations sitting next to each other, forced into contrast.</p>
+<p>The endpoint used as the example throughout this post is <code>GET /api/units/{id}</code> — get a unit by ID, with its members and EXCO roles. It's a good candidate because it's not trivial. It has input validation, a primary query, two secondary queries, a composed response object, and a not-found case. Enough moving parts to show real differences.</p>
+<hr>
+<h2 id="version-1-minimal-api-with-linq">Version 1: Minimal API with LINQ</h2>
+<p>Here's the Minimal API version, living in <code>OrganizationEndpoints.cs</code>:</p>
+<pre><code class="language-csharp">private static async Task&lt;IResult&gt; GetUnitById(int id, AmsaDbContext db)
+{
+    try
+    {
+        var unit = await db.Units
+            .AsNoTracking()
+            .Where(u =&gt; u.UnitId == id)
+            .Select(u =&gt; new UnitDetailDto
+            {
+                UnitId = u.UnitId,
+                UnitName = u.UnitName,
+                StateId = u.StateId,
+                StateName = u.State.StateName,
+                NationalId = u.State.NationalId,
+                NationalName = u.State.National.NationalName,
+                MemberCount = u.Members.Count()
+            })
+            .FirstOrDefaultAsync();
 
-  <!-- Arch Divider -->
-  <div class="flex items-center justify-center my-8 md:my-16 reveal">
-    <div class="h-px bg-sediment/30 flex-grow"></div>
-    <div class="flex items-center gap-3 md:gap-6 px-4 md:px-8">
-      <svg class="w-8 h-8 md:w-12 md:h-12 text-sediment/60 scale-x-[-1] hidden sm:block"><use href="#branch-fractal"></use></svg>
-      <div class="font-heading-lg text-sm md:text-lg text-script whitespace-nowrap tracking-[0.2em] md:tracking-[0.3em] uppercase">✦ LATEST POSTS ✦</div>
-      <svg class="w-8 h-8 md:w-12 md:h-12 text-sediment/60 hidden sm:block"><use href="#branch-fractal"></use></svg>
-    </div>
-    <div class="h-px bg-sediment/30 flex-grow"></div>
-  </div>
+        if (unit == null)
+            return Results.NotFound($&quot;Unit with ID {id} not found&quot;);
 
-  <div class="flex flex-col gap-0 px-2 md:px-0">
-      <h2 class="font-display-xl text-2xl md:text-3xl font-900 tracking-widest text-sediment/40 uppercase mb-6 md:mb-10 mt-10 md:mt-16 border-b border-sediment/10 pb-2">2026</h2>
-        <article class="py-6 md:py-10 border-b border-sediment/40 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 md:gap-8 items-baseline transition-all duration-300 hover:bg-topsoil/50 hover:pl-4 md:hover:pl-6 reveal first:border-t">
-          <div>
-              <div class="flex gap-2 mb-3 flex-wrap">
-                  <span class="font-mono-label text-[9px] md:text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment/60 text-ash/80 uppercase rounded-sm">ASP.NET Core</span>
-                  <span class="font-mono-label text-[9px] md:text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment/60 text-ash/80 uppercase rounded-sm">FastEndpoints</span>
-                  <span class="font-mono-label text-[9px] md:text-[10px] tracking-[0.12em] px-2 py-0.5 border border-sediment/60 text-ash/80 uppercase rounded-sm">Minimal API</span>
-              </div>
-            <a href="/posts/2026-05-05-built-endpoint-twice" class="font-display-xl text-xl md:text-2xl font-bold text-script tracking-[0.03em] leading-tight block mb-2 transition-colors hover:text-ember">I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.</a>
-              <p class="font-body-italic text-sm md:text-base text-ash/90 leading-relaxed md:leading-[1.7]">A direct comparison of the same ASP.NET Core endpoint built with Minimal API (LINQ) and FastEndpoints (raw SQL) &#x2014; and what having both versions side-by-side revealed about how frameworks shape the decisions you make inside them.</p>
-          </div>
-          <div class="font-mono-label text-[10px] md:text-xs tracking-[0.15em] text-ash/60 uppercase whitespace-nowrap pt-1">
-            May 05
-          </div>
-        </article>
-  </div>
+        var members = await db.Members
+            .AsNoTracking()
+            .Where(m =&gt; m.UnitId == id)
+            .Select(m =&gt; new UnitMemberDto
+            {
+                MemberId = m.MemberId,
+                FirstName = m.FirstName,
+                LastName = m.LastName,
+                Email = m.Email,
+                Phone = m.Phone,
+                Mkanid = m.Mkanid
+            })
+            .OrderBy(m =&gt; m.FirstName)
+            .ToListAsync();
 
-</div>
+        var excoRoles = await db.MemberLevelDepartments
+            .AsNoTracking()
+            .Where(mld =&gt; mld.LevelDepartment.Level.UnitId == id)
+            .Select(mld =&gt; new UnitExcoDto
+            {
+                FirstName = mld.Member.FirstName,
+                LastName = mld.Member.LastName,
+                Mkanid = mld.Member.Mkanid,
+                DepartmentName = mld.LevelDepartment.Department.DepartmentName,
+                LevelType = mld.LevelDepartment.Level.LevelType
+            })
+            .ToListAsync();
 
+        return Results.Ok(new UnitDetailResponse
+        {
+            Unit = unit,
+            Members = members,
+            ExcoRoles = excoRoles
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($&quot;Error retrieving unit: {ex.Message}&quot;);
+    }
+}
+</code></pre>
+<p>Registered like this, at the top of the file:</p>
+<pre><code class="language-csharp">unitGroup.MapGet(&quot;/{id:int}&quot;, GetUnitById);
+</code></pre>
+<p>This is genuinely pleasant to read. The navigation properties — <code>u.State.StateName</code>, <code>u.State.National.NationalName</code>, <code>mld.LevelDepartment.Level.UnitId</code> — read almost like English sentences. There's no SQL to write. No JOIN clauses to maintain. The object graph does the talking and EF Core translates it into optimized queries behind the scenes.</p>
+<p>This is exactly what <a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview?wt.mc_id=studentamb_478453">EF Core LINQ queries</a> are built for. The <a href="https://learn.microsoft.com/ef/core/querying/related-data/eager?wt.mc_id=studentamb_478453"><code>Select</code> projection</a> means only the required columns are fetched — not entire entity rows hydrated into memory. <a href="https://learn.microsoft.com/ef/core/querying/tracking?wt.mc_id=studentamb_478453"><code>AsNoTracking()</code></a> tells EF Core to skip the change tracker entirely since this is a read-only path, which is a meaningful performance win for endpoints that never write.</p>
+<p>The whole handler fits in one mental unit. Read it once, top to bottom, and the intent is clear.</p>
+<p>But notice what's absent: there's no validation on <code>id</code>. If someone passes <code>0</code> or <code>-99</code>, the query runs. It returns a 404 because nothing matches — which is technically correct but not <em>intentionally</em> correct. The right answer was arrived at by coincidence, not design.</p>
+<p>Also notice the <code>try/catch</code> wrapping everything. Every single Minimal API handler in this project has that same block. Every one. Copy-pasted about twelve times across the codebase. That should tell you something about what Minimal API leaves up to you.</p>
+<hr>
+<h2 id="version-2-fastendpoints-with-raw-sql">Version 2: FastEndpoints with Raw SQL</h2>
+<p>Here's the same endpoint rebuilt in <code>OrganizationFastEndpoints.cs</code>:</p>
+<pre><code class="language-csharp">// Private file-scoped record for SQL projection
+file record UnitDetailRawDto(
+    int UnitId, string UnitName,
+    int StateId, string StateName,
+    int NationalId, string NationalName,
+    int MemberCount
+);
+
+public sealed class GetUnitByIdEndpoint(AmsaDbContext db)
+    : Endpoint&lt;GetUnitByIdRequest, UnitDetailResponse&gt;
+{
+    public override void Configure()
+    {
+        Get(&quot;/api/units/{id}&quot;);
+        AllowAnonymous();
+        Summary(s =&gt; s.Summary = &quot;Get unit details with members and EXCO roles&quot;);
+    }
+
+    public override async Task HandleAsync(GetUnitByIdRequest req, CancellationToken ct)
+    {
+        var validationResult = OrganizationValidationMethods.ValidateUnitRequest(req);
+        if (!validationResult.IsSuccess)
+        {
+            await Send.ResultAsync(Results.BadRequest(validationResult.ErrorMessage));
+            return;
+        }
+
+        var unitRaw = await db.Database.SqlQueryRaw&lt;UnitDetailRawDto&gt;(&quot;&quot;&quot;
+            SELECT u.UnitId, u.UnitName, s.StateId, s.StateName,
+                   n.NationalId, n.NationalName,
+                   COUNT(DISTINCT m.MemberId) as MemberCount
+            FROM Units u
+            INNER JOIN States s ON u.StateId = s.StateId
+            INNER JOIN National n ON s.NationalId = n.NationalId
+            LEFT JOIN Members m ON u.UnitId = m.UnitId
+            WHERE u.UnitId = {0}
+            GROUP BY u.UnitId, u.UnitName, s.StateId, s.StateName,
+                     n.NationalId, n.NationalName
+            &quot;&quot;&quot;, req.Id).FirstOrDefaultAsync(ct);
+
+        if (unitRaw == null)
+        {
+            await Send.NotFoundAsync(ct);
+            return;
+        }
+
+        var members = await db.Database.SqlQueryRaw&lt;UnitMemberDto&gt;(&quot;&quot;&quot;
+            SELECT MemberId, FirstName, LastName, Email, Phone, Mkanid
+            FROM Members
+            WHERE UnitId = {0}
+            ORDER BY FirstName, LastName
+            &quot;&quot;&quot;, req.Id).ToListAsync(ct);
+
+        var excoRoles = await db.Database.SqlQueryRaw&lt;UnitExcoDto&gt;(&quot;&quot;&quot;
+            SELECT m.FirstName, m.LastName, m.Mkanid,
+                   d.DepartmentName, lv.LevelType
+            FROM Members m
+            INNER JOIN MemberLevelDepartments mld ON m.MemberId = mld.MemberId
+            INNER JOIN LevelDepartments ld ON mld.LevelDepartmentId = ld.LevelDepartmentId
+            INNER JOIN Departments d ON ld.DepartmentId = d.DepartmentId
+            INNER JOIN Levels lv ON ld.LevelId = lv.LevelId
+            WHERE lv.UnitId = {0}
+            ORDER BY d.DepartmentName
+            &quot;&quot;&quot;, req.Id).ToListAsync(ct);
+
+        await Send.OkAsync(new UnitDetailResponse
+        {
+            Unit = new UnitDetailDto
+            {
+                UnitId = unitRaw.UnitId,
+                UnitName = unitRaw.UnitName,
+                StateId = unitRaw.StateId,
+                StateName = unitRaw.StateName,
+                NationalId = unitRaw.NationalId,
+                NationalName = unitRaw.NationalName,
+                MemberCount = unitRaw.MemberCount
+            },
+            Members = members,
+            ExcoRoles = excoRoles
+        }, ct);
+    }
+}
+</code></pre>
+<p>And the validation method it calls:</p>
+<pre><code class="language-csharp">public static class OrganizationValidationMethods
+{
+    public static Result&lt;bool&gt; ValidateUnitRequest(GetUnitByIdRequest req)
+    {
+        if (req.Id &lt;= 0)
+            return Result.Validation&lt;bool&gt;(&quot;Invalid unit ID. ID must be greater than 0.&quot;);
+
+        return Result.Success(true);
+    }
+}
+</code></pre>
+<p>More code than the LINQ version. Deliberately so.</p>
+<p>Writing raw SQL here is an explicit statement: <em>this is exactly what query hits the database.</em> No ORM translation layer. No inference. The <code>GROUP BY</code>, the <code>COUNT(DISTINCT)</code>, the JOIN order — all of it is specified and visible. For complex aggregations or performance-sensitive paths, that visibility matters. <a href="https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453">EF Core's query translator is good</a> but it's not omniscient, and sometimes you need to be the one writing the execution plan.</p>
+<p>The <code>{0}</code> parameter syntax in <code>SqlQueryRaw</code> is worth understanding. Despite looking like string formatting, these are <a href="https://learn.microsoft.com/ef/core/querying/sql-queries?wt.mc_id=studentamb_478453#passing-parameters">proper parameterized queries</a> — EF Core passes them as SQL parameters under the hood, not interpolated strings. SQL injection is not a concern here. The shape of the query is written in code; the values are passed safely at runtime.</p>
+<p>The <code>file record UnitDetailRawDto</code> at the top uses the <code>file</code> access modifier, which scopes the type to this single file. The rest of the project cannot see it. The public contract of this endpoint is <code>UnitDetailResponse</code>. How that response was assembled — what intermediate DTOs were used, what SQL was written — is an implementation detail that belongs to this file and nowhere else. This is <a href="https://jimmybogard.com/vertical-slice-architecture/">vertical slice architecture</a> expressed at the type system level: each endpoint owns its full stack and exposes only its contract.</p>
+<hr>
+<h2 id="why-the-query-approach-flipped">Why the Query Approach Flipped</h2>
+<p>Minimal API uses LINQ. FastEndpoints uses raw SQL. That wasn't arbitrary.</p>
+<p>Minimal API's promise is that simple things should stay simple. <a href="https://learn.microsoft.com/ef/core/querying/?wt.mc_id=studentamb_478453">LINQ projections</a> are the natural language of EF Core — readable, safe, and well-optimized for standard data access patterns. Reaching for raw SQL inside a Minimal API handler would introduce friction that the framework never asked for. It would work, but it would feel like the wrong tool.</p>
+<p>FastEndpoints operates at a different level of intentionality. By the time a handler is written inside a FastEndpoints endpoint, a request type has been defined, a response type has been declared, explicit validation has been wired up. The whole setup communicates: structure is worth the investment here. In that context, reaching for raw SQL to get precise control over a complex query is <em>consistent</em> with the philosophy — not contradictory to it. Deliberate query authorship fits naturally alongside deliberate type design.</p>
+<p>This is something framework documentation rarely says out loud: the framework chosen shapes the <em>kind of decisions</em> made inside it. Minimal API nudges toward simplicity at every decision point. FastEndpoints nudges toward explicitness. Neither nudge is universally correct. But they're real, and they accumulate.</p>
+<hr>
+<h2 id="what-fastendpoints-forces-you-to-think-about">What FastEndpoints Forces You to Think About</h2>
+<h3 id="the-request-is-a-real-object">1. The Request is a Real Object</h3>
+<p>In Minimal API, <code>id</code> is a primitive <code>int</code> in a method signature. It exists, it has a value, and that's all.</p>
+<p>In FastEndpoints, the request is <code>GetUnitByIdRequest</code>:</p>
+<pre><code class="language-csharp">public class GetUnitByIdRequest
+{
+    public int Id { get; set; }
+}
+</code></pre>
+<p>Still simple — just wrapping an int. But it's a <em>seam</em>. When validation needs to be added, it validates the object. When authorization context is needed, it lives on the object. When the request needs to be logged or traced, the object is logged. The request has an identity.</p>
+<p>And crucially, validation is now a testable, isolated method call:</p>
+<pre><code class="language-csharp">var validationResult = OrganizationValidationMethods.ValidateUnitRequest(req);
+</code></pre>
+<p>That method can be unit tested without spinning up a web server, without a database, without any infrastructure at all. In the Minimal API version, extracting validation to that level requires deliberate effort that the framework doesn't push toward. In FastEndpoints, it's the natural path. See <a href="https://fast-endpoints.com/docs/requests">FastEndpoints request binding docs</a> for how the framework handles this.</p>
+<h3 id="the-response-contract-is-declared-upfront">2. The Response Contract is Declared Upfront</h3>
+<pre><code class="language-csharp">public sealed class GetUnitByIdEndpoint(AmsaDbContext db)
+    : Endpoint&lt;GetUnitByIdRequest, UnitDetailResponse&gt;
+</code></pre>
+<p>Before reading a single line of the handler, anyone looking at this class knows what goes in and what comes out. FastEndpoints uses these generic type parameters to generate Swagger documentation automatically. The endpoint <em>is</em> its contract.</p>
+<p>Minimal API's equivalent return type is <code>Task&lt;IResult&gt;</code>. That tells the reader nothing. The contract only becomes visible by reading the entire handler.</p>
+<h3 id="no-more-copy-pasted-error-handling">3. No More Copy-Pasted Error Handling</h3>
+<p>FastEndpoints supports a <a href="https://fast-endpoints.com/docs/exception-handler">global exception handler</a> configured once at startup. Every endpoint benefits automatically. There is no per-handler <code>try/catch</code>. There is no risk of forgetting to add it on one endpoint and getting a raw stack trace in production. The infrastructure concern is handled at the infrastructure level, not scattered across every handler.</p>
+<p>This single difference has compounding effects on codebase maintainability that are easy to underestimate until you've actually had to chase down an unhandled exception that slipped through because one handler out of fifteen was missing its catch block.</p>
+<h3 id="the-send-api-makes-intent-explicit">4. The Send API Makes Intent Explicit</h3>
+<pre><code class="language-csharp">await Send.OkAsync(response, ct);
+await Send.NotFoundAsync(ct);
+await Send.ResultAsync(Results.BadRequest(validationResult.ErrorMessage));
+</code></pre>
+<p>Compare to:</p>
+<pre><code class="language-csharp">return Results.Ok(response);
+return Results.NotFound(...);
+return Results.Problem(...);
+</code></pre>
+<p>Both work. But <code>Send.*</code> communicates that a response is being <em>sent down an active connection</em>, not just returned from a function. It's a small shift in framing, but it reflects the underlying reality of HTTP more accurately. See <a href="https://fast-endpoints.com/docs/configuration-settings">FastEndpoints endpoint configuration</a> for the full Send API surface.</p>
+<hr>
+<h2 id="what-minimal-api-does-better">What Minimal API Does Better</h2>
+<p>This is not a post that concludes FastEndpoints won and everything should be rewritten. That would be dishonest.</p>
+<p><strong>Minimal API is genuinely faster to read at a glance.</strong> Open <code>OrganizationEndpoints.cs</code> and a single handler can be fully understood in about twenty seconds. No base classes to know about. No framework conventions to learn. No type parameters to decode. A function that takes a db context and an id and returns a result — the most legible possible description of what an endpoint does.</p>
+<p>For small projects, solo developers, internal tools, and prototypes, that legibility is the right priority. The mental overhead of FastEndpoints pays off over time, at scale, across teams. At the start of a project, or when requirements are shifting fast, the ceremony can slow down more than it helps.</p>
+<p><strong>Minimal API is also closer to the metal of ASP.NET Core.</strong> Everything it does is built on top of primitives that ship with the framework — <a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/route-handlers?wt.mc_id=studentamb_478453">route handlers</a>, <code>IResult</code>, dependency injection via method parameters. FastEndpoints is a library with conventions and abstractions layered on top. That's a dependency. For long-lived projects that's an acceptable and worthwhile dependency; for short-lived ones it may not be.</p>
+<p>The <a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling?wt.mc_id=studentamb_478453">official error handling documentation for Minimal API</a> covers how to configure global exception handling there too — it's possible, just not the path of least resistance the way it is in FastEndpoints.</p>
+<hr>
+<h2 id="the-real-lesson">The Real Lesson</h2>
+<p>When the Minimal API version of an endpoint was being written, the question being answered was: <em>what does this endpoint do?</em></p>
+<p>When the FastEndpoints version was being written, the question was: <em>what is this endpoint?</em></p>
+<p>That's a subtle distinction but it matters in practice. The first framing produces procedural code — a sequence of steps that accomplishes a task. The second produces structured code — a thing with an identity, an input contract, an output contract, and behavior. The first is easier to write initially. The second is easier to reason about as the codebase grows.</p>
+<p>Neither framing is universally correct. But being able to recognize which question is being asked — and choose deliberately which one to answer — is the difference between someone who writes code and someone who designs systems.</p>
+<p>That realization didn't come from reading documentation. It came from having a messy folder structure for two weeks.</p>
+<hr>
+<h2 id="where-this-codebase-goes-from-here">Where This Codebase Goes From Here</h2>
+<p>The Minimal API endpoints are not being deleted. They work, they're tested, and removing working code for the sake of consistency is a bad trade. But every new endpoint goes into FastEndpoints, and as existing ones need changes, they get migrated one at a time.</p>
+<p>That's just software. You don't rewrite — you migrate. Slowly, intentionally, with tests you probably should have written earlier.</p>
+<hr>
+<p>If the FastEndpoints library isn't on your radar yet, the <a href="https://fast-endpoints.com/docs/get-started">getting started guide</a> is worth a few hours. It won't change how you think about everything. But it will make you ask better questions about the structure of the code you're already writing, and that compounds.</p>
+<p>And if the best learning you've done recently came from an accident — from a messy project, a bad decision that turned into a comparison, a folder structure that got out of hand — that's not a failure of process. That's just how real understanding gets built.</p>
+<hr>
+<p><em>All code in this post is from a real production project. The full implementation is available on <a href="https://github.com/intisor/intitechApi">GitHub</a>.</em></p>
 
         <div class="reveal mt-16 pt-8 border-t border-sediment">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
@@ -580,11 +800,11 @@
         </div>
         
         <div class="flex items-center gap-3">
-            <a href="https://twitter.com/intent/tweet?text=Intitech&#x2B;%E2%80%94&#x2B;Backend&#x2B;Engineering&url=https%3A%2F%2Fblogs.intitech.dev%2Fposts" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg" title="Share on X">
+            <a href="https://twitter.com/intent/tweet?text=I&#x2B;Built&#x2B;the&#x2B;Same&#x2B;API&#x2B;Endpoint&#x2B;Twice.&#x2B;Here%27s&#x2B;What&#x2B;I&#x2B;Learned.&url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-05-05-built-endpoint-twice" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg" title="Share on X">
                 <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
             </a>
 
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fblogs.intitech.dev%2Fposts" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg" title="Share on LinkedIn">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-05-05-built-endpoint-twice" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg" title="Share on LinkedIn">
                 <svg class="w-5 h-5"><use href="#icon-linkedin"></use></svg>
             </a>
 
