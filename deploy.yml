@@ -15,10 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (with submodules)
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true        # pulls CleanBlog theme
           fetch-depth: 0
 
       - name: Setup .NET
