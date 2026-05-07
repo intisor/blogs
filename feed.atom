@@ -3,8 +3,8 @@
 	<id>https://blogs.intitech.dev/</id>
 	<title>Intitech</title>
 	<link rel="self" href="https://blogs.intitech.dev/" />
-	<rights>Copyright © 2026</rights>
-	<updated>2026-05-07T15:51:22Z</updated>
+	<rights>Copyright (c) 2026</rights>
+	<updated>2026-05-07T16:03:28Z</updated>
 	<subtitle>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</subtitle>
 	<entry>
 		<id>https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice</id>
