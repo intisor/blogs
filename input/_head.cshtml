@@ -31,7 +31,7 @@ else if (Document.ContainsKey("Image"))
 <link rel="canonical" href="@Context.GetLink(Document, true)" />
 
 @* Favicon *@
-<link rel="icon" type="image/svg+xml" href='@Context.GetLink("/favicon.svg")'>
+<link rel="icon" type="image/svg+xml" href='@Context.GetLink("/favicon.svg")' sizes="any">
 
 @* Tailwind & Plugins *@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
