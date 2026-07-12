@@ -61,20 +61,20 @@
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems." />
+<meta name="description" content="Why most tailoring apps fail, and how we built a domain-driven interface to replace the fragile paper notebook." />
 <meta name="author" content="Abdulawwal Intisor Mawupego" />
 
-<meta property="og:type" content="website" />
-<meta property="og:title" content="FastEndpoints — Intitech" />
-<meta property="og:description" content="Backend engineering in C# and ASP.NET Core." />
-<meta property="og:url" content="https://blogs.intitech.dev/tags/fastendpoints" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Introducing ZikFash: From Physical Tape to Digital Scroll — Intitech" />
+<meta property="og:description" content="Why most tailoring apps fail, and how we built a domain-driven interface to replace the fragile paper notebook." />
+<meta property="og:url" content="https://blogs.intitech.dev/posts/introducing-zikfash" />
 <meta property="og:site_name" content="Intitech" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@intitech" />
-<meta name="twitter:title" content="FastEndpoints" />
-<meta name="twitter:description" content="Backend engineering in C# and ASP.NET Core." />
+<meta name="twitter:title" content="Introducing ZikFash: From Physical Tape to Digital Scroll" />
+<meta name="twitter:description" content="Why most tailoring apps fail, and how we built a domain-driven interface to replace the fragile paper notebook." />
 
-<link rel="canonical" href="https://blogs.intitech.dev/tags/fastendpoints" />
+<link rel="canonical" href="https://blogs.intitech.dev/posts/introducing-zikfash" />
 
 <link rel="icon" type="image/svg+xml" href='/favicon.svg' sizes="any">
 
@@ -213,7 +213,7 @@
 
 <link rel="alternate" type="application/rss+xml" title="Intitech — RSS Feed" href="/feed.rss" />
 
-<title>FastEndpoints — Intitech</title>
+<title>Introducing ZikFash: From Physical Tape to Digital Scroll — Intitech</title>
 
   <style>
     /* ── SCROLLBAR ── */
@@ -496,32 +496,182 @@
 
   <!-- Main Content -->
   <main class="main-container flex-grow z-10 relative">
-  <div class="container-sm-height">
-    <div class="row row-sm-height">
-      <div class="col-md-6 right-border col-sm-height">
+<header class="text-center mb-12 md:mb-20 reveal relative px-2">
+  <div class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+     <svg class="w-32 h-32 md:w-48 md:h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+  </div>
+  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">Introducing ZikFash: From Physical Tape to Digital Scroll</h1>
+
+  <div class="flex justify-center items-center mb-8 md:mb-10 z-10 relative">
+    <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent" /></svg>
+  </div>
+
+  <div class="metadata-grid">
+    <div class="flex items-center">
+      <span class="opacity-40 mr-2 sm:hidden">#</span>
+      <span class="whitespace-nowrap">INSCRIBED: JUL 12, 2026</span>
+    </div>
+
+        <div class="flex items-center">
+          <span class="hidden sm:inline opacity-30 mr-4">|</span>
+          <span class="opacity-40 mr-2 sm:hidden">#</span>
+          <span class="whitespace-nowrap">NODE: UX/UI</span>
+        </div>
+
+      <div class="flex items-center">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <span class="opacity-40 mr-2 sm:hidden">#</span>
+        <span class="whitespace-nowrap text-ember/70">AUTHOR: ABDULAWWAL INTISOR</span>
+      </div>
+
+  </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'COPIED TO CLIPBOARD';
+        btn.classList.add('text-ember');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('text-ember');
+        }, 2000);
+      });
+    }
+  </script>
+
+    <div class="flex gap-3 justify-center mt-8 flex-wrap">
+        <a href="/tags/blazor" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">Blazor</a>
+        <a href="/tags/product-design" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">Product Design</a>
+        <a href="/tags/zikfash" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">ZikFash</a>
+    </div>
+</header>
+      <article class="prose-container font-body-main text-body-main text-parchment space-y-6 mb-section-gap">
+        <p>Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input &quot;38 and 3/4 inches&quot; into a digital system without dropping your tools or losing your place.</p>
+<p>Growing up, I watched my mom navigate this beautiful chaos every single day. Her most critical tool was not her premium sewing machine or her expensive fabric shears. Her most critical tool was her &quot;Measurement Notebook.&quot; However, that notebook was incredibly fragile. It was constantly prone to tea spills, hastily scribbled numbers, and frantically flipped pages when a client walked in unexpectedly.</p>
+<p>This friction is the exact moment where ninety percent of fashion technology fails. Software engineers often build tools for a quiet office environment, forgetting that tailors work in a highly tactile, physical space. That disconnect is exactly why we built <strong><a href="https://intitech.dev/zikfash/">ZikFash</a></strong>.</p>
+<hr />
+<h2 id="enter-zikfash">Enter ZikFash</h2>
+<p>We are thrilled to introduce ZikFash, a digital workspace built from the ground up exclusively for tailors, fashion designers, and bespoke creators. ZikFash is designed to replace the fragile paper notebook. But it does not just act as a simple database in the cloud. It acts as a system that fundamentally understands the physical workflow of a fashion designer.</p>
+<p>The goal of ZikFash is to bridge the gap between traditional craftsmanship and modern technology. Before writing a single line of code for this platform, we spent days researching existing tailoring applications online to see how others had solved this problem. What we found was frustrating, but not exactly surprising.</p>
+<hr />
+<h2 id="the-problem-with-existing-solutions">The Problem with Existing Solutions</h2>
+<p>Every single solution I tested felt like a glorified spreadsheet disguised as a mobile app. They relied heavily on standard text inputs. These apps essentially forced tailors to stop whatever they were doing, pull up a digital number pad, and manually type out decimals on a tiny screen. If you have a measuring tape around someone's waist, the last thing you want to do is type &quot;32.75&quot; on a glass screen.</p>
+<p>But the user experience problems got much worse. The apps lacked even basic anatomical validation. During testing, we typed &quot;1000 inches&quot; for a sleeve length, and the apps cheerfully saved it to the database without a single warning. In the real world, a 1000-inch sleeve does not exist. A bad measurement input in a real shop means ruined expensive fabric, lost time, and lost money.</p>
+<p>We quickly realized ZikFash could not just digitize a standard HTML form. We had to build an interface that respected the physical constraints, anatomical realities, and fast-paced workflow of a real tailor shop.</p>
+<hr />
+<h2 id="the-technical-deep-dive">The Technical Deep Dive</h2>
+<p>To fix this glaring issue, we threw out the standard number keypad entirely. Instead, we engineered a custom <strong>3D Tape Measure Scroll</strong> that perfectly mimics the tactile reality of the job.</p>
+<h3 id="the-digital-scroll-wheel">The Digital Scroll Wheel</h3>
+<p>Tailors do not think in decimals like 38.75. They think in fractions like 38 and 3/4. We built a custom digital wheel component in <a href="https://learn.microsoft.com/aspnet/core/blazor/?wt.mc_id=studentamb_478453">Blazor</a> that splits the input into two physical-feeling dials. The whole numbers live on the left side, and the standard tape fractions (1/8, 1/4, 1/2, 5/8) live on the right side.</p>
+<p><img src="measurementmodal.gif" alt="GIF showing the custom 3D Tape Measure Scroll wheel in action" /></p>
+<p>This layout allows the user to quickly swipe their thumb up or down to lock in a measurement. It feels like spinning a real dial rather than doing data entry. The component handles <a href="https://learn.microsoft.com/aspnet/core/blazor/components/virtualization?wt.mc_id=studentamb_478453">virtualization</a> internally, ensuring that even with dozens of items, the DOM remains lightweight and the scroll animation stays buttery smooth.</p>
+<h3 id="context-aware-anatomical-validation">Context-Aware Anatomical Validation</h3>
+<p>To prevent the &quot;1000-inch sleeve&quot; problem, the scroll wheel dynamically restricts its options based on what specific body part is being measured. If a tailor is measuring a neck, the dial literally cannot scroll past 25 inches.</p>
+<pre><code class="language-csharp">// Conceptual mapping of anatomy to UI constraints
+private (int min, int max) GetAnatomicalRange(string bodyPart)
+{
+    if (bodyPart.Contains(&quot;neck&quot;)) 
+    {
+        return (10, 25);
+    }
+    else if (bodyPart.Contains(&quot;waist&quot;)) 
+    {
+        return (20, 55);
+    }
+    // ... maps to over a dozen other specific body regions ...
+    else 
+    {
+        return (1, 80); // Global safety fallback
+    }
+}
+</code></pre>
+<p>These ranges aren't just validation rules that yell at the user after they click &quot;Submit&quot; (the traditional web development way). They actively define the bounds of the <code>WheelPicker</code> data source. It is literally impossible to input an invalid measurement because the UI simply doesn't render those numbers.</p>
+<h3 id="the-smart-default-engine">The Smart Default Engine</h3>
+<p>We also added a smart default engine to make the scrolling even faster. When the measurement screen opens for a &quot;Waist&quot; input, the dial does not start at zero. Starting at zero would force the tailor to scroll thirty or forty times to reach a normal adult measurement.</p>
+<p>Instead, it snaps immediately to <code>32</code> as a highly logical starting point. This means most data entries only require a tiny, satisfying flick of the thumb to reach the exact number.</p>
+<pre><code class="language-csharp">public void InitializeScrollWheel(string bodyPart)
+{
+    // 1. Fetch the exact physical limits for this measurement
+    var (min, max) = GetAnatomicalRange(bodyPart);
+    
+    // 2. Generate only valid numbers (e.g. 20 to 55 for a waist)
+    ScrollWheelItems = Enumerable.Range(min, max - min + 1).ToList();
+
+    // 3. Apply logic to start the wheel at the most likely measurement
+    if (!HasPreviousMeasurement) 
+    {
+        SelectedValue = CalculateSmartDefault(min, max);
+    }
+}
+</code></pre>
+<hr />
+<h2 id="the-innovation-domain-driven-ux">The Innovation: Domain-Driven UX</h2>
+<p>The core innovation of ZikFash is <strong>Domain-Driven UX</strong>. We actively stopped treating tailoring data like generic database fields. By building a 3D scroll wheel, we successfully translated the physical action of sliding a tape measure into a digital swipe.</p>
+<p>Furthermore, by baking hard anatomical limits directly into the UI layer, we eliminated the possibility of catastrophic typos. The tailor does not need to type, and they do not need to worry if they accidentally hit an extra zero on a keypad. The software simply does not allow reality-breaking measurements to exist.</p>
+<p>This level of empathy in design didn't happen in a vacuum. <a href="https://www.linkedin.com/in/latifat-ajisafe/">Latifah</a>, who designs the UI/UX with me, has also worked as a tailor. Because of her hands-on experience, a lot of the pushback on the initial scroll wheel designs came from her just trying it out in a simulated workspace and telling me when it felt merely <em>clever</em> instead of actually <em>usable</em>. Her insights were critical in ensuring the digital tool respected the physical workflow.</p>
+<hr />
+<h2 id="welcome-to-zikfash">Welcome to ZikFash</h2>
+<p>I keep coming back to something my mom's notebook did that no app I tested could do: it never argued with her. It just held whatever she gave it (a rushed number, a smudged fraction, a name in the margin) and got out of the way.</p>
+<p>That is the bar. Not &quot;smarter than a notebook.&quot; Just as unobtrusive, minus the tea stains.</p>
+<p>ZikFash isn't finished proving it can hit that bar. But the scroll wheel and the anatomical limits are the first real test of a bet we are making: that the right move isn't to make tailoring more digital, it is to make digital more tailoring-shaped.</p>
+<p>If that sounds like a small distinction, it hasn't felt small to build.</p>
+<hr />
+<p><em>Curious to see how we're changing the game for fashion creators? Check out the <strong><a href="https://intitech.dev/zikfash/">ZikFash Landing Page</a></strong> to learn more.</em></p>
+
+        <div class="reveal mt-16 pt-8 border-t border-sediment">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+            <h4 class="text-parchment font-cinzel text-lg mb-1">Share this insight</h4>
+            <p class="text-ash text-sm">Spread the knowledge with your network.</p>
+        </div>
         
+        <div class="flex items-center gap-3">
+            <a href="https://twitter.com/intent/tweet?text=Introducing&#x2B;ZikFash%3A&#x2B;From&#x2B;Physical&#x2B;Tape&#x2B;to&#x2B;Digital&#x2B;Scroll&url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2Fintroducing-zikfash" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on X">
+                <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
+            </a>
 
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2Fintroducing-zikfash" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on LinkedIn">
+                <svg class="w-5 h-5"><use href="#icon-linkedin"></use></svg>
+            </a>
 
-<div class="post-preview">
-  <h2 class="post-title"><a href="/posts/2026-05-05-built-endpoint-twice">I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.</a></h2>
-  <p class="post-meta">Published on Tuesday 5 May 2026</p>
-<p>At some point during this project, I had two folders doing the same thing.</p>    <p class="small"><a href="/posts/2026-05-05-built-endpoint-twice">Read more...</a></p>
+            <button onclick="copyPostLink()" 
+                    id="copy-link-btn"
+                    class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg active:scale-95"
+                    title="Copy post link">
+                <svg class="w-5 h-5" id="copy-icon"><use href="#icon-link"></use></svg>
+                <span id="copy-feedback" class="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-ember text-void text-xs font-bold rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">
+                    Link Copied!
+                </span>
+            </button>
+        </div>
+    </div>
 </div>
 
+<script>
+    function copyPostLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const feedback = document.getElementById('copy-feedback');
+            feedback.classList.remove('opacity-0');
+            feedback.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                feedback.classList.remove('opacity-100');
+                feedback.classList.add('opacity-0');
+            }, 2000);
+        });
+    }
+</script>
 
-      </div>
-      <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-          <a href="/tags/uxui" class="badge text-bg-light"> UX/UI (1)</a>
-          <a href="/tags/blazor" class="badge text-bg-light"> Blazor (1)</a>
-          <a href="/tags/product-design" class="badge text-bg-light"> Product Design (1)</a>
-          <a href="/tags/zikfash" class="badge text-bg-light"> ZikFash (1)</a>
-          <a href="/tags/asp.net-core" class="badge text-bg-light"> ASP.NET Core (1)</a>
-          <a href="/tags/fastendpoints" class="badge text-bg-dark"> FastEndpoints (1)</a>
-          <a href="/tags/minimal-api" class="badge text-bg-light"> Minimal API (1)</a>
-          <a href="/tags/architecture" class="badge text-bg-light"> Architecture (1)</a>
-      </div>
-    </div>
-  </div>
+      </article>
   </main>
 
   <!-- Footer -->
