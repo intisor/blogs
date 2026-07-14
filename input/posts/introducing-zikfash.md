@@ -8,8 +8,8 @@ Tags:
   - Product Design
   - ZikFash
 Author: Abdulawwal Intisor
-cover_image: https://blogs.intitech.dev/zikfash-cover.png
-Image: https://blogs.intitech.dev/zikfash-cover.png
+cover_image: https://blogs.intitech.dev/measurementmodal.gif
+Image: https://blogs.intitech.dev/measurementmodal.gif
 ---
 
 Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input "38 and 3/4 inches" into a digital system without dropping your tools or losing your place.
