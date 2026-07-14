@@ -5,14 +5,14 @@
 		<link>https://blogs.intitech.dev/</link>
 		<description>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</description>
 		<copyright>Copyright (c) 2026</copyright>
-		<pubDate>Tue, 14 Jul 2026 13:09:20 GMT</pubDate>
-		<lastBuildDate>Tue, 14 Jul 2026 13:09:20 GMT</lastBuildDate>
+		<pubDate>Tue, 14 Jul 2026 13:15:13 GMT</pubDate>
+		<lastBuildDate>Tue, 14 Jul 2026 13:15:13 GMT</lastBuildDate>
 		<item>
 			<title>Introducing ZikFash: From Physical Tape to Digital Scroll</title>
 			<link>https://blogs.intitech.dev/posts/introducing-zikfash</link>
 			<description>Why most tailoring apps fail, and how we built a domain-driven interface to replace the fragile paper notebook.</description>
 			<author>Abdulawwal Intisor</author>
-			<enclosure url="https://blogs.intitech.dev/zikfash-cover.png" length="0" type="image" />
+			<enclosure url="https://blogs.intitech.dev/measurementmodal.gif" length="0" type="image" />
 			<guid>https://blogs.intitech.dev/posts/introducing-zikfash</guid>
 			<pubDate>Sun, 12 Jul 2026 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input &amp;quot;38 and 3/4 inches&amp;quot; into a digital system without dropping your tools or losing your place.&lt;/p&gt;
