@@ -4,7 +4,7 @@
 	<title>Intitech</title>
 	<link rel="self" href="https://blogs.intitech.dev/" />
 	<rights>Copyright (c) 2026</rights>
-	<updated>2026-07-14T11:13:35Z</updated>
+	<updated>2026-07-14T13:09:20Z</updated>
 	<subtitle>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</subtitle>
 	<entry>
 		<id>https://blogs.intitech.dev/posts/introducing-zikfash</id>
@@ -13,6 +13,7 @@
 			<name>Abdulawwal Intisor</name>
 		</author>
 		<link href="https://blogs.intitech.dev/posts/introducing-zikfash" />
+		<link rel="enclosure" type="image" href="https://blogs.intitech.dev/zikfash-cover.png" />
 		<updated>2026-07-12T00:00:00Z</updated>
 		<content>&lt;p&gt;Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input &amp;quot;38 and 3/4 inches&amp;quot; into a digital system without dropping your tools or losing your place.&lt;/p&gt;
 &lt;p&gt;Growing up, I watched my mom navigate this beautiful chaos every single day. Her most critical tool was not her premium sewing machine or her expensive fabric shears. Her most critical tool was her &amp;quot;Measurement Notebook.&amp;quot; However, that notebook was incredibly fragile. It was constantly prone to tea spills, hastily scribbled numbers, and frantically flipped pages when a client walked in unexpectedly.&lt;/p&gt;
