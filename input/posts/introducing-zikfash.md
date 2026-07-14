@@ -44,7 +44,7 @@ To fix this glaring issue, we threw out the standard number keypad entirely. Ins
 
 Tailors do not think in decimals like 38.75. They think in fractions like 38 and 3/4. We built a custom digital wheel component in [Blazor](https://learn.microsoft.com/aspnet/core/blazor/?wt.mc_id=studentamb_478453) that splits the input into two physical-feeling dials. The whole numbers live on the left side, and the standard tape fractions (1/8, 1/4, 1/2, 5/8) live on the right side.
 
-![GIF showing the custom 3D Tape Measure Scroll wheel in action](measurementmodal.gif)
+![GIF showing the custom 3D Tape Measure Scroll wheel in action](https://blogs.intitech.dev/measurementmodal.gif)
 
 This layout allows the user to quickly swipe their thumb up or down to lock in a measurement. It feels like spinning a real dial rather than doing data entry. The component handles [virtualization](https://learn.microsoft.com/aspnet/core/blazor/components/virtualization?wt.mc_id=studentamb_478453) internally, ensuring that even with dozens of items, the DOM remains lightweight and the scroll animation stays buttery smooth.
 
