@@ -323,109 +323,41 @@
     @media (min-width: 640px) {
         .metadata-grid {
             flex-direction: row;
-            gap: 1rem;
             font-size: 12px;
         }
     }
 
     /* ── TABLE OF CONTENTS (ToC) ── */
-    .toc-sidebar {
-        position: fixed;
-        left: 1.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 280px;
-        z-index: 50;
-        display: none;
-    }
-    @media (min-width: 1200px) { .toc-sidebar { display: block; } }
-
-    .toc-wrapper {
-        position: relative;
-        display: flex;
-        align-items: flex-start;
-    }
-
-    #toc-vein-svg {
-        width: 60px;
-        height: 100%;
-        min-height: 200px;
-        overflow: visible;
-        pointer-events: none;
-    }
-
-    .toc-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        position: relative;
-        flex-grow: 1;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .toc-item {
-        margin: 1.5rem 0;
-        transition: all 0.4s ease;
-        opacity: 0.2;
-        position: relative;
-        padding-left: 0.5rem;
-    }
-    
-    .toc-item a {
+    #toc-list a {
         color: #6b6355; /* ash */
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
         text-decoration: none;
-        display: block;
-        transition: all 0.3s;
-        line-height: 1.4;
+        transition: color 0.3s;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
     }
-
-    .toc-item.active {
-        opacity: 1 !important;
-        transform: translateX(8px);
+    #toc-list a:hover {
+        color: #c8612a; /* hover color */
     }
-    .toc-item.active a {
+    #toc-list li.active a {
         color: #ffb694; /* primary */
-        text-shadow: 0 0 15px rgba(255, 182, 148, 0.4);
+        font-weight: bold;
     }
-
-    .toc-item.h3 {
-        padding-left: 1.5rem;
-        margin: 0.8rem 0;
+    #toc-list li.h3 {
+        padding-left: 1rem;
+        font-size: 11px;
     }
-    .toc-item.h3 a { font-size: 10px; opacity: 0.8; }
-
-    /* Branch paths */
-    .vein-stem { stroke: #2e2b22; stroke-width: 1.5; fill: none; transition: stroke 0.5s; }
-    .vein-branch { stroke: #2e2b22; stroke-width: 1; fill: none; transition: all 0.5s ease; stroke-dasharray: 100; stroke-dashoffset: 0; }
-    .vein-branch.active { stroke: #c8612a; stroke-width: 2; filter: drop-shadow(0 0 3px #c8612a); stroke-dashoffset: 0; }
-    .vein-node { fill: #2e2b22; transition: all 0.4s ease; }
-    .vein-node.active { fill: #ffb694; r: 3; filter: drop-shadow(0 0 5px #ffb694); }
-  </style>
   </style>
 </head>
 <body class="bg-void text-parchment font-body-main min-h-screen flex flex-col relative overflow-x-hidden">
 
-  <!-- Left Side: Intelligent Vein + ToC -->
-  <div class="hidden xl:block">
-    <div class="fixed left-0 top-0 bottom-0 w-64 pointer-events-none z-0">
-      <svg id="toc-vein-svg" class="h-full w-full stroke-sediment fill-none opacity-40" preserveAspectRatio="none" stroke-width="1" viewBox="0 0 100 1000">
-        <path id="vein-stem" class="vein-stem" d=""></path>
-        <g id="vein-branches"></g>
-      </svg>
-    </div>
-    
-    <aside class="toc-sidebar" id="toc-container">
-      <nav>
-        <ul class="toc-list ml-16" id="toc-list">
-          <!-- Generated via JS -->
-        </ul>
-      </nav>
-    </aside>
+  <!-- Simple Table of Contents -->
+  <div class="hidden xl:block fixed right-8 top-32 w-64 z-50 overflow-y-auto max-h-[80vh]">
+    <div class="text-xs font-bold mb-4 text-[#6b6355] uppercase tracking-wider">Table of Contents</div>
+    <nav>
+      <ul id="toc-list" class="space-y-2">
+        <!-- Generated via JS -->
+      </ul>
+    </nav>
   </div>
 
   <!-- Right Side: Static Ornament (Original Shape) -->
@@ -511,14 +443,20 @@
 
       </div>
       <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
+          <a href="/tags/blazor" class="badge text-bg-light"> Blazor (5)</a>
+          <a href="/tags/webassembly" class="badge text-bg-light"> WebAssembly (3)</a>
+          <a href="/tags/architecture" class="badge text-bg-light"> Architecture (3)</a>
+          <a href="/tags/asp.net-core" class="badge text-bg-light"> ASP.NET Core (3)</a>
+          <a href="/tags/pwa" class="badge text-bg-light"> PWA (3)</a>
           <a href="/tags/uxui" class="badge text-bg-dark"> UX/UI (1)</a>
-          <a href="/tags/blazor" class="badge text-bg-light"> Blazor (1)</a>
           <a href="/tags/product-design" class="badge text-bg-light"> Product Design (1)</a>
           <a href="/tags/zikfash" class="badge text-bg-light"> ZikFash (1)</a>
-          <a href="/tags/asp.net-core" class="badge text-bg-light"> ASP.NET Core (1)</a>
+          <a href="/tags/c" class="badge text-bg-light"> C# (1)</a>
+          <a href="/tags/performance" class="badge text-bg-light"> Performance (1)</a>
+          <a href="/tags/indexeddb" class="badge text-bg-light"> IndexedDB (1)</a>
+          <a href="/tags/offline-first" class="badge text-bg-light"> Offline-First (1)</a>
           <a href="/tags/fastendpoints" class="badge text-bg-light"> FastEndpoints (1)</a>
           <a href="/tags/minimal-api" class="badge text-bg-light"> Minimal API (1)</a>
-          <a href="/tags/architecture" class="badge text-bg-light"> Architecture (1)</a>
       </div>
     </div>
   </div>
@@ -609,96 +547,18 @@
 
     // Table of Contents Generator
     const tocList = document.getElementById('toc-list');
-    const veinSvg = document.getElementById('toc-vein-svg');
-    const veinStem = document.getElementById('vein-stem');
-    const veinBranches = document.getElementById('vein-branches');
     const content = document.querySelector('.prose-container');
     
     if (tocList && content) {
       const headings = content.querySelectorAll('h2, h3');
-      const observerOptions = {
-        root: null,
-        rootMargin: '-10% 0px -70% 0px',
-        threshold: 0
-      };
-
-      const updateVein = () => {
-        const items = document.querySelectorAll('.toc-item');
-        if (items.length === 0) return;
-
-        const screenH = window.innerHeight;
-        
-        let stemPath = `M 50,0`;
-        for (let y = 100; y <= 1000; y += 200) {
-            stemPath += ` Q 40,${y-50} 50,${y} T 50,${y+100}`;
-        }
-        veinStem.setAttribute('d', stemPath);
-        
-        veinBranches.innerHTML = '';
-        items.forEach((item, index) => {
-          const itemRect = item.getBoundingClientRect();
-          const globalY = itemRect.top + (itemRect.height / 2);
-          const isActive = item.classList.contains('active');
-          const isH3 = item.classList.contains('h3');
-          
-          const svgY = (globalY / screenH) * 1000;
-          
-          // Determine attachment point with pseudo-random "organic" growth
-          // Seeded by index to keep it stable but varied
-          const seed = (index + 1) * 137;
-          const yOffset = (seed % 60) - 30; // Random offset between -30 and +30
-          const startY = svgY + yOffset;
-          
-          const phase = (startY % 200) / 200;
-          const stemX = 50 + Math.sin(phase * Math.PI * 2) * 5;
-          
-          const targetX = isH3 ? 75 : 65;
-          
-          const branch = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          branch.setAttribute('class', `vein-branch ${isActive ? 'active' : ''}`);
-          
-          // Organic Cubic curve with varied orientation
-          // We make it curve from the offset startY to the target svgY
-          const cp1x = stemX + 20;
-          const cp1y = startY + (yOffset * 0.2);
-          const cp2x = targetX - 10;
-          const cp2y = svgY - (yOffset * 0.1);
-          
-          const d = `M ${stemX},${startY} C ${cp1x},${cp1y} ${cp2x},${cp2y} ${targetX},${svgY}`;
-          
-          branch.setAttribute('d', d);
-          veinBranches.appendChild(branch);
-          
-          const node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          node.setAttribute('class', `vein-node ${isActive ? 'active' : ''}`);
-          node.setAttribute('cx', targetX);
-          node.setAttribute('cy', svgY);
-          node.setAttribute('r', isActive ? 3 : 1.5);
-          veinBranches.appendChild(node);
-        });
-      };
-
-      const tocObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            document.querySelectorAll('.toc-item').forEach(item => item.classList.remove('active'));
-            const id = entry.target.getAttribute('id');
-            const tocItem = document.querySelector(`.toc-item a[href="#${id}"]`)?.parentElement;
-            if (tocItem) {
-                tocItem.classList.add('active');
-                updateVein();
-            }
-          }
-        });
-      }, observerOptions);
-
+      
       headings.forEach(heading => {
         if (!heading.id) {
           heading.id = heading.innerText.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
         }
 
         const li = document.createElement('li');
-        li.className = `toc-item ${heading.tagName.toLowerCase()}`;
+        li.className = `${heading.tagName.toLowerCase()}`;
         li.innerHTML = `<a href="#${heading.id}">${heading.innerText}</a>`;
         
         const a = li.querySelector('a');
@@ -718,12 +578,31 @@
         });
 
         tocList.appendChild(li);
-        tocObserver.observe(heading);
       });
 
-      // Initial draw and update on resize
-      setTimeout(updateVein, 100);
-      window.addEventListener('resize', updateVein);
+      const updateActiveToc = () => {
+        let current = '';
+        headings.forEach(heading => {
+          const headingTop = heading.getBoundingClientRect().top;
+          if (headingTop < 120) {
+            current = heading.id;
+          }
+        });
+
+        if (!current && headings.length > 0) {
+            current = headings[0].id;
+        }
+
+        document.querySelectorAll('#toc-list li').forEach(li => {
+          li.classList.remove('active');
+          if (current && li.querySelector(`a[href="#${current}"]`)) {
+            li.classList.add('active');
+          }
+        });
+      };
+
+      window.addEventListener('scroll', updateActiveToc);
+      setTimeout(updateActiveToc, 100);
     }
 
     // make all external links open in new tab 

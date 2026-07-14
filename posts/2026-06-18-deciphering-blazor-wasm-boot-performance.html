@@ -61,20 +61,20 @@
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems." />
+<meta name="description" content="Chrome Lighthouse said 8.52 seconds to first paint. Here&#x27;s how we hunted down a sequential boot waterfall, a 3MB XML library nobody asked for, and a redundant NuGet package &#x2014; and got ZikFash&#x27;s shell rendering in under a second." />
 <meta name="author" content="Abdulawwal Intisor Mawupego" />
 
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Minimal API — Intitech" />
-<meta property="og:description" content="Backend engineering in C# and ASP.NET Core." />
-<meta property="og:url" content="https://blogs.intitech.dev/tags/minimal-api" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Deciphering the 2-Second Silence - A Blazor WASM Load-Time Investigation — Intitech" />
+<meta property="og:description" content="Chrome Lighthouse said 8.52 seconds to first paint. Here&#x27;s how we hunted down a sequential boot waterfall, a 3MB XML library nobody asked for, and a redundant NuGet package &#x2014; and got ZikFash&#x27;s shell rendering in under a second." />
+<meta property="og:url" content="https://blogs.intitech.dev/posts/2026-06-18-deciphering-blazor-wasm-boot-performance" />
 <meta property="og:site_name" content="Intitech" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@intitech" />
-<meta name="twitter:title" content="Minimal API" />
-<meta name="twitter:description" content="Backend engineering in C# and ASP.NET Core." />
+<meta name="twitter:title" content="Deciphering the 2-Second Silence - A Blazor WASM Load-Time Investigation" />
+<meta name="twitter:description" content="Chrome Lighthouse said 8.52 seconds to first paint. Here&#x27;s how we hunted down a sequential boot waterfall, a 3MB XML library nobody asked for, and a redundant NuGet package &#x2014; and got ZikFash&#x27;s shell rendering in under a second." />
 
-<link rel="canonical" href="https://blogs.intitech.dev/tags/minimal-api" />
+<link rel="canonical" href="https://blogs.intitech.dev/posts/2026-06-18-deciphering-blazor-wasm-boot-performance" />
 
 <link rel="icon" type="image/svg+xml" href='/favicon.svg' sizes="any">
 
@@ -213,7 +213,7 @@
 
 <link rel="alternate" type="application/rss+xml" title="Intitech — RSS Feed" href="/feed.rss" />
 
-<title>Minimal API — Intitech</title>
+<title>Deciphering the 2-Second Silence - A Blazor WASM Load-Time Investigation — Intitech</title>
 
   <style>
     /* ── SCROLLBAR ── */
@@ -428,38 +428,176 @@
 
   <!-- Main Content -->
   <main class="main-container flex-grow z-10 relative">
-  <div class="container-sm-height">
-    <div class="row row-sm-height">
-      <div class="col-md-6 right-border col-sm-height">
+<header class="text-center mb-12 md:mb-20 reveal relative px-2">
+  <div class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+     <svg class="w-32 h-32 md:w-48 md:h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+  </div>
+  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">Deciphering the 2-Second Silence - A Blazor WASM Load-Time Investigation</h1>
+
+  <div class="flex justify-center items-center mb-8 md:mb-10 z-10 relative">
+    <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent" /></svg>
+  </div>
+
+  <div class="metadata-grid">
+    <div class="flex items-center">
+      <span class="opacity-40 mr-2 sm:hidden">#</span>
+      <span class="whitespace-nowrap">INSCRIBED: JUN 18, 2026</span>
+    </div>
+
+        <div class="flex items-center">
+          <span class="hidden sm:inline opacity-30 mr-4">|</span>
+          <span class="opacity-40 mr-2 sm:hidden">#</span>
+          <span class="whitespace-nowrap">NODE: BLAZOR</span>
+        </div>
+
+      <div class="flex items-center">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <span class="opacity-40 mr-2 sm:hidden">#</span>
+        <span class="whitespace-nowrap text-ember/70">AUTHOR: ABDULAWWAL INTISOR</span>
+      </div>
+
+  </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'COPIED TO CLIPBOARD';
+        btn.classList.add('text-ember');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('text-ember');
+        }, 2000);
+      });
+    }
+  </script>
+
+    <div class="flex gap-3 justify-center mt-8 flex-wrap">
+        <a href="/tags/webassembly" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">WebAssembly</a>
+        <a href="/tags/performance" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">Performance</a>
+        <a href="/tags/asp.net-core" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">ASP.NET Core</a>
+        <a href="/tags/pwa" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">PWA</a>
+    </div>
+</header>
+      <article class="prose-container font-body-main text-body-main text-parchment space-y-6 mb-section-gap">
+        <p>Chrome Lighthouse doesn't do insults, but the number it gave me felt like one anyway.</p>
+<p><strong>Largest Contentful Paint: 8.52 seconds.</strong></p>
+<p>Eight and a half seconds is an eternity for a modern PWA — it's the gap between a user onboarding and a user deleting the app before they've even tried it. I was building ZikFash, a &quot;premium digital record book&quot; for professional tailors, and I was failing the one requirement that mattered before any feature did: speed.</p>
+<p>Even after I refactored the UI to render the shell — the header, the logo — instantly, there was still a frustrating two-second silence after it. The logo would appear, and then nothing. Just a spinner, doing nothing useful, for two whole seconds. So I decided to actually decipher what those two seconds were spent on. This is that investigation.</p>
+<hr />
+<h2 id="the-staircase-nobody-warned-me-about">The Staircase Nobody Warned Me About</h2>
+<p>I opened the Network tab and hit refresh, expecting a burst of parallel downloads. Instead I got a staircase.</p>
+<p>Blazor WASM's default boot sequence has trust issues — it refuses to ask for anything until the thing before it has fully answered:</p>
+<ol>
+<li><code>index.html</code> loads.</li>
+<li>It loads <code>blazor.webassembly.js</code>.</li>
+<li>That script fetches <code>blazor.boot.json</code>.</li>
+<li>Only <em>after</em> the manifest is parsed does it start requesting the 50+ assemblies (<code>.wasm</code> and <code>.dll</code> files) that make up the actual app.</li>
+</ol>
+<p>That's a sequential bottleneck dressed up as a boot process. My connection was 100Mbps, but for the first second and a half, the browser was using maybe 1% of that bandwidth, because it was waiting for one script to tell it what to ask for next — a relay race where the runners walk between handoffs.</p>
+<p>The fix didn't require waiting for JavaScript to tell the browser what mattered most. I already knew what mattered most. I added <code>&lt;link rel=&quot;preload&quot; as=&quot;fetch&quot; crossorigin=&quot;anonymous&quot;&gt;</code> hints to <code>index.html</code> for the big three:</p>
+<ul>
+<li><code>dotnet.native.wasm</code> — the engine.</li>
+<li><code>System.Private.CoreLib.wasm</code> — the heart.</li>
+<li><code>blazor.boot.json</code> — the map.</li>
+</ul>
+<p>That alone put the full network pipe to work from the first millisecond instead of the second-and-a-half mark. The engine started downloading in parallel with the initial HTML parse, and we clawed back nearly 800ms of pure &quot;thinking time&quot; from three lines of HTML.</p>
+<hr />
+<h2 id="hunting-the-3mb-library-nobody-invited">Hunting the 3MB Library Nobody Invited</h2>
+<p>With the loading <em>order</em> fixed, it was time to look at the loading <em>size</em>. I ran a quick check on the <code>_framework</code> folder and nearly fell out of my chair.</p>
+<p><strong><code>System.Private.Xml.wasm</code>: 2.95 MB.</strong></p>
+<p>ZikFash is a modern app. We use JSON. We use REST. We use Supabase. There is not a single line of XML anywhere in the codebase. So why was every user downloading a 3MB XML library on first load?</p>
+<p>An hour of tracing the dependency graph turned up <strong>transitive bloat</strong>. We were using the Supabase 1.1.1 SDK, which pulls in <code>Postgrest-csharp</code> and <code>Realtime-csharp</code>, both built on Newtonsoft.Json. Newtonsoft is a legendary library, but it's a Swiss Army knife from an older era — it ships with built-in converters for <code>XmlNode</code> and <code>XDocument</code>. Because those references are baked directly into the assembly, the .NET trimmer wouldn't touch them. It saw a reference to XML and played it safe: keep the whole 3MB stack, just in case.</p>
+<p>That wasn't the only stowaway. <code>System.Reactive.wasm</code> was adding another 1.27 MB, entirely in service of &quot;realtime&quot; events we weren't even using yet.</p>
+<hr />
+<h2 id="reaching-for-the-full-trim">Reaching for the Full Trim</h2>
+<p>The standard Blazor build runs with <code>TrimMode=partial</code> — it only trims assemblies that explicitly declare themselves safe to trim, and most legacy libraries never make that promise. So I went further:</p>
+<pre><code class="language-xml">&lt;TrimMode&gt;full&lt;/TrimMode&gt;
+</code></pre>
+<p>Full trimming assumes that if your code never actually calls something, it's dead weight, full stop — no benefit of the doubt for &quot;potential&quot; reflection-based references. The risk is real: if Supabase used reflection somewhere to find an XML converter at runtime, the app would break in a way tests might not catch. The reward was just as real: almost 5MB shaved off the initial payload.</p>
+<p>I also switched on <strong>invariant globalization</strong>. ZikFash doesn't need Thai or Japanese sorting rules, so the 1MB ICU data file went with it.</p>
+<hr />
+<h2 id="deleting-the-package-wed-already-replaced">Deleting the Package We'd Already Replaced</h2>
+<p>Digging through <code>Program.cs</code>, I found one more piece of baggage: <code>Blazor.LocalStorage.WebAssembly</code>, still registered as a service.</p>
+<p>We'd spent the previous few days writing a custom IndexedDB and <code>localStorage</code> JS bridge specifically to handle shop-scoped data for ZikFash (that's <a href="/posts/2026-06-01-offline-first-zikfash-sync-engine">its own story</a>). The NuGet package was doing the exact same job our bridge already did, just with an extra C#-to-JS round trip we'd already engineered away. I deleted it, removed the registration, and the assembly count dropped again.</p>
+<hr />
+<h2 id="where-we-landed">Where We Landed</h2>
+<p>Put together, the changes were transformative:</p>
+<ul>
+<li><strong>The sequential waterfall broke.</strong> Assets started preloading instantly instead of waiting their turn.</li>
+<li><strong>The XML ghost got exorcised.</strong> <code>System.Private.Xml</code> was finally pruned from the bundle.</li>
+<li><strong>The boot order got refined.</strong> The shell — header and logo — now renders immediately, with a &quot;Loading your record book…&quot; state scoped only to the content area.</li>
+</ul>
+<p><strong>Final numbers:</strong></p>
+<ul>
+<li>LCP dropped from 8.52s to <strong>under 1 second</strong> for the shell.</li>
+<li>Payload shrank by roughly 4.5MB uncompressed.</li>
+<li>The app now <em>feels</em> instant — the brand appears in under 500ms, and the data is ready by the time a tailor has even looked at the menu.</li>
+</ul>
+<hr />
+<h2 id="what-id-tell-the-next-developer">What I'd Tell the Next Developer</h2>
+<p>If your Blazor app is slow, don't blame the framework first. Blazor is fast; your dependency graph is probably just carrying passengers you didn't invite.</p>
+<ul>
+<li>Audit your transitive DLLs. If you spot <code>System.Xml</code> or <code>System.Data</code> in the output and you've never typed those words, find out who invited them.</li>
+<li>Break the sequential cascade — preload <code>blazor.boot.json</code> and <code>dotnet.native.wasm</code> before JavaScript ever asks for them.</li>
+<li>Be brave with <code>TrimMode=full</code>, but only if you have a test suite that would actually catch a reflection-based crash.</li>
+</ul>
+<p>High-performance software isn't about what you bolt on. It's about having the discipline to go back and remove what you don't need — even after it's already shipped.</p>
+<p>One more twist to this story, though: a few weeks after this fix landed, that same <code>blazor.boot.json</code> preload hint I was proud of turned into a brand-new bug, courtesy of .NET 10. More on that next.</p>
+
+        <div class="reveal mt-16 pt-8 border-t border-sediment">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+            <h4 class="text-parchment font-cinzel text-lg mb-1">Share this insight</h4>
+            <p class="text-ash text-sm">Spread the knowledge with your network.</p>
+        </div>
         
+        <div class="flex items-center gap-3">
+            <a href="https://twitter.com/intent/tweet?text=Deciphering&#x2B;the&#x2B;2-Second&#x2B;Silence&#x2B;-&#x2B;A&#x2B;Blazor&#x2B;WASM&#x2B;Load-Time&#x2B;Investigation&url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-06-18-deciphering-blazor-wasm-boot-performance" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on X">
+                <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
+            </a>
 
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-06-18-deciphering-blazor-wasm-boot-performance" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on LinkedIn">
+                <svg class="w-5 h-5"><use href="#icon-linkedin"></use></svg>
+            </a>
 
-<div class="post-preview">
-  <h2 class="post-title"><a href="/posts/2026-05-05-built-endpoint-twice">I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.</a></h2>
-  <p class="post-meta">Published on Tuesday 5 May 2026</p>
-<p>At some point during this project, I had two folders doing the same thing.</p>    <p class="small"><a href="/posts/2026-05-05-built-endpoint-twice">Read more...</a></p>
+            <button onclick="copyPostLink()" 
+                    id="copy-link-btn"
+                    class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg active:scale-95"
+                    title="Copy post link">
+                <svg class="w-5 h-5" id="copy-icon"><use href="#icon-link"></use></svg>
+                <span id="copy-feedback" class="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-ember text-void text-xs font-bold rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">
+                    Link Copied!
+                </span>
+            </button>
+        </div>
+    </div>
 </div>
 
+<script>
+    function copyPostLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const feedback = document.getElementById('copy-feedback');
+            feedback.classList.remove('opacity-0');
+            feedback.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                feedback.classList.remove('opacity-100');
+                feedback.classList.add('opacity-0');
+            }, 2000);
+        });
+    }
+</script>
 
-      </div>
-      <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-          <a href="/tags/blazor" class="badge text-bg-light"> Blazor (5)</a>
-          <a href="/tags/webassembly" class="badge text-bg-light"> WebAssembly (3)</a>
-          <a href="/tags/architecture" class="badge text-bg-light"> Architecture (3)</a>
-          <a href="/tags/asp.net-core" class="badge text-bg-light"> ASP.NET Core (3)</a>
-          <a href="/tags/pwa" class="badge text-bg-light"> PWA (3)</a>
-          <a href="/tags/uxui" class="badge text-bg-light"> UX/UI (1)</a>
-          <a href="/tags/product-design" class="badge text-bg-light"> Product Design (1)</a>
-          <a href="/tags/zikfash" class="badge text-bg-light"> ZikFash (1)</a>
-          <a href="/tags/c" class="badge text-bg-light"> C# (1)</a>
-          <a href="/tags/performance" class="badge text-bg-light"> Performance (1)</a>
-          <a href="/tags/indexeddb" class="badge text-bg-light"> IndexedDB (1)</a>
-          <a href="/tags/offline-first" class="badge text-bg-light"> Offline-First (1)</a>
-          <a href="/tags/fastendpoints" class="badge text-bg-light"> FastEndpoints (1)</a>
-          <a href="/tags/minimal-api" class="badge text-bg-dark"> Minimal API (1)</a>
-      </div>
-    </div>
-  </div>
+      </article>
   </main>
 
   <!-- Footer -->

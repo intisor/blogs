@@ -4,7 +4,7 @@
 	<title>Intitech</title>
 	<link rel="self" href="https://blogs.intitech.dev/" />
 	<rights>Copyright (c) 2026</rights>
-	<updated>2026-07-12T19:08:00Z</updated>
+	<updated>2026-07-14T11:13:35Z</updated>
 	<subtitle>Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems.</subtitle>
 	<entry>
 		<id>https://blogs.intitech.dev/posts/introducing-zikfash</id>
@@ -14,35 +14,35 @@
 		</author>
 		<link href="https://blogs.intitech.dev/posts/introducing-zikfash" />
 		<updated>2026-07-12T00:00:00Z</updated>
-		<content>&lt;p&gt;Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input "38 and 3/4 inches" into a digital system without dropping your tools or losing your place.&lt;/p&gt;
-&lt;p&gt;Growing up, I watched my mom navigate this beautiful chaos every single day. Her most critical tool was not her premium sewing machine or her expensive fabric shears. Her most critical tool was her "Measurement Notebook." However, that notebook was incredibly fragile. It was constantly prone to tea spills, hastily scribbled numbers, and frantically flipped pages when a client walked in unexpectedly.&lt;/p&gt;
+		<content>&lt;p&gt;Imagine you are a tailor in the middle of a busy workday. In your left hand, you are holding a physical tape measure that is wrapped tightly around a client. In your right hand, you have a piece of chalk ready to make a mark. Your shop is buzzing with the sounds of sewing machines, customers talking, and fabrics rustling. Now, somehow, you need to pull out your mobile phone and input &amp;quot;38 and 3/4 inches&amp;quot; into a digital system without dropping your tools or losing your place.&lt;/p&gt;
+&lt;p&gt;Growing up, I watched my mom navigate this beautiful chaos every single day. Her most critical tool was not her premium sewing machine or her expensive fabric shears. Her most critical tool was her &amp;quot;Measurement Notebook.&amp;quot; However, that notebook was incredibly fragile. It was constantly prone to tea spills, hastily scribbled numbers, and frantically flipped pages when a client walked in unexpectedly.&lt;/p&gt;
 &lt;p&gt;This friction is the exact moment where ninety percent of fashion technology fails. Software engineers often build tools for a quiet office environment, forgetting that tailors work in a highly tactile, physical space. That disconnect is exactly why we built &lt;strong&gt;&lt;a href="https://intitech.dev/zikfash/"&gt;ZikFash&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;h2 id="enter-zikfash"&gt;Enter ZikFash&lt;/h2&gt;
 &lt;p&gt;We are thrilled to introduce ZikFash, a digital workspace built from the ground up exclusively for tailors, fashion designers, and bespoke creators. ZikFash is designed to replace the fragile paper notebook. But it does not just act as a simple database in the cloud. It acts as a system that fundamentally understands the physical workflow of a fashion designer.&lt;/p&gt;
 &lt;p&gt;The goal of ZikFash is to bridge the gap between traditional craftsmanship and modern technology. Before writing a single line of code for this platform, we spent days researching existing tailoring applications online to see how others had solved this problem. What we found was frustrating, but not exactly surprising.&lt;/p&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;h2 id="the-problem-with-existing-solutions"&gt;The Problem with Existing Solutions&lt;/h2&gt;
-&lt;p&gt;Every single solution I tested felt like a glorified spreadsheet disguised as a mobile app. They relied heavily on standard text inputs. These apps essentially forced tailors to stop whatever they were doing, pull up a digital number pad, and manually type out decimals on a tiny screen. If you have a measuring tape around someone's waist, the last thing you want to do is type "32.75" on a glass screen.&lt;/p&gt;
-&lt;p&gt;But the user experience problems got much worse. The apps lacked even basic anatomical validation. During testing, we typed "1000 inches" for a sleeve length, and the apps cheerfully saved it to the database without a single warning. In the real world, a 1000-inch sleeve does not exist. A bad measurement input in a real shop means ruined expensive fabric, lost time, and lost money.&lt;/p&gt;
+&lt;p&gt;Every single solution I tested felt like a glorified spreadsheet disguised as a mobile app. They relied heavily on standard text inputs. These apps essentially forced tailors to stop whatever they were doing, pull up a digital number pad, and manually type out decimals on a tiny screen. If you have a measuring tape around someone's waist, the last thing you want to do is type &amp;quot;32.75&amp;quot; on a glass screen.&lt;/p&gt;
+&lt;p&gt;But the user experience problems got much worse. The apps lacked even basic anatomical validation. During testing, we typed &amp;quot;1000 inches&amp;quot; for a sleeve length, and the apps cheerfully saved it to the database without a single warning. In the real world, a 1000-inch sleeve does not exist. A bad measurement input in a real shop means ruined expensive fabric, lost time, and lost money.&lt;/p&gt;
 &lt;p&gt;We quickly realized ZikFash could not just digitize a standard HTML form. We had to build an interface that respected the physical constraints, anatomical realities, and fast-paced workflow of a real tailor shop.&lt;/p&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;h2 id="the-technical-deep-dive"&gt;The Technical Deep Dive&lt;/h2&gt;
 &lt;p&gt;To fix this glaring issue, we threw out the standard number keypad entirely. Instead, we engineered a custom &lt;strong&gt;3D Tape Measure Scroll&lt;/strong&gt; that perfectly mimics the tactile reality of the job.&lt;/p&gt;
 &lt;h3 id="the-digital-scroll-wheel"&gt;The Digital Scroll Wheel&lt;/h3&gt;
 &lt;p&gt;Tailors do not think in decimals like 38.75. They think in fractions like 38 and 3/4. We built a custom digital wheel component in &lt;a href="https://learn.microsoft.com/aspnet/core/blazor/?wt.mc_id=studentamb_478453"&gt;Blazor&lt;/a&gt; that splits the input into two physical-feeling dials. The whole numbers live on the left side, and the standard tape fractions (1/8, 1/4, 1/2, 5/8) live on the right side.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://blogs.intitech.dev/measurementmodal.gif" alt="GIF showing the custom 3D Tape Measure Scroll wheel in action"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blogs.intitech.dev/measurementmodal.gif" alt="GIF showing the custom 3D Tape Measure Scroll wheel in action" /&gt;&lt;/p&gt;
 &lt;p&gt;This layout allows the user to quickly swipe their thumb up or down to lock in a measurement. It feels like spinning a real dial rather than doing data entry. The component handles &lt;a href="https://learn.microsoft.com/aspnet/core/blazor/components/virtualization?wt.mc_id=studentamb_478453"&gt;virtualization&lt;/a&gt; internally, ensuring that even with dozens of items, the DOM remains lightweight and the scroll animation stays buttery smooth.&lt;/p&gt;
 &lt;h3 id="context-aware-anatomical-validation"&gt;Context-Aware Anatomical Validation&lt;/h3&gt;
-&lt;p&gt;To prevent the "1000-inch sleeve" problem, the scroll wheel dynamically restricts its options based on what specific body part is being measured. If a tailor is measuring a neck, the dial literally cannot scroll past 25 inches.&lt;/p&gt;
+&lt;p&gt;To prevent the &amp;quot;1000-inch sleeve&amp;quot; problem, the scroll wheel dynamically restricts its options based on what specific body part is being measured. If a tailor is measuring a neck, the dial literally cannot scroll past 25 inches.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;// Conceptual mapping of anatomy to UI constraints
 private (int min, int max) GetAnatomicalRange(string bodyPart)
 {
-    if (bodyPart.Contains("neck")) 
+    if (bodyPart.Contains(&amp;quot;neck&amp;quot;)) 
     {
         return (10, 25);
     }
-    else if (bodyPart.Contains("waist")) 
+    else if (bodyPart.Contains(&amp;quot;waist&amp;quot;)) 
     {
         return (20, 55);
     }
@@ -53,9 +53,9 @@ private (int min, int max) GetAnatomicalRange(string bodyPart)
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;These ranges aren't just validation rules that yell at the user after they click "Submit" (the traditional web development way). They actively define the bounds of the &lt;code&gt;WheelPicker&lt;/code&gt; data source. It is literally impossible to input an invalid measurement because the UI simply doesn't render those numbers.&lt;/p&gt;
+&lt;p&gt;These ranges aren't just validation rules that yell at the user after they click &amp;quot;Submit&amp;quot; (the traditional web development way). They actively define the bounds of the &lt;code&gt;WheelPicker&lt;/code&gt; data source. It is literally impossible to input an invalid measurement because the UI simply doesn't render those numbers.&lt;/p&gt;
 &lt;h3 id="the-smart-default-engine"&gt;The Smart Default Engine&lt;/h3&gt;
-&lt;p&gt;We also added a smart default engine to make the scrolling even faster. When the measurement screen opens for a "Waist" input, the dial does not start at zero. Starting at zero would force the tailor to scroll thirty or forty times to reach a normal adult measurement.&lt;/p&gt;
+&lt;p&gt;We also added a smart default engine to make the scrolling even faster. When the measurement screen opens for a &amp;quot;Waist&amp;quot; input, the dial does not start at zero. Starting at zero would force the tailor to scroll thirty or forty times to reach a normal adult measurement.&lt;/p&gt;
 &lt;p&gt;Instead, it snaps immediately to &lt;code&gt;32&lt;/code&gt; as a highly logical starting point. This means most data entries only require a tiny, satisfying flick of the thumb to reach the exact number.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;public void InitializeScrollWheel(string bodyPart)
 {
@@ -72,21 +72,320 @@ private (int min, int max) GetAnatomicalRange(string bodyPart)
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;h2 id="the-innovation-domain-driven-ux"&gt;The Innovation: Domain-Driven UX&lt;/h2&gt;
 &lt;p&gt;The core innovation of ZikFash is &lt;strong&gt;Domain-Driven UX&lt;/strong&gt;. We actively stopped treating tailoring data like generic database fields. By building a 3D scroll wheel, we successfully translated the physical action of sliding a tape measure into a digital swipe.&lt;/p&gt;
 &lt;p&gt;Furthermore, by baking hard anatomical limits directly into the UI layer, we eliminated the possibility of catastrophic typos. The tailor does not need to type, and they do not need to worry if they accidentally hit an extra zero on a keypad. The software simply does not allow reality-breaking measurements to exist.&lt;/p&gt;
 &lt;p&gt;This level of empathy in design didn't happen in a vacuum. &lt;a href="https://www.linkedin.com/in/latifat-ajisafe/"&gt;Latifah&lt;/a&gt;, who designs the UI/UX with me, has also worked as a tailor. Because of her hands-on experience, a lot of the pushback on the initial scroll wheel designs came from her just trying it out in a simulated workspace and telling me when it felt merely &lt;em&gt;clever&lt;/em&gt; instead of actually &lt;em&gt;usable&lt;/em&gt;. Her insights were critical in ensuring the digital tool respected the physical workflow.&lt;/p&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;h2 id="welcome-to-zikfash"&gt;Welcome to ZikFash&lt;/h2&gt;
 &lt;p&gt;I keep coming back to something my mom's notebook did that no app I tested could do: it never argued with her. It just held whatever she gave it (a rushed number, a smudged fraction, a name in the margin) and got out of the way.&lt;/p&gt;
-&lt;p&gt;That is the bar. Not "smarter than a notebook." Just as unobtrusive, minus the tea stains.&lt;/p&gt;
+&lt;p&gt;That is the bar. Not &amp;quot;smarter than a notebook.&amp;quot; Just as unobtrusive, minus the tea stains.&lt;/p&gt;
 &lt;p&gt;ZikFash isn't finished proving it can hit that bar. But the scroll wheel and the anatomical limits are the first real test of a bet we are making: that the right move isn't to make tailoring more digital, it is to make digital more tailoring-shaped.&lt;/p&gt;
 &lt;p&gt;If that sounds like a small distinction, it hasn't felt small to build.&lt;/p&gt;
-&lt;hr&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;Curious to see how we're changing the game for fashion creators? Check out the &lt;strong&gt;&lt;a href="https://intitech.dev/zikfash/"&gt;ZikFash Landing Page&lt;/a&gt;&lt;/strong&gt; to learn more.&lt;/em&gt;&lt;/p&gt;
 </content>
 		<summary>Why most tailoring apps fail, and how we built a domain-driven interface to replace the fragile paper notebook.</summary>
+	</entry>
+	<entry>
+		<id>https://blogs.intitech.dev/posts/2026-07-09-beyond-html-declarative-svg-canvas</id>
+		<title>Beyond HTML - Building a Declarative, Dynamic SVG Canvas with C# and Blazor WebAssembly</title>
+		<author>
+			<name>Abdulawwal Intisor</name>
+		</author>
+		<link href="https://blogs.intitech.dev/posts/2026-07-09-beyond-html-declarative-svg-canvas" />
+		<updated>2026-07-09T00:00:00Z</updated>
+		<content>&lt;p&gt;Most frontend developers eventually hit the same wall: HTML and CSS are built around boxes. You can round the corners, mask them, transform them, but underneath it all, they're still rigid, block-level rectangles pretending to be something else.&lt;/p&gt;
+&lt;p&gt;ZikFash — the offline-first tailoring PWA I've been writing about for a few posts now — ran straight into that wall. Tailors needed a digital workspace where they could configure garment cuts, patterns, and overlapping layout layers, and see the result instantly. None of that is a rectangle, and all of it needed to redraw the moment a C# variable changed.&lt;/p&gt;
+&lt;p&gt;If you were tasked with building this today, your mind would probably jump to one of two legacy solutions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;The Brute-Force Image Stack:&lt;/strong&gt; Generate thousands of transparent PNG variations and absolutely destroy the user's bandwidth.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The Heavy Canvas Library:&lt;/strong&gt; Pull in a massive JavaScript library like Fabric.js, drop an imperative &lt;code&gt;&amp;lt;canvas&amp;gt;&lt;/code&gt; element into your DOM, and write thousands of lines of state-syncing JS code across the WebAssembly boundary.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Neither of these solutions work when you are building for unpredictable network connectivity. You need something lightweight, infinitely scalable, and declarative.&lt;/p&gt;
+&lt;p&gt;The solution? Pure, raw SVG manipulated entirely by C# state variables in Blazor WebAssembly.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="the-architecture-why-blazor-and-svg-fit-so-well-together"&gt;The Architecture: Why Blazor and SVG Fit So Well Together&lt;/h2&gt;
+&lt;p&gt;Here's the part most developers forget: SVG is just XML text markup. Because Blazor treats SVG tags (&lt;code&gt;&amp;lt;svg&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;g&amp;gt;&lt;/code&gt;) exactly the same as HTML tags, you can bind your C# variables directly to the mathematical attributes of vector graphics, the same way you'd bind a string to a &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Instead of calling &lt;code&gt;canvasContext.lineTo(x, y)&lt;/code&gt; imperatively in JavaScript, we can declaratively state:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Hey Blazor, the &lt;code&gt;&amp;lt;path&amp;gt;&lt;/code&gt; attribute &lt;code&gt;d&lt;/code&gt; should be this exact string generated by my C# function, and if the user changes their layout preference, update the string and let the native browser re-render it.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This gives us the buttery-smooth performance of raw vector graphics, combined with the safety, strong typing, and diffing engine of C#.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="the-core-component-implementation"&gt;The Core Component Implementation&lt;/h2&gt;
+&lt;p&gt;Here is the exact production-grade component implementation. It utilizes a custom virtual coordinate system, handles dynamic path generation using C# mathematical layout calculations, and utilizes SVG &lt;code&gt;&amp;lt;clipPath&amp;gt;&lt;/code&gt; configurations to cleanly isolate overlapping elements without cross-boundary bleeding.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-cshtml"&gt;&amp;#64;* Optimized Solution: Zero-allocation, declarative DOM binding where Blazor's 
+  diffing tree updates only string attributes, letting the native browser render vectors.
+*&amp;#64;
+
+&amp;lt;div class=&amp;quot;style-canvas-container&amp;quot; style=&amp;quot;width: 100%; max-width: 400px; margin: 0 auto;&amp;quot;&amp;gt;
+    &amp;lt;svg viewBox=&amp;quot;0 0 200 400&amp;quot; preserveAspectRatio=&amp;quot;xMidYMin meet&amp;quot; xmlns=&amp;quot;http://www.w3.org/2000/svg&amp;quot;&amp;gt;
+        &amp;lt;defs&amp;gt;
+            &amp;#64;if (IsLayerClipped)
+            {
+                &amp;lt;clipPath id=&amp;quot;outer-layer-clip&amp;quot;&amp;gt;
+                    &amp;lt;path d=&amp;quot;&amp;#64;GetOuterShellPath()&amp;quot; /&amp;gt;
+                &amp;lt;/clipPath&amp;gt;
+            }
+        &amp;lt;/defs&amp;gt;
+
+        &amp;lt;path d=&amp;quot;M 100,12 C 112,12 116,25 120,40 L 120,380 L 80,380 Z&amp;quot; fill=&amp;quot;#E2E8F0&amp;quot; /&amp;gt;
+
+        &amp;lt;g clip-path=&amp;quot;&amp;#64;(IsLayerClipped ? &amp;quot;url(#outer-layer-clip)&amp;quot; : null)&amp;quot;&amp;gt;
+            &amp;lt;path d=&amp;quot;&amp;#64;GetGarmentGeometry(Config.StyleCut)&amp;quot; fill=&amp;quot;&amp;#64;Config.PrimaryColor&amp;quot; /&amp;gt;
+            
+            &amp;#64;if (Config.PatternName != &amp;quot;plain&amp;quot;)
+            {
+                &amp;lt;path d=&amp;quot;&amp;#64;GetGarmentGeometry(Config.StyleCut)&amp;quot; fill=&amp;quot;url(#pattern-&amp;#64;Config.PatternName)&amp;quot; opacity=&amp;quot;0.65&amp;quot; /&amp;gt;
+            }
+        &amp;lt;/g&amp;gt;
+    &amp;lt;/svg&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;#64;code {
+    [Parameter] public CanvasConfig Config { get; set; } = new();
+    private bool IsLayerClipped =&amp;gt; Config.CanvasMode == &amp;quot;bounded&amp;quot;;
+
+    private string GetOuterShellPath() =&amp;gt; &amp;quot;M 20,60 L 180,60 L 160,390 L 40,390 Z&amp;quot;;
+
+    private string GetGarmentGeometry(string cutStyle)
+    {
+        // C# &amp;quot;Digital Scissors&amp;quot; - Transforming layout logic into pure vector strings
+        string edgeCurve = cutStyle.ToLowerInvariant() switch
+        {
+            &amp;quot;angled&amp;quot;      =&amp;gt; &amp;quot;L 100,85 L 82,52&amp;quot;,
+            &amp;quot;square&amp;quot;      =&amp;gt; &amp;quot;L 108,65 L 92,65 L 82,52&amp;quot;,
+            &amp;quot;curved&amp;quot;      =&amp;gt; &amp;quot;C 115,70 105,85 100,75 C 95,85 85,70 82,52&amp;quot;,
+            _             =&amp;gt; &amp;quot;C 108,58 92,58 82,52&amp;quot; // Default Baseline Cut
+        };
+
+        return $&amp;quot;M 44.5,65.5 L 7.5,115.5 L 39.5,159.5 L 58,112 L 142,112 L 195,115 L 159.5,65.5 {edgeCurve} Z&amp;quot;;
+    }
+
+    public class CanvasConfig
+    {
+        public string StyleCut { get; set; } = &amp;quot;default&amp;quot;;
+        public string PrimaryColor { get; set; } = &amp;quot;#B8955A&amp;quot;;
+        public string PatternName { get; set; } = &amp;quot;plain&amp;quot;;
+        public string CanvasMode { get; set; } = &amp;quot;standard&amp;quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2 id="what-this-actually-buys-you"&gt;What This Actually Buys You&lt;/h2&gt;
+&lt;p&gt;Three things fall out of this approach for free, and none of them needed a single line of JavaScript.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Zero JS interop overhead.&lt;/strong&gt; There's no heavy data string crossing the WebAssembly boundary, because the SVG is manipulated directly as a native DOM node inside Blazor's own diffing tree. The serialization tax that made our sync engine freeze for a second in an earlier post simply doesn't exist here — there's no boundary left to cross.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Hardware-accelerated rendering, for free.&lt;/strong&gt; Because every layout calculation resolves down to a plain SVG tag, the browser engine hands the actual rasterization to the GPU. That keeps a locked 60 FPS update cycle even on the lower-end Android phones a lot of tailors are actually using in the field.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A featherweight payload.&lt;/strong&gt; No high-resolution image assets, no multi-hundred-KB rendering library. The entire interactive canvas runs on less than 100KB of text-based vector coordinates — small enough to sit comfortably inside an app that has to work when the network doesn't.&lt;/p&gt;
+&lt;p&gt;That last point is really the whole thesis of building ZikFash offline-first: every architectural decision, from the sync engine to this canvas, gets judged by the same question — does this still work with zero bars? SVG-as-C#-state passes that test better than anything else I tried. Sometimes the most &amp;quot;advanced&amp;quot; solution is just remembering what the platform already gives you for free.&lt;/p&gt;
+</content>
+		<summary>Leveraging Blazor WebAssembly to treat SVG elements not as images, but as declarative XML DOM elements to achieve responsive, zero-latency rendering without writing a single line of JavaScript.</summary>
+	</entry>
+	<entry>
+		<id>https://blogs.intitech.dev/posts/2026-07-02-blazor-boot-json-vanishes-net10</id>
+		<title>When .NET 10 Deleted the File We Were Proudly Preloading</title>
+		<author>
+			<name>Abdulawwal Intisor</name>
+		</author>
+		<link href="https://blogs.intitech.dev/posts/2026-07-02-blazor-boot-json-vanishes-net10" />
+		<updated>2026-07-02T00:00:00Z</updated>
+		<content>&lt;p&gt;A few weeks ago, I wrote about shaving nearly a second off ZikFash's boot time by preloading &lt;code&gt;blazor.boot.json&lt;/code&gt; before the browser even asked for it. It worked. I was pleased with myself. Then .NET 10 landed, and that exact same line of code turned into a 404 error in my own console.&lt;/p&gt;
+&lt;p&gt;This is the short version of that story: an optimization that quietly expired underneath me, and why that's a completely normal thing to happen when you build on a framework that's still moving.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="the-symptom"&gt;The Symptom&lt;/h2&gt;
+&lt;p&gt;After bumping ZikFash to .NET 10, the browser console started logging this on every single load:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-http"&gt;GET http://localhost:5262/_framework/blazor.boot.json 404 (Not Found)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nothing crashed. The app still worked. But it added an unnecessary request to the waterfall and littered the logs during both development and production runs — exactly the kind of noise that makes you distrust your own console the next time something &lt;em&gt;actually&lt;/em&gt; breaks.&lt;/p&gt;
+&lt;h2 id="the-root-cause"&gt;The Root Cause&lt;/h2&gt;
+&lt;p&gt;A bit of digging into .NET 10's WebAssembly boot architecture explained everything: &lt;strong&gt;&lt;code&gt;blazor.boot.json&lt;/code&gt; is no longer generated as a separate static file.&lt;/strong&gt; Starting with .NET 10, the boot manifest is compiled and inlined directly inside &lt;code&gt;dotnet.js&lt;/code&gt; at build time, specifically to cut down on requests and streamline WebAssembly startup.&lt;/p&gt;
+&lt;p&gt;Which means the very optimization I was proud of — the hardcoded preload hint sitting in &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; —&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;link rel="preload" href="_framework/blazor.boot.json" as="fetch" crossorigin="anonymous" /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;— was asking the browser to preload a file that no longer exists anywhere on disk or in the server's static assets. The framework I was optimizing for had moved the goalposts, and my code hadn't noticed.&lt;/p&gt;
+&lt;p&gt;It's a good reminder that "optimize for the framework's internals" comes with an expiration date. The framework owes you a stable public API. It owes you nothing about &lt;em&gt;how&lt;/em&gt; it gets there internally, and .NET 10 changed exactly that.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="the-fix"&gt;The Fix&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Cleaning up &lt;code&gt;index.html&lt;/code&gt;.&lt;/strong&gt; The obsolete preload line came out entirely, leaving the two hints that are still doing real work:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-diff"&gt;     &amp;lt;!-- Preload critical WASM/DLLs to bypass the Blazor sequential boot cascade --&amp;gt;
+     &amp;lt;link rel="preload" href="_framework/dotnet.native.wasm" as="fetch" crossorigin="anonymous" /&amp;gt;
+     &amp;lt;link rel="preload" href="_framework/System.Private.CoreLib.wasm" as="fetch" crossorigin="anonymous" /&amp;gt;
+-    &amp;lt;link rel="preload" href="_framework/blazor.boot.json" as="fetch" crossorigin="anonymous" /&amp;gt;
+ &amp;lt;/head&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Auditing the service workers.&lt;/strong&gt; Before calling it done, I checked both &lt;code&gt;service-worker.js&lt;/code&gt; and &lt;code&gt;service-worker.published.js&lt;/code&gt; for any hardcoded reference to &lt;code&gt;blazor.boot.json&lt;/code&gt; in their static cache manifests — the kind of thing that could quietly break offline caching down the line. Neither one had any. Both rely on the dynamically generated &lt;code&gt;service-worker-assets.js&lt;/code&gt; for framework asset caching, so there was nothing left to clean up there.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Verifying the build.&lt;/strong&gt; A full &lt;code&gt;dotnet build&lt;/code&gt; from the workspace root came back clean: 0 errors, 0 warnings.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="why-this-was-worth-a-whole-post"&gt;Why This Was Worth a Whole Post&lt;/h2&gt;
+&lt;p&gt;It's a two-line fix, but the lesson underneath it is bigger than two lines. Every time you optimize around a framework's &lt;em&gt;implementation details&lt;/em&gt; rather than its &lt;em&gt;public contract&lt;/em&gt;, you're borrowing against a future upgrade. That's not a reason to avoid these optimizations — the preload hint genuinely bought ZikFash real load-time savings, as covered in the &lt;a href="https://blogs.intitech.dev/posts/2026-06-18-deciphering-blazor-wasm-boot-performance"&gt;previous investigation into that 8-second boot delay&lt;/a&gt;. It's a reason to expect them to need revisiting, and to actually re-audit &lt;code&gt;index.html&lt;/code&gt;, your service workers, and your build output every time you jump a major framework version — instead of assuming yesterday's fix is still true today.&lt;/p&gt;
+&lt;p&gt;The console is now clean, the network waterfall is prioritizing the WASM files that are actually preloaded, and ZikFash's performance layer is aligned with how .NET 10 actually boots — not how .NET 8 used to.&lt;/p&gt;
+</content>
+		<summary>We shipped a preload hint for blazor.boot.json to fix a boot waterfall, and it worked beautifully — until a .NET 10 upgrade quietly removed that file from existence and turned our own optimization into a 404.</summary>
+	</entry>
+	<entry>
+		<id>https://blogs.intitech.dev/posts/2026-06-18-deciphering-blazor-wasm-boot-performance</id>
+		<title>Deciphering the 2-Second Silence - A Blazor WASM Load-Time Investigation</title>
+		<author>
+			<name>Abdulawwal Intisor</name>
+		</author>
+		<link href="https://blogs.intitech.dev/posts/2026-06-18-deciphering-blazor-wasm-boot-performance" />
+		<updated>2026-06-18T00:00:00Z</updated>
+		<content>&lt;p&gt;Chrome Lighthouse doesn't do insults, but the number it gave me felt like one anyway.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Largest Contentful Paint: 8.52 seconds.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Eight and a half seconds is an eternity for a modern PWA — it's the gap between a user onboarding and a user deleting the app before they've even tried it. I was building ZikFash, a "premium digital record book" for professional tailors, and I was failing the one requirement that mattered before any feature did: speed.&lt;/p&gt;
+&lt;p&gt;Even after I refactored the UI to render the shell — the header, the logo — instantly, there was still a frustrating two-second silence after it. The logo would appear, and then nothing. Just a spinner, doing nothing useful, for two whole seconds. So I decided to actually decipher what those two seconds were spent on. This is that investigation.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="the-staircase-nobody-warned-me-about"&gt;The Staircase Nobody Warned Me About&lt;/h2&gt;
+&lt;p&gt;I opened the Network tab and hit refresh, expecting a burst of parallel downloads. Instead I got a staircase.&lt;/p&gt;
+&lt;p&gt;Blazor WASM's default boot sequence has trust issues — it refuses to ask for anything until the thing before it has fully answered:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;index.html&lt;/code&gt; loads.&lt;/li&gt;
+&lt;li&gt;It loads &lt;code&gt;blazor.webassembly.js&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;That script fetches &lt;code&gt;blazor.boot.json&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Only &lt;em&gt;after&lt;/em&gt; the manifest is parsed does it start requesting the 50+ assemblies (&lt;code&gt;.wasm&lt;/code&gt; and &lt;code&gt;.dll&lt;/code&gt; files) that make up the actual app.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That's a sequential bottleneck dressed up as a boot process. My connection was 100Mbps, but for the first second and a half, the browser was using maybe 1% of that bandwidth, because it was waiting for one script to tell it what to ask for next — a relay race where the runners walk between handoffs.&lt;/p&gt;
+&lt;p&gt;The fix didn't require waiting for JavaScript to tell the browser what mattered most. I already knew what mattered most. I added &lt;code&gt;&amp;lt;link rel="preload" as="fetch" crossorigin="anonymous"&amp;gt;&lt;/code&gt; hints to &lt;code&gt;index.html&lt;/code&gt; for the big three:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dotnet.native.wasm&lt;/code&gt; — the engine.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;System.Private.CoreLib.wasm&lt;/code&gt; — the heart.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;blazor.boot.json&lt;/code&gt; — the map.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That alone put the full network pipe to work from the first millisecond instead of the second-and-a-half mark. The engine started downloading in parallel with the initial HTML parse, and we clawed back nearly 800ms of pure "thinking time" from three lines of HTML.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="hunting-the-3mb-library-nobody-invited"&gt;Hunting the 3MB Library Nobody Invited&lt;/h2&gt;
+&lt;p&gt;With the loading &lt;em&gt;order&lt;/em&gt; fixed, it was time to look at the loading &lt;em&gt;size&lt;/em&gt;. I ran a quick check on the &lt;code&gt;_framework&lt;/code&gt; folder and nearly fell out of my chair.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;System.Private.Xml.wasm&lt;/code&gt;: 2.95 MB.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ZikFash is a modern app. We use JSON. We use REST. We use Supabase. There is not a single line of XML anywhere in the codebase. So why was every user downloading a 3MB XML library on first load?&lt;/p&gt;
+&lt;p&gt;An hour of tracing the dependency graph turned up &lt;strong&gt;transitive bloat&lt;/strong&gt;. We were using the Supabase 1.1.1 SDK, which pulls in &lt;code&gt;Postgrest-csharp&lt;/code&gt; and &lt;code&gt;Realtime-csharp&lt;/code&gt;, both built on Newtonsoft.Json. Newtonsoft is a legendary library, but it's a Swiss Army knife from an older era — it ships with built-in converters for &lt;code&gt;XmlNode&lt;/code&gt; and &lt;code&gt;XDocument&lt;/code&gt;. Because those references are baked directly into the assembly, the .NET trimmer wouldn't touch them. It saw a reference to XML and played it safe: keep the whole 3MB stack, just in case.&lt;/p&gt;
+&lt;p&gt;That wasn't the only stowaway. &lt;code&gt;System.Reactive.wasm&lt;/code&gt; was adding another 1.27 MB, entirely in service of "realtime" events we weren't even using yet.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="reaching-for-the-full-trim"&gt;Reaching for the Full Trim&lt;/h2&gt;
+&lt;p&gt;The standard Blazor build runs with &lt;code&gt;TrimMode=partial&lt;/code&gt; — it only trims assemblies that explicitly declare themselves safe to trim, and most legacy libraries never make that promise. So I went further:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;&amp;lt;TrimMode&amp;gt;full&amp;lt;/TrimMode&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Full trimming assumes that if your code never actually calls something, it's dead weight, full stop — no benefit of the doubt for "potential" reflection-based references. The risk is real: if Supabase used reflection somewhere to find an XML converter at runtime, the app would break in a way tests might not catch. The reward was just as real: almost 5MB shaved off the initial payload.&lt;/p&gt;
+&lt;p&gt;I also switched on &lt;strong&gt;invariant globalization&lt;/strong&gt;. ZikFash doesn't need Thai or Japanese sorting rules, so the 1MB ICU data file went with it.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="deleting-the-package-wed-already-replaced"&gt;Deleting the Package We'd Already Replaced&lt;/h2&gt;
+&lt;p&gt;Digging through &lt;code&gt;Program.cs&lt;/code&gt;, I found one more piece of baggage: &lt;code&gt;Blazor.LocalStorage.WebAssembly&lt;/code&gt;, still registered as a service.&lt;/p&gt;
+&lt;p&gt;We'd spent the previous few days writing a custom IndexedDB and &lt;code&gt;localStorage&lt;/code&gt; JS bridge specifically to handle shop-scoped data for ZikFash (that's &lt;a href="https://blogs.intitech.dev/posts/2026-06-01-offline-first-zikfash-sync-engine"&gt;its own story&lt;/a&gt;). The NuGet package was doing the exact same job our bridge already did, just with an extra C#-to-JS round trip we'd already engineered away. I deleted it, removed the registration, and the assembly count dropped again.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="where-we-landed"&gt;Where We Landed&lt;/h2&gt;
+&lt;p&gt;Put together, the changes were transformative:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;The sequential waterfall broke.&lt;/strong&gt; Assets started preloading instantly instead of waiting their turn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The XML ghost got exorcised.&lt;/strong&gt; &lt;code&gt;System.Private.Xml&lt;/code&gt; was finally pruned from the bundle.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The boot order got refined.&lt;/strong&gt; The shell — header and logo — now renders immediately, with a "Loading your record book…" state scoped only to the content area.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Final numbers:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;LCP dropped from 8.52s to &lt;strong&gt;under 1 second&lt;/strong&gt; for the shell.&lt;/li&gt;
+&lt;li&gt;Payload shrank by roughly 4.5MB uncompressed.&lt;/li&gt;
+&lt;li&gt;The app now &lt;em&gt;feels&lt;/em&gt; instant — the brand appears in under 500ms, and the data is ready by the time a tailor has even looked at the menu.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="what-id-tell-the-next-developer"&gt;What I'd Tell the Next Developer&lt;/h2&gt;
+&lt;p&gt;If your Blazor app is slow, don't blame the framework first. Blazor is fast; your dependency graph is probably just carrying passengers you didn't invite.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Audit your transitive DLLs. If you spot &lt;code&gt;System.Xml&lt;/code&gt; or &lt;code&gt;System.Data&lt;/code&gt; in the output and you've never typed those words, find out who invited them.&lt;/li&gt;
+&lt;li&gt;Break the sequential cascade — preload &lt;code&gt;blazor.boot.json&lt;/code&gt; and &lt;code&gt;dotnet.native.wasm&lt;/code&gt; before JavaScript ever asks for them.&lt;/li&gt;
+&lt;li&gt;Be brave with &lt;code&gt;TrimMode=full&lt;/code&gt;, but only if you have a test suite that would actually catch a reflection-based crash.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;High-performance software isn't about what you bolt on. It's about having the discipline to go back and remove what you don't need — even after it's already shipped.&lt;/p&gt;
+&lt;p&gt;One more twist to this story, though: a few weeks after this fix landed, that same &lt;code&gt;blazor.boot.json&lt;/code&gt; preload hint I was proud of turned into a brand-new bug, courtesy of .NET 10. More on that next.&lt;/p&gt;
+</content>
+		<summary>Chrome Lighthouse said 8.52 seconds to first paint. Here's how we hunted down a sequential boot waterfall, a 3MB XML library nobody asked for, and a redundant NuGet package — and got ZikFash's shell rendering in under a second.</summary>
+	</entry>
+	<entry>
+		<id>https://blogs.intitech.dev/posts/2026-06-01-offline-first-zikfash-sync-engine</id>
+		<title>Building ZikFash Offline-First - Engineering Trust When the Network Isn't There</title>
+		<author>
+			<name>Abdulawwal Intisor</name>
+		</author>
+		<link href="https://blogs.intitech.dev/posts/2026-06-01-offline-first-zikfash-sync-engine" />
+		<updated>2026-06-01T00:00:00Z</updated>
+		<content>&lt;p&gt;My mother runs a tailoring shop. That's not a fun fact — it's the whole reason ZikFash exists. I've watched her write &amp;quot;Half Waist&amp;quot; and &amp;quot;Shoulder Width&amp;quot; into a paper record book for years, and I've watched the power cut mid-measurement more times than I can count. Any app that's supposed to replace that paper book has to survive the exact moment the internet doesn't.&lt;/p&gt;
+&lt;p&gt;In a normal cloud-first app, that moment looks like a spinner, a timeout, and eventually a red banner that says &amp;quot;Failed to save.&amp;quot; For a tool meant to earn a tailor's trust, that's not a bug. That's a resignation letter.&lt;/p&gt;
+&lt;p&gt;That single scenario is the reason ZikFash's data layer doesn't look anything like it did a few months ago. We tore out a &amp;quot;save to local and hope&amp;quot; system and rebuilt it into something that behaves identically whether you're on fibre in Accra or standing in a market with zero bars: local-first, always, with the cloud treated as backup — not a dependency.&lt;/p&gt;
+&lt;p&gt;This is the story of that rebuild: the storage ceiling we hit, the sync conflicts we had to actually solve instead of hand-wave away, and one service worker bug that made icons vanish for reasons that had nothing to do with icons.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="hitting-the-wall-localstorages-invisible-ceiling"&gt;Hitting the Wall: localStorage's Invisible Ceiling&lt;/h2&gt;
+&lt;p&gt;We started, like everyone does, with &lt;code&gt;localStorage&lt;/code&gt;. It's the &amp;quot;hello world&amp;quot; of persisting anything in a browser — dead simple, synchronous, works everywhere.&lt;/p&gt;
+&lt;p&gt;It also has a hard 5MB cap, and it blocks the main thread on every write. Neither of those facts matter until they suddenly matter a lot. As tailors added more customers, more orders, more measurements, two things happened at once:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;The wall.&lt;/strong&gt; Get close enough to 5MB of JSON and the browser throws &lt;code&gt;QuotaExceededError&lt;/code&gt;. Your &amp;quot;reliable offline app&amp;quot; just stopped being reliable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The jank.&lt;/strong&gt; Every &lt;code&gt;localStorage.setItem()&lt;/code&gt; freezes the UI while it writes to disk. On a growing customer list, that's a visible stutter — exactly the kind of thing that makes a premium-feeling app suddenly feel cheap.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The fix wasn't clever, it was necessary: move to &lt;strong&gt;IndexedDB&lt;/strong&gt;. Asynchronous, effectively unbounded, built for exactly this job. The actual engineering problem wasn't the migration — it was doing it without a single existing user noticing.&lt;/p&gt;
+&lt;p&gt;We wrote a silent migration that runs once, on boot:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Check for a &lt;code&gt;zf_migrated_v1&lt;/code&gt; flag.&lt;/li&gt;
+&lt;li&gt;If it's missing, read every shop-specific bucket out of &lt;code&gt;localStorage&lt;/code&gt; (&lt;code&gt;zikfash_customers_v1_IntiCloths&lt;/code&gt;, and so on).&lt;/li&gt;
+&lt;li&gt;Parse it, write it into the new IndexedDB &lt;code&gt;Customers&lt;/code&gt; store.&lt;/li&gt;
+&lt;li&gt;Only flip the flag once the IndexedDB write is confirmed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A tailor opens the app one morning and their entire customer history has quietly moved into a bigger, faster vault — no changelog, no popup, no dropped record. That's the bar for any infrastructure change: it should be invisible to the person actually using the tool.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="two-tablets-one-truth"&gt;Two Tablets, One Truth&lt;/h2&gt;
+&lt;p&gt;Storage was the easy half. The hard half of any offline-first system is what happens when two devices go offline separately and both come back online — because now you have two versions of &amp;quot;the truth,&amp;quot; and somebody has to decide which one wins.&lt;/p&gt;
+&lt;p&gt;We ruled out the lazy options fast:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cloud always wins&lt;/strong&gt; deletes whatever the tailor just did offline on the tablet.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local always wins&lt;/strong&gt; deletes whatever changed on the phone while the tablet was out of signal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Neither is acceptable when the data is a paying customer's measurements. So we built a &lt;strong&gt;record-level merge&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Every &lt;code&gt;Customer&lt;/code&gt; and &lt;code&gt;Order&lt;/code&gt; carries an &lt;code&gt;UpdatedAt&lt;/code&gt; timestamp, touched the instant a field changes.&lt;/li&gt;
+&lt;li&gt;Every &lt;code&gt;ShopConfig&lt;/code&gt; carries a &lt;code&gt;LastSyncAt&lt;/code&gt; — the last moment &lt;em&gt;this specific device&lt;/em&gt; successfully spoke to the cloud.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When the tailor hits sync, we run a pre-flight check: is the cloud's last-updated timestamp newer than this device's &lt;code&gt;LastSyncAt&lt;/code&gt;? If yes, someone else moved first — and instead of aborting or blindly overwriting, we merge record by record, keeping whichever version has the newer timestamp.&lt;/p&gt;
+&lt;p&gt;It's not a fancy CRDT. It's honest, boring, and it handles the 99% case that actually happens in a real shop: two people editing different customers on different days.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="the-freeze-no-one-was-supposed-to-see"&gt;The Freeze No One Was Supposed to See&lt;/h2&gt;
+&lt;p&gt;Here's the part that had nothing to do with sync logic and everything to do with Blazor's plumbing. JS interop — Blazor WebAssembly's bridge to JavaScript — is fantastic until you push real volume through it. Every crossing means C# serializes to a string, that string copies across the WASM boundary, and JavaScript parses it back into an object.&lt;/p&gt;
+&lt;p&gt;Do that with a full merge of a few megabytes of customer data and the UI freezes for close to a second. For an app whose entire pitch is &amp;quot;instant,&amp;quot; a full second of nothing is a broken promise.&lt;/p&gt;
+&lt;p&gt;The fix was to stop pushing &lt;em&gt;data&lt;/em&gt; across the boundary and only push the &lt;em&gt;diff&lt;/em&gt;. C# sends only the newly changed records. JavaScript pulls the full existing dataset straight from IndexedDB — no bridge involved — and merges everything itself using a &lt;code&gt;Map&lt;/code&gt; for O(n) lookups:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-javascript"&gt;const mergedMap = new Map();
+cloudData.forEach(c =&amp;gt; mergedMap.set(c.Id, c));
+localData.forEach(l =&amp;gt; {
+    const existing = mergedMap.get(l.Id);
+    if (!existing || new Date(l.UpdatedAt) &amp;gt; new Date(existing.UpdatedAt)) {
+        mergedMap.set(l.Id, l);
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The merged result gets written back to IndexedDB and handed to C# as a single &amp;quot;here's your new state&amp;quot; call. One second of freeze became about twenty milliseconds nobody notices. Same merge logic, completely different experience — just by being deliberate about what actually needs to cross the C#/JS border.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="the-case-of-the-disappearing-scissors-icon"&gt;The Case of the Disappearing Scissors Icon&lt;/h2&gt;
+&lt;p&gt;This one took longer to find than it should have, mostly because the symptoms lied to us. The Material icons throughout the UI — scissors, rulers, the small visual language of the app — would randomly vanish, even on a perfectly good connection.&lt;/p&gt;
+&lt;p&gt;The service worker was caching Google Fonts requests with &lt;code&gt;ignoreSearch: true&lt;/code&gt;, a setting that's usually correct for local assets, where you want to ignore cache-busting query strings like &lt;code&gt;app.css?v=1&lt;/code&gt;. But Google Fonts identifies &lt;em&gt;which&lt;/em&gt; font you're asking for through the query string:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fonts.googleapis.com/css2?family=Lato&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fonts.googleapis.com/css2?family=Material+Symbols+Rounded&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With &lt;code&gt;ignoreSearch: true&lt;/code&gt;, the service worker treated both as the &lt;em&gt;same URL&lt;/em&gt;. Whichever one got cached first won, permanently. If Lato loaded first, every later request for Material Symbols got served Lato's CSS instead, the browser failed to parse it as an icon font, and the icons just disappeared.&lt;/p&gt;
+&lt;p&gt;The fix: stop treating every cached asset the same way. Local, versioned assets keep &lt;code&gt;ignoreSearch: true&lt;/code&gt;. Anything external, where the query string &lt;em&gt;is&lt;/em&gt; the identity, gets &lt;code&gt;ignoreSearch: false&lt;/code&gt; plus a stale-while-revalidate strategy — serve the cached copy instantly, then quietly refetch in the background so the next load is fresh.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="knowing-youre-offline-is-half-the-job"&gt;Knowing You're Offline Is Half the Job&lt;/h2&gt;
+&lt;p&gt;A good offline app doesn't just keep working when the network drops — it tells you it knows. We built a small &lt;code&gt;NetworkStatusService&lt;/code&gt; that listens for the browser's &lt;code&gt;online&lt;/code&gt;/&lt;code&gt;offline&lt;/code&gt; events and surfaces a quiet, unapologetic banner: &lt;em&gt;&amp;quot;Working Offline — changes saved locally.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;It sounds like a small thing. It isn't. It's the difference between a tailor trusting the tool enough to finally put the paper record book away, and a tailor keeping that book in a drawer &amp;quot;just in case.&amp;quot; The &lt;code&gt;StorageService&lt;/code&gt; also checks this status before attempting a sync — if you're in a market basement with zero signal, we're not going to waste your battery pretending otherwise.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="whats-still-ahead"&gt;What's Still Ahead&lt;/h2&gt;
+&lt;p&gt;The architecture holds up fine for thousands of records, but we already know where the next cracks will show:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tombstones.&lt;/strong&gt; Right now, deleting a customer offline can get that customer re-imported from another device during sync. We need an &lt;code&gt;IsDeleted&lt;/code&gt; flag that syncs the &lt;em&gt;act&lt;/em&gt; of deletion, not just the absence of a record.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Differential sync.&lt;/strong&gt; Sending the full list to Supabase works today. It won't scale forever — sending only the dirty records is next.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A real conflict UI.&lt;/strong&gt; Last-write-wins is fine for measurements. It won't stay fine forever for payments — some conflicts deserve a human decision, not an algorithm's.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="the-actual-lesson"&gt;The Actual Lesson&lt;/h2&gt;
+&lt;p&gt;Offline-first isn't a package you install. It's a mindset that treats local storage as the source of truth and the cloud as a layer that catches up when it can. It costs you JS interop tricks, timestamp math you have to get right, and service worker behavior you have to actually understand instead of copy-paste.&lt;/p&gt;
+&lt;p&gt;But when a tailor in a busy market saves a measurement and it just works — no spinner, no error, no drama — all of that complexity earns its keep. That's the whole point.&lt;/p&gt;
+&lt;p&gt;Next up: we go chasing an 8-second load time that had absolutely no business existing, and it gets uncomfortably detective-y.&lt;/p&gt;
+</content>
+		<summary>How we rebuilt ZikFash's data layer from a fragile "save and hope" hack into a conflict-aware, IndexedDB-backed sync engine that behaves the same on fibre in Accra as it does with zero bars in a crowded market.</summary>
 	</entry>
 	<entry>
 		<id>https://blogs.intitech.dev/posts/2026-05-05-built-endpoint-twice</id>

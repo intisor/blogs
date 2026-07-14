@@ -61,20 +61,20 @@
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="Backend engineering using the best tools for the job.  C#, ASP.NET Core, and systems built for real problems." />
+<meta name="description" content="We shipped a preload hint for blazor.boot.json to fix a boot waterfall, and it worked beautifully &#x2014; until a .NET 10 upgrade quietly removed that file from existence and turned our own optimization into a 404." />
 <meta name="author" content="Abdulawwal Intisor Mawupego" />
 
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Minimal API — Intitech" />
-<meta property="og:description" content="Backend engineering in C# and ASP.NET Core." />
-<meta property="og:url" content="https://blogs.intitech.dev/tags/minimal-api" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="When .NET 10 Deleted the File We Were Proudly Preloading — Intitech" />
+<meta property="og:description" content="We shipped a preload hint for blazor.boot.json to fix a boot waterfall, and it worked beautifully &#x2014; until a .NET 10 upgrade quietly removed that file from existence and turned our own optimization into a 404." />
+<meta property="og:url" content="https://blogs.intitech.dev/posts/2026-07-02-blazor-boot-json-vanishes-net10" />
 <meta property="og:site_name" content="Intitech" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@intitech" />
-<meta name="twitter:title" content="Minimal API" />
-<meta name="twitter:description" content="Backend engineering in C# and ASP.NET Core." />
+<meta name="twitter:title" content="When .NET 10 Deleted the File We Were Proudly Preloading" />
+<meta name="twitter:description" content="We shipped a preload hint for blazor.boot.json to fix a boot waterfall, and it worked beautifully &#x2014; until a .NET 10 upgrade quietly removed that file from existence and turned our own optimization into a 404." />
 
-<link rel="canonical" href="https://blogs.intitech.dev/tags/minimal-api" />
+<link rel="canonical" href="https://blogs.intitech.dev/posts/2026-07-02-blazor-boot-json-vanishes-net10" />
 
 <link rel="icon" type="image/svg+xml" href='/favicon.svg' sizes="any">
 
@@ -213,7 +213,7 @@
 
 <link rel="alternate" type="application/rss+xml" title="Intitech — RSS Feed" href="/feed.rss" />
 
-<title>Minimal API — Intitech</title>
+<title>When .NET 10 Deleted the File We Were Proudly Preloading — Intitech</title>
 
   <style>
     /* ── SCROLLBAR ── */
@@ -428,38 +428,141 @@
 
   <!-- Main Content -->
   <main class="main-container flex-grow z-10 relative">
-  <div class="container-sm-height">
-    <div class="row row-sm-height">
-      <div class="col-md-6 right-border col-sm-height">
+<header class="text-center mb-12 md:mb-20 reveal relative px-2">
+  <div class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+     <svg class="w-32 h-32 md:w-48 md:h-48 text-sediment" viewBox="-60 -30 120 100"><use href="#phi-spiral" /></svg>
+  </div>
+  <h1 class="font-display-xl text-[clamp(1.75rem,7vw,3.75rem)] text-script leading-[1.15] md:leading-[1.1] mb-8 md:mb-10 z-10 relative px-2">When .NET 10 Deleted the File We Were Proudly Preloading</h1>
+
+  <div class="flex justify-center items-center mb-8 md:mb-10 z-10 relative">
+    <svg class="w-10 h-10 md:w-12 md:h-12 text-ember opacity-50 md:opacity-60"><use href="#leaf-accent" /></svg>
+  </div>
+
+  <div class="metadata-grid">
+    <div class="flex items-center">
+      <span class="opacity-40 mr-2 sm:hidden">#</span>
+      <span class="whitespace-nowrap">INSCRIBED: JUL 02, 2026</span>
+    </div>
+
+        <div class="flex items-center">
+          <span class="hidden sm:inline opacity-30 mr-4">|</span>
+          <span class="opacity-40 mr-2 sm:hidden">#</span>
+          <span class="whitespace-nowrap">NODE: BLAZOR</span>
+        </div>
+
+      <div class="flex items-center">
+        <span class="hidden sm:inline opacity-30 mr-4">|</span>
+        <span class="opacity-40 mr-2 sm:hidden">#</span>
+        <span class="whitespace-nowrap text-ember/70">AUTHOR: ABDULAWWAL INTISOR</span>
+      </div>
+
+  </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'COPIED TO CLIPBOARD';
+        btn.classList.add('text-ember');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('text-ember');
+        }, 2000);
+      });
+    }
+  </script>
+
+    <div class="flex gap-3 justify-center mt-8 flex-wrap">
+        <a href="/tags/asp.net-core" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">ASP.NET Core</a>
+        <a href="/tags/webassembly" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">WebAssembly</a>
+        <a href="/tags/pwa" class="font-mono-label text-xs tracking-[0.15em] px-3 py-1 border border-sediment text-ash uppercase hover:text-ember hover:border-ember transition-colors">PWA</a>
+    </div>
+</header>
+      <article class="prose-container font-body-main text-body-main text-parchment space-y-6 mb-section-gap">
+        <p>A few weeks ago, I wrote about shaving nearly a second off ZikFash's boot time by preloading <code>blazor.boot.json</code> before the browser even asked for it. It worked. I was pleased with myself. Then .NET 10 landed, and that exact same line of code turned into a 404 error in my own console.</p>
+<p>This is the short version of that story: an optimization that quietly expired underneath me, and why that's a completely normal thing to happen when you build on a framework that's still moving.</p>
+<hr />
+<h2 id="the-symptom">The Symptom</h2>
+<p>After bumping ZikFash to .NET 10, the browser console started logging this on every single load:</p>
+<pre><code class="language-http">GET http://localhost:5262/_framework/blazor.boot.json 404 (Not Found)
+</code></pre>
+<p>Nothing crashed. The app still worked. But it added an unnecessary request to the waterfall and littered the logs during both development and production runs — exactly the kind of noise that makes you distrust your own console the next time something <em>actually</em> breaks.</p>
+<h2 id="the-root-cause">The Root Cause</h2>
+<p>A bit of digging into .NET 10's WebAssembly boot architecture explained everything: <strong><code>blazor.boot.json</code> is no longer generated as a separate static file.</strong> Starting with .NET 10, the boot manifest is compiled and inlined directly inside <code>dotnet.js</code> at build time, specifically to cut down on requests and streamline WebAssembly startup.</p>
+<p>Which means the very optimization I was proud of — the hardcoded preload hint sitting in <code>&lt;head&gt;</code> —</p>
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; href=&quot;_framework/blazor.boot.json&quot; as=&quot;fetch&quot; crossorigin=&quot;anonymous&quot; /&gt;
+</code></pre>
+<p>— was asking the browser to preload a file that no longer exists anywhere on disk or in the server's static assets. The framework I was optimizing for had moved the goalposts, and my code hadn't noticed.</p>
+<p>It's a good reminder that &quot;optimize for the framework's internals&quot; comes with an expiration date. The framework owes you a stable public API. It owes you nothing about <em>how</em> it gets there internally, and .NET 10 changed exactly that.</p>
+<hr />
+<h2 id="the-fix">The Fix</h2>
+<p><strong>Cleaning up <code>index.html</code>.</strong> The obsolete preload line came out entirely, leaving the two hints that are still doing real work:</p>
+<pre><code class="language-diff">     &lt;!-- Preload critical WASM/DLLs to bypass the Blazor sequential boot cascade --&gt;
+     &lt;link rel=&quot;preload&quot; href=&quot;_framework/dotnet.native.wasm&quot; as=&quot;fetch&quot; crossorigin=&quot;anonymous&quot; /&gt;
+     &lt;link rel=&quot;preload&quot; href=&quot;_framework/System.Private.CoreLib.wasm&quot; as=&quot;fetch&quot; crossorigin=&quot;anonymous&quot; /&gt;
+-    &lt;link rel=&quot;preload&quot; href=&quot;_framework/blazor.boot.json&quot; as=&quot;fetch&quot; crossorigin=&quot;anonymous&quot; /&gt;
+ &lt;/head&gt;
+</code></pre>
+<p><strong>Auditing the service workers.</strong> Before calling it done, I checked both <code>service-worker.js</code> and <code>service-worker.published.js</code> for any hardcoded reference to <code>blazor.boot.json</code> in their static cache manifests — the kind of thing that could quietly break offline caching down the line. Neither one had any. Both rely on the dynamically generated <code>service-worker-assets.js</code> for framework asset caching, so there was nothing left to clean up there.</p>
+<p><strong>Verifying the build.</strong> A full <code>dotnet build</code> from the workspace root came back clean: 0 errors, 0 warnings.</p>
+<hr />
+<h2 id="why-this-was-worth-a-whole-post">Why This Was Worth a Whole Post</h2>
+<p>It's a two-line fix, but the lesson underneath it is bigger than two lines. Every time you optimize around a framework's <em>implementation details</em> rather than its <em>public contract</em>, you're borrowing against a future upgrade. That's not a reason to avoid these optimizations — the preload hint genuinely bought ZikFash real load-time savings, as covered in the <a href="/posts/2026-06-18-deciphering-blazor-wasm-boot-performance">previous investigation into that 8-second boot delay</a>. It's a reason to expect them to need revisiting, and to actually re-audit <code>index.html</code>, your service workers, and your build output every time you jump a major framework version — instead of assuming yesterday's fix is still true today.</p>
+<p>The console is now clean, the network waterfall is prioritizing the WASM files that are actually preloaded, and ZikFash's performance layer is aligned with how .NET 10 actually boots — not how .NET 8 used to.</p>
+
+        <div class="reveal mt-16 pt-8 border-t border-sediment">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+            <h4 class="text-parchment font-cinzel text-lg mb-1">Share this insight</h4>
+            <p class="text-ash text-sm">Spread the knowledge with your network.</p>
+        </div>
         
+        <div class="flex items-center gap-3">
+            <a href="https://twitter.com/intent/tweet?text=When&#x2B;.NET&#x2B;10&#x2B;Deleted&#x2B;the&#x2B;File&#x2B;We&#x2B;Were&#x2B;Proudly&#x2B;Preloading&url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-07-02-blazor-boot-json-vanishes-net10" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on X">
+                <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
+            </a>
 
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fblogs.intitech.dev%2Fposts%2F2026-07-02-blazor-boot-json-vanishes-net10" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg"
+               title="Share on LinkedIn">
+                <svg class="w-5 h-5"><use href="#icon-linkedin"></use></svg>
+            </a>
 
-<div class="post-preview">
-  <h2 class="post-title"><a href="/posts/2026-05-05-built-endpoint-twice">I Built the Same API Endpoint Twice. Here&#x27;s What I Learned.</a></h2>
-  <p class="post-meta">Published on Tuesday 5 May 2026</p>
-<p>At some point during this project, I had two folders doing the same thing.</p>    <p class="small"><a href="/posts/2026-05-05-built-endpoint-twice">Read more...</a></p>
+            <button onclick="copyPostLink()" 
+                    id="copy-link-btn"
+                    class="group flex items-center justify-center w-12 h-12 rounded-full bg-topsoil border border-sediment text-ash hover:text-parchment hover:border-ember transition-all duration-300 hover:-translate-y-1 shadow-lg active:scale-95"
+                    title="Copy post link">
+                <svg class="w-5 h-5" id="copy-icon"><use href="#icon-link"></use></svg>
+                <span id="copy-feedback" class="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-ember text-void text-xs font-bold rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">
+                    Link Copied!
+                </span>
+            </button>
+        </div>
+    </div>
 </div>
 
+<script>
+    function copyPostLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const feedback = document.getElementById('copy-feedback');
+            feedback.classList.remove('opacity-0');
+            feedback.classList.add('opacity-100');
+            
+            setTimeout(() => {
+                feedback.classList.remove('opacity-100');
+                feedback.classList.add('opacity-0');
+            }, 2000);
+        });
+    }
+</script>
 
-      </div>
-      <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-          <a href="/tags/blazor" class="badge text-bg-light"> Blazor (5)</a>
-          <a href="/tags/webassembly" class="badge text-bg-light"> WebAssembly (3)</a>
-          <a href="/tags/architecture" class="badge text-bg-light"> Architecture (3)</a>
-          <a href="/tags/asp.net-core" class="badge text-bg-light"> ASP.NET Core (3)</a>
-          <a href="/tags/pwa" class="badge text-bg-light"> PWA (3)</a>
-          <a href="/tags/uxui" class="badge text-bg-light"> UX/UI (1)</a>
-          <a href="/tags/product-design" class="badge text-bg-light"> Product Design (1)</a>
-          <a href="/tags/zikfash" class="badge text-bg-light"> ZikFash (1)</a>
-          <a href="/tags/c" class="badge text-bg-light"> C# (1)</a>
-          <a href="/tags/performance" class="badge text-bg-light"> Performance (1)</a>
-          <a href="/tags/indexeddb" class="badge text-bg-light"> IndexedDB (1)</a>
-          <a href="/tags/offline-first" class="badge text-bg-light"> Offline-First (1)</a>
-          <a href="/tags/fastendpoints" class="badge text-bg-light"> FastEndpoints (1)</a>
-          <a href="/tags/minimal-api" class="badge text-bg-dark"> Minimal API (1)</a>
-      </div>
-    </div>
-  </div>
+      </article>
   </main>
 
   <!-- Footer -->
